@@ -1,0 +1,2466 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Let's Talk! 영어 공부</title>
+<meta name="theme-color" content="#16213a">
+<meta name="description" content="대학생 영어 공부 앱: 단어 카드, 문장 말하기, 역할극 대화, 21일 플랜">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Let's Talk!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=Literata:opsz,wght@7..72,500;7..72,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#f3f5f9; --card:#ffffff; --ink:#16213a; --sub:#5f6b82; --line:#dde2ec;
+  --blue:#2d5be3; --blue-soft:#e6edfd; --mark:#ffd84d; --mark-soft:#fff4c2;
+  --good:#1e9e6a; --bad:#e5484d; --bA:#ffffff; --bB:#e6edfd;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1524; --card:#18213a; --ink:#e7ecf6; --sub:#98a3ba; --line:#2a3552;
+    --blue:#7fa2ff; --blue-soft:#1f2c50; --mark:#e8c23a; --mark-soft:#3a3420;
+    --good:#3cc08a; --bad:#ff6b6f; --bA:#1d2744; --bB:#233463;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1524; --card:#18213a; --ink:#e7ecf6; --sub:#98a3ba; --line:#2a3552;
+  --blue:#7fa2ff; --blue-soft:#1f2c50; --mark:#e8c23a; --mark-soft:#3a3420;
+  --good:#3cc08a; --bad:#ff6b6f; --bA:#1d2744; --bB:#233463;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);
+  font-family:"IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-tap-highlight-color:transparent}
+.en{font-family:"Literata",Georgia,"Times New Roman",serif}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.app{max-width:640px;margin:0 auto}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 6px}
+.logo{font-family:"Literata",Georgia,serif;font-weight:700;font-size:22px;letter-spacing:-.3px}
+.logo small{font-family:"IBM Plex Sans KR",sans-serif;font-weight:500;font-size:13px;color:var(--sub);margin-left:6px}
+.trackchip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-size:13px}
+main{padding:8px 16px 110px}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom,0px);z-index:10}
+nav.tabs .in{max-width:640px;margin:0 auto;display:flex}
+nav.tabs button{flex:1;background:none;border:0;padding:9px 0 10px;font-size:12px;color:var(--sub);display:flex;flex-direction:column;align-items:center;gap:2px}
+nav.tabs button b{font-size:20px;font-weight:400;line-height:1}
+nav.tabs button.on{color:var(--blue);font-weight:700}
+h2{font-size:19px;margin:18px 2px 10px}
+h3{font-size:16px;margin:0}
+.muted{color:var(--sub);font-size:14px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.list .item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin-bottom:8px;width:100%;text-align:left}
+.item .ic{font-size:24px;width:32px;text-align:center}
+.item .tx{flex:1;min-width:0}
+.item .tx small{display:block;color:var(--sub);font-size:13px}
+.item .go{color:var(--sub);font-size:20px}
+.tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:6px;background:var(--blue-soft);color:var(--blue);margin-left:6px;vertical-align:2px;font-weight:500}
+.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--good);border-radius:6px}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 14px;font-weight:500}
+.btn.pri{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.good{background:var(--good);border-color:var(--good);color:#fff}
+.btn.bad{background:var(--card);border-color:var(--bad);color:var(--bad)}
+.btn.sm{padding:7px 11px;font-size:14px;border-radius:10px}
+.row{display:flex;gap:8px;margin-top:10px}
+.row>.btn{flex:1}
+.row.wrap>.btn{flex:1 1 28%}
+.hintw{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:24px;letter-spacing:3px;margin-top:14px;word-break:break-all;line-height:1.5}
+.spin{width:100%;font-family:"Literata",Georgia,serif;font-size:22px;padding:14px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);text-align:center;margin-top:12px}
+.spin:focus{border-color:var(--blue);outline:none}
+.spin.ok{border-color:var(--good)} .spin.ng{border-color:var(--bad);text-decoration:line-through}
+.res{margin-top:12px;border-radius:12px;padding:12px 14px;font-size:16px}
+.res.ok{background:color-mix(in srgb,var(--good) 14%,var(--card));border:1px solid var(--good)}
+.res.ng{background:color-mix(in srgb,var(--bad) 10%,var(--card));border:1px solid var(--bad)}
+.res .ans{font-family:"Literata",Georgia,serif;font-size:24px;font-weight:700;margin-top:4px}
+.wrap{flex-wrap:wrap}
+/* hero */
+.hero{background:var(--ink);color:var(--bg);border-radius:18px;padding:20px 18px;margin-top:6px;position:relative;overflow:hidden}
+.hero .day{font-family:"Literata",Georgia,serif;font-size:44px;font-weight:700;line-height:1}
+.hero .day span{font-size:18px;opacity:.6;font-weight:500}
+.hero p{margin:8px 0 0;opacity:.8;font-size:14px}
+.hero .hl{background:linear-gradient(transparent 55%,var(--mark) 55%);color:var(--bg)}
+.grid21{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:14px}
+.grid21 button{aspect-ratio:1;border-radius:9px;border:1px solid rgba(255,255,255,.18);background:transparent;color:inherit;font-size:13px;padding:0}
+.grid21 button.done{background:var(--mark);color:#16213a;border-color:var(--mark);font-weight:700}
+.grid21 button.today{outline:2px solid var(--mark);outline-offset:1px}
+.grid21 button.sel{background:rgba(255,255,255,.18)}
+.stat{display:flex;gap:10px}
+.stat .panel{flex:1;margin:0}
+.stat b{font-size:24px;font-family:"Literata",Georgia,serif}
+/* flashcard */
+.topbar{display:flex;align-items:center;gap:10px;margin:4px 0 8px}
+.topbar .back{border:0;background:none;font-size:26px;padding:0 6px;color:var(--sub)}
+.topbar .t{flex:1;font-weight:700;font-size:16px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.topbar .n{color:var(--sub);font-size:14px}
+.prog{height:4px;background:var(--line);border-radius:4px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--blue)}
+.flash{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;min-height:300px;padding:28px 20px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;user-select:none}
+.flash .word{font-size:38px;font-weight:700;line-height:1.2;letter-spacing:-.5px}
+.flash .word.en{background:linear-gradient(transparent 62%,var(--mark-soft) 62%);padding:0 4px}
+.flash .ko{font-size:22px;font-weight:700;margin-top:14px}
+.flash .ex{margin-top:16px;font-size:17px;line-height:1.5}
+.flash .exko{margin-top:4px;color:var(--sub);font-size:14px}
+.flash .hint{margin-top:22px;color:var(--sub);font-size:13px}
+.big{font-size:22px;font-weight:700;line-height:1.45}
+.speakhint{display:inline-block;margin-top:14px;font-size:13px;color:var(--sub);border:1px dashed var(--line);padding:5px 10px;border-radius:8px}
+.answer{margin-top:18px;font-size:21px;line-height:1.45;background:linear-gradient(transparent 60%,var(--mark-soft) 60%)}
+/* quiz */
+.opt{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:8px;font-size:17px}
+.opt.ok{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--card))}
+.opt.ng{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--card))}
+/* dialog */
+.ctrl{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:8px 0;z-index:5}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:none;border-radius:8px;padding:7px 4px;font-size:13px}
+.seg button.on{background:var(--blue);color:#fff;font-weight:700}
+.chat{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.line{display:flex;flex-direction:column;max-width:86%}
+.line.A{align-self:flex-start}
+.line.B{align-self:flex-end;align-items:flex-end}
+.who{font-size:12px;color:var(--sub);margin:0 6px 3px}
+.bubble{border:1px solid var(--line);border-radius:16px;padding:10px 13px;background:var(--bA);text-align:left;font-size:16px;line-height:1.45}
+.line.A .bubble{border-top-left-radius:4px}
+.line.B .bubble{background:var(--bB);border-top-right-radius:4px}
+.bubble .k{display:block;font-size:13px;color:var(--sub);margin-top:4px;font-family:"IBM Plex Sans KR",sans-serif}
+.bubble.hid{background:transparent;border-style:dashed;border-width:2px;color:var(--sub);font-family:"IBM Plex Sans KR",sans-serif}
+.bubble.hid b{display:block;color:var(--ink);font-size:15px;margin-top:2px}
+.bubble.cur{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue)}
+/* settings */
+label.f{display:block;margin:14px 0 6px;font-weight:500}
+select,input[type=range],textarea{width:100%}
+select,textarea{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px}
+textarea{min-height:90px;font-size:12px;word-break:break-all}
+.pick{display:block;width:100%;text-align:left;border:2px solid var(--line);background:var(--card);border-radius:14px;padding:16px;margin-bottom:10px}
+.pick.on{border-color:var(--blue);background:var(--blue-soft)}
+.pick b{font-size:18px}
+.pick span{display:block;color:var(--sub);font-size:14px;margin-top:4px}
+.toast{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:10px;font-size:14px;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.center{text-align:center}
+.autobar{display:flex;align-items:center;gap:8px;margin:10px 0 0}
+.autobar .btn{flex:0 0 auto}
+.autobar .st{flex:1;font-size:13px;color:var(--sub);line-height:1.35}
+.autobar.on .st{color:var(--blue);font-weight:500}
+.btn.play{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.flash.playing{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue)}
+.banner{display:flex;gap:10px;align-items:center;background:var(--mark-soft);border:1px solid var(--mark);border-radius:12px;padding:11px 12px;margin:6px 0 10px;font-size:14px}
+.banner .tx{flex:1}
+.banner .x{border:0;background:none;color:var(--sub);font-size:18px;padding:0 4px}
+details.help{border-top:1px solid var(--line);padding:10px 0}
+details.help:first-of-type{border-top:0}
+details.help summary{cursor:pointer;font-weight:500;list-style:none}
+details.help summary::-webkit-details-marker{display:none}
+details.help summary::after{content:"＋";float:right;color:var(--sub)}
+details.help[open] summary::after{content:"－"}
+details.help ol{margin:8px 0 0;padding-left:20px;font-size:14px}
+details.help li{margin:4px 0}
+details.help code{background:var(--blue-soft);color:var(--blue);padding:1px 6px;border-radius:5px;font-family:inherit;font-weight:500}
+.grp{display:flex;align-items:baseline;justify-content:space-between;margin:22px 2px 10px}
+.grp h2{margin:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="logo">Let's Talk!<small>영어 공부</small></div>
+    <button class="trackchip" id="trackchip" type="button"></button>
+  </header>
+  <main id="main"></main>
+</div>
+<nav class="tabs" id="tabs"><div class="in">
+  <button data-tab="home" type="button"><b>🗓</b>오늘</button>
+  <button data-tab="words" type="button"><b>🃏</b>단어</button>
+  <button data-tab="sets" type="button"><b>🗣</b>문장</button>
+  <button data-tab="dialogs" type="button"><b>💬</b>대화</button>
+  <button data-tab="settings" type="button"><b>⚙️</b>설정</button>
+</div></nav>
+<div class="toast" id="toast"></div>
+
+<script>
+window.addEventListener("error",ev=>{
+  const m=document.getElementById("main");
+  if(m&&!m.children.length)m.innerHTML='<div style="padding:20px;border:1px solid #e5484d;border-radius:12px;margin-top:20px"><b>앱을 여는 중 오류가 났어요.</b><p style="font-size:14px">페이지를 새로고침해 보세요. 계속되면 아래 내용을 캡처해서 보내 주세요.</p><code style="font-size:12px;word-break:break-all">'+String(ev.message).replace(/</g,"&lt;")+' (line '+ev.lineno+')</code></div>';
+});
+/* =========================================================
+   DATA  — track: common(공통) / biz(경영) / eng(영문)
+   words: [영어, 뜻, 예문, 예문 해석]
+   ========================================================= */
+const CATS = [
+{id:"campus",track:"common",icon:"🏫",ko:"캠퍼스 생활",en:"Campus Life",w:[
+["syllabus","강의계획서","Please read the syllabus before the first class.","첫 수업 전에 강의계획서를 읽어 오세요."],
+["assignment","과제","The assignment is due next Monday.","과제는 다음 주 월요일까지입니다."],
+["deadline","마감일","Can I get an extension on the deadline?","마감일을 연장받을 수 있을까요?"],
+["office hours","교수 면담 시간","I'll visit the professor during office hours.","교수님 면담 시간에 찾아갈게요."],
+["semester","학기","I'm taking five courses this semester.","이번 학기에 다섯 과목을 들어요."],
+["major","전공","What's your major?","전공이 뭐예요?"],
+["scholarship","장학금","She got a full scholarship.","그녀는 전액 장학금을 받았어요."],
+["attendance","출석","Attendance counts for ten percent of the grade.","출석이 성적의 10%를 차지해요."],
+["midterm","중간고사","How did your midterm go?","중간고사 어땠어?"],
+["group project","조별 과제","We have a group project in marketing class.","마케팅 수업에 조별 과제가 있어."],
+["return to school","복학하다","I'm returning to school after my military service.","군 복무를 마치고 복학해요."],
+["dormitory","기숙사","I live in the dormitory on campus.","캠퍼스 기숙사에 살아요."]]},
+{id:"daily",track:"common",icon:"💬",ko:"일상 필수 표현",en:"Everyday Phrases",w:[
+["figure out","알아내다, 이해하다","I can't figure out this problem.","이 문제를 도저히 모르겠어."],
+["catch up","근황을 나누다, 따라잡다","Let's catch up over coffee.","커피 마시면서 근황 얘기하자."],
+["hang out","어울려 놀다","Do you want to hang out this weekend?","이번 주말에 같이 놀래?"],
+["run out of","~이 다 떨어지다","We ran out of time.","시간이 다 됐어."],
+["look forward to","~을 기대하다","I'm looking forward to the trip.","여행이 기대돼."],
+["get used to","~에 익숙해지다","I'm getting used to the new schedule.","새 일정에 익숙해지고 있어."],
+["make it","시간 맞춰 가다, 해내다","Sorry, I can't make it tonight.","미안, 오늘 밤엔 못 가."],
+["come up with","(생각을) 떠올리다","She came up with a great idea.","그녀가 좋은 아이디어를 냈어."],
+["put off","미루다","Don't put off your homework.","숙제 미루지 마."],
+["sort of","약간, 좀","I'm sort of tired today.","오늘 좀 피곤해."]]},
+{id:"bizbasic",track:"biz",icon:"🏢",ko:"경영 기초",en:"Business Basics",w:[
+["revenue","매출","Our revenue grew by twelve percent this year.","올해 매출이 12% 늘었어요."],
+["profit","이익","The company made a profit of two million dollars.","회사는 200만 달러의 이익을 냈어요."],
+["stakeholder","이해관계자","We must consider all stakeholders.","모든 이해관계자를 고려해야 해요."],
+["strategy","전략","We need a new strategy for the Asian market.","아시아 시장을 위한 새 전략이 필요해요."],
+["competitor","경쟁사","Our main competitor lowered its prices.","주요 경쟁사가 가격을 내렸어요."],
+["market share","시장 점유율","We increased our market share to twenty percent.","시장 점유율을 20%로 높였어요."],
+["supply chain","공급망","The supply chain was affected by the storm.","태풍으로 공급망에 차질이 생겼어요."],
+["merger","합병","The merger will be completed next year.","합병은 내년에 완료될 거예요."],
+["efficiency","효율성","The new system improved efficiency.","새 시스템이 효율성을 높였어요."],
+["entrepreneur","기업가, 창업가","He wants to be an entrepreneur.","그는 창업가가 되고 싶어 해요."],
+["negotiate","협상하다","We need to negotiate the contract terms.","계약 조건을 협상해야 해요."],
+["launch","출시하다","They will launch a new product in May.","그들은 5월에 신제품을 출시해요."]]},
+{id:"finance",track:"biz",icon:"📊",ko:"회계·재무",en:"Accounting & Finance",w:[
+["asset","자산","Cash is a current asset.","현금은 유동자산이에요."],
+["liability","부채","The company has too many liabilities.","그 회사는 부채가 너무 많아요."],
+["equity","자본","Assets equal liabilities plus equity.","자산은 부채와 자본의 합이에요."],
+["balance sheet","재무상태표","Let's review the balance sheet first.","재무상태표부터 검토합시다."],
+["income statement","손익계산서","The income statement shows a net loss.","손익계산서에 순손실이 나타나요."],
+["cash flow","현금흐름","Positive cash flow is important for small businesses.","작은 기업에는 플러스 현금흐름이 중요해요."],
+["depreciation","감가상각","Depreciation reduces the value of equipment over time.","감가상각은 시간이 지나며 설비 가치를 줄여요."],
+["budget","예산","We are over budget this quarter.","이번 분기 예산을 초과했어요."],
+["interest rate","금리","The central bank raised the interest rate.","중앙은행이 금리를 올렸어요."],
+["dividend","배당금","The company pays a dividend every year.","그 회사는 매년 배당금을 지급해요."],
+["audit","회계감사","The annual audit starts next week.","연례 회계감사가 다음 주에 시작돼요."],
+["forecast","예측, 전망","Our sales forecast was too optimistic.","매출 전망이 너무 낙관적이었어요."]]},
+{id:"marketing",track:"biz",icon:"📣",ko:"마케팅",en:"Marketing",w:[
+["target customer","목표 고객","Our target customers are people in their twenties.","우리 목표 고객은 20대예요."],
+["brand awareness","브랜드 인지도","The campaign raised brand awareness.","캠페인이 브랜드 인지도를 높였어요."],
+["campaign","캠페인","The social media campaign was a big success.","SNS 캠페인이 큰 성공을 거뒀어요."],
+["survey","설문조사","We conducted a survey of 500 students.","학생 500명을 대상으로 설문조사를 했어요."],
+["segment","시장을 나누다, 세분 시장","We segment the market by age and income.","나이와 소득으로 시장을 세분화해요."],
+["pricing","가격 책정","Pricing is one of the four Ps.","가격 책정은 4P 중 하나예요."],
+["promotion","판촉, 홍보","There is a special promotion this week.","이번 주에 특별 판촉이 있어요."],
+["consumer behavior","소비자 행동","We studied consumer behavior in class.","수업에서 소비자 행동을 공부했어요."],
+["positioning","포지셔닝","Good positioning makes a brand different.","좋은 포지셔닝은 브랜드를 차별화해요."],
+["word of mouth","입소문","The restaurant became famous through word of mouth.","그 식당은 입소문으로 유명해졌어요."]]},
+{id:"meeting",track:"biz",icon:"🎤",ko:"발표·회의",en:"Presentations & Meetings",w:[
+["agenda","안건","What's on the agenda today?","오늘 안건이 뭐예요?"],
+["minutes","회의록","Who will take the minutes?","회의록은 누가 작성하나요?"],
+["action item","실행 과제","Let's review the action items from last week.","지난주 실행 과제를 검토합시다."],
+["follow up","후속 조치하다","I'll follow up with an email.","이메일로 후속 연락 드릴게요."],
+["wrap up","마무리하다","Let's wrap up the meeting.","회의를 마무리합시다."],
+["point out","지적하다","She pointed out a mistake in the report.","그녀가 보고서의 실수를 지적했어요."],
+["on the same page","같은 이해를 하다","Let's make sure we're on the same page.","우리 이해가 같은지 확인합시다."],
+["bottom line","요점, 결론","The bottom line is that we need more time.","결론은 시간이 더 필요하다는 거예요."],
+["brainstorm","아이디어를 모으다","Let's brainstorm some ideas.","아이디어를 좀 모아 봅시다."],
+["handout","유인물","Please look at page two of the handout.","유인물 2페이지를 봐 주세요."]]},
+{id:"career",track:"biz",icon:"👔",ko:"취업·면접",en:"Jobs & Interviews",w:[
+["resume","이력서","Please send your resume by Friday.","금요일까지 이력서를 보내 주세요."],
+["cover letter","자기소개서","I rewrote my cover letter three times.","자기소개서를 세 번 고쳐 썼어요."],
+["internship","인턴십","I'm applying for a summer internship.","여름 인턴십에 지원하고 있어요."],
+["qualification","자격, 자격 요건","What qualifications do you have?","어떤 자격을 갖추고 있나요?"],
+["strength","강점","My biggest strength is teamwork.","저의 가장 큰 강점은 팀워크예요."],
+["weakness","약점","Everyone has a weakness.","누구나 약점이 있어요."],
+["leadership","리더십","I developed leadership in the military.","군대에서 리더십을 길렀어요."],
+["apply for","~에 지원하다","I want to apply for this position.","이 직무에 지원하고 싶어요."],
+["hire","채용하다","The company plans to hire fifty new employees.","회사는 신입 50명을 채용할 계획이에요."],
+["reliable","믿을 수 있는","He is a reliable team member.","그는 믿을 만한 팀원이에요."]]},
+{id:"lit",track:"eng",icon:"📖",ko:"문학 용어",en:"Literary Terms",w:[
+["metaphor","은유","Life is a journey is a common metaphor.","'인생은 여행이다'는 흔한 은유예요."],
+["simile","직유","She runs like the wind is a simile.","'그녀는 바람처럼 달린다'는 직유예요."],
+["irony","아이러니, 반어","The irony is that the fire station burned down.","아이러니하게도 소방서가 불에 탔어요."],
+["protagonist","주인공","The protagonist faces a difficult choice.","주인공은 어려운 선택에 직면해요."],
+["narrator","화자, 서술자","The narrator is not always reliable.","서술자가 항상 믿을 만한 건 아니에요."],
+["theme","주제","The main theme of the novel is love.","그 소설의 주된 주제는 사랑이에요."],
+["symbolism","상징","The green light is full of symbolism.","초록 불빛에는 상징이 가득해요."],
+["foreshadowing","복선, 암시","The storm is foreshadowing trouble.","폭풍은 곧 닥칠 문제를 암시해요."],
+["stanza","(시의) 연","The poem has four stanzas.","그 시는 네 개의 연으로 되어 있어요."],
+["plot","줄거리, 구성","The plot is simple but powerful.","줄거리는 단순하지만 강렬해요."],
+["genre","장르","Gothic fiction is my favorite genre.","고딕 소설이 제가 제일 좋아하는 장르예요."],
+["tragedy","비극","Hamlet is one of the greatest tragedies.","햄릿은 가장 위대한 비극 중 하나예요."]]},
+{id:"academic",track:"eng",icon:"🎓",ko:"학술 어휘",en:"Academic Words",w:[
+["analyze","분석하다","We will analyze the first chapter today.","오늘은 1장을 분석할 거예요."],
+["interpret","해석하다","How do you interpret this line?","이 구절을 어떻게 해석하나요?"],
+["evidence","근거, 증거","Support your argument with evidence.","근거로 주장을 뒷받침하세요."],
+["argue","주장하다","The author argues that education is freedom.","작가는 교육이 곧 자유라고 주장해요."],
+["context","맥락, 배경","You need to understand the historical context.","역사적 배경을 이해해야 해요."],
+["significant","중요한, 의미 있는","This is a significant change in her character.","이것은 그녀 성격의 중요한 변화예요."],
+["perspective","관점","Let's look at it from a different perspective.","다른 관점에서 봅시다."],
+["assumption","가정, 전제","That is a common assumption.","그건 흔한 전제예요."],
+["contrast","대조하다, 대조","Compare and contrast the two characters.","두 인물을 비교하고 대조하세요."],
+["summarize","요약하다","Can you summarize the main idea?","요지를 요약해 줄래요?"],
+["cite","인용하다, 출처를 밝히다","Always cite your sources.","항상 출처를 밝히세요."],
+["paraphrase","다른 말로 바꿔 표현하다","Try to paraphrase the sentence.","그 문장을 다른 말로 바꿔 보세요."]]},
+{id:"discuss",track:"eng",icon:"✍️",ko:"토론·에세이 표현",en:"Discussion & Essays",w:[
+["in my opinion","제 생각에는","In my opinion, the ending is too sad.","제 생각에 결말이 너무 슬퍼요."],
+["on the other hand","반면에","On the other hand, it feels realistic.","반면에, 현실적으로 느껴져요."],
+["to some extent","어느 정도는","I agree with you to some extent.","어느 정도는 동의해요."],
+["furthermore","게다가, 더욱이","Furthermore, the author uses humor well.","게다가, 작가는 유머를 잘 사용해요."],
+["for instance","예를 들어","For instance, look at the second paragraph.","예를 들어, 두 번째 문단을 보세요."],
+["however","그러나","However, not everyone agrees.","그러나 모두가 동의하지는 않아요."],
+["therefore","그러므로","Therefore, the title has two meanings.","그러므로 제목에는 두 가지 의미가 있어요."],
+["in conclusion","결론적으로","In conclusion, the poem is about hope.","결론적으로 그 시는 희망에 관한 것이에요."],
+["that's a good point","좋은 지적이에요","That's a good point. I didn't think of that.","좋은 지적이에요. 그건 생각 못 했어요."],
+["could you elaborate","좀 더 설명해 줄래요?","Could you elaborate on that idea?","그 생각을 좀 더 설명해 줄래요?"]]},
+/* ---------- 경영 전공 원서 용어 (group: major) ---------- */
+{id:"acct",track:"biz",group:"major",icon:"🧾",ko:"회계원리",en:"Principles of Accounting",info:"경영학과 1~2학년 필수 · 원서 수업 핵심 용어",w:[
+["journal entry","분개","Record a journal entry for every transaction.","모든 거래에 대해 분개를 기록하세요."],
+["ledger","원장","The ledger shows the balance of each account.","원장은 각 계정의 잔액을 보여 줘요."],
+["debit","차변","Cash increases on the debit side.","현금은 차변에서 증가해요."],
+["credit","대변","Revenue is recorded as a credit.","수익은 대변에 기록해요."],
+["accrual basis","발생주의","Under the accrual basis, revenue is recorded when it is earned.","발생주의에서는 수익을 벌었을 때 기록해요."],
+["revenue recognition","수익 인식","Revenue recognition is a key topic in this chapter.","수익 인식은 이 장의 핵심 주제예요."],
+["accounts receivable","매출채권","Accounts receivable increased because customers paid late.","고객이 늦게 지급해서 매출채권이 늘었어요."],
+["accounts payable","매입채무","We must pay our accounts payable within thirty days.","매입채무는 30일 안에 갚아야 해요."],
+["inventory","재고자산","The store counts its inventory every month.","그 가게는 매달 재고를 세요."],
+["cost of goods sold","매출원가","Cost of goods sold is subtracted from sales.","매출원가는 매출에서 빼요."],
+["retained earnings","이익잉여금","Net income is added to retained earnings.","당기순이익은 이익잉여금에 더해져요."],
+["trial balance","시산표","Total debits must equal total credits in the trial balance.","시산표에서 차변 합계와 대변 합계는 같아야 해요."]]},
+{id:"corpfin",track:"biz",group:"major",icon:"💹",ko:"재무관리",en:"Corporate Finance",info:"경영학과 2학년 전공 · 투자·자금조달 핵심 용어",w:[
+["time value of money","화폐의 시간가치","A dollar today is worth more than a dollar tomorrow because of the time value of money.","화폐의 시간가치 때문에 오늘의 1달러는 내일의 1달러보다 가치가 커요."],
+["present value","현재가치","Calculate the present value of future cash flows.","미래 현금흐름의 현재가치를 계산하세요."],
+["discount rate","할인율","A higher discount rate lowers the present value.","할인율이 높을수록 현재가치는 낮아져요."],
+["net present value","순현재가치 (NPV)","Accept the project if the net present value is positive.","순현재가치가 플러스면 프로젝트를 채택하세요."],
+["internal rate of return","내부수익률 (IRR)","The internal rate of return is higher than our cost of capital.","내부수익률이 자본비용보다 높아요."],
+["cost of capital","자본비용","The cost of capital is the minimum return investors expect.","자본비용은 투자자가 기대하는 최소 수익률이에요."],
+["capital budgeting","자본예산","Capital budgeting helps firms choose long-term investments.","자본예산은 기업이 장기 투자를 고르는 데 도움이 돼요."],
+["risk premium","위험 프리미엄","Stocks offer a risk premium over government bonds.","주식은 국채보다 위험 프리미엄을 제공해요."],
+["diversification","분산투자","Diversification reduces unsystematic risk.","분산투자는 비체계적 위험을 줄여요."],
+["leverage","레버리지, 부채 활용","High leverage increases both risk and return.","높은 레버리지는 위험과 수익을 모두 키워요."],
+["bond","채권","The company issued bonds to raise money.","회사는 자금을 조달하려고 채권을 발행했어요."],
+["yield","수익률","The bond yield rose to four percent.","채권 수익률이 4%로 올랐어요."]]},
+{id:"strategy",track:"biz",group:"major",icon:"♟️",ko:"경영전략·조직",en:"Strategy & Organization",info:"경영전략·조직행동론 · 케이스 스터디 필수 용어",w:[
+["SWOT analysis","SWOT 분석","We did a SWOT analysis of the company.","그 회사의 SWOT 분석을 했어요."],
+["competitive advantage","경쟁우위","Low cost is their main competitive advantage.","저원가가 그들의 주된 경쟁우위예요."],
+["core competency","핵심역량","Design is the core competency of the firm.","디자인이 그 회사의 핵심역량이에요."],
+["value chain","가치사슬","Each step in the value chain adds value.","가치사슬의 각 단계가 가치를 더해요."],
+["economies of scale","규모의 경제","Large factories benefit from economies of scale.","큰 공장은 규모의 경제 효과를 봐요."],
+["barrier to entry","진입장벽","High costs create a barrier to entry.","높은 비용이 진입장벽이 돼요."],
+["differentiation","차별화","Their strategy is based on differentiation.","그들의 전략은 차별화에 기반해요."],
+["organizational structure","조직구조","A flat organizational structure speeds up decisions.","수평적 조직구조는 의사결정을 빠르게 해요."],
+["corporate culture","기업문화","A strong corporate culture keeps good employees.","강한 기업문화는 좋은 직원을 붙잡아요."],
+["motivation","동기부여","Money is not the only source of motivation.","돈만이 동기부여의 원천은 아니에요."],
+["outsourcing","외주, 아웃소싱","The company uses outsourcing for customer service.","그 회사는 고객 서비스를 외주로 맡겨요."],
+["case study","사례 연구","We will discuss a case study in class.","수업에서 사례 연구를 토론할 거예요."]]},
+{id:"econ",track:"biz",group:"major",icon:"⚖️",ko:"경제학원론",en:"Principles of Economics",info:"경영학과 기초 필수 · 미시·거시 핵심 용어",w:[
+["supply and demand","수요와 공급","Prices are set by supply and demand.","가격은 수요와 공급으로 정해져요."],
+["opportunity cost","기회비용","The opportunity cost of studying is lost free time.","공부의 기회비용은 잃어버린 자유 시간이에요."],
+["equilibrium","균형","The market reaches equilibrium at this price.","시장은 이 가격에서 균형에 도달해요."],
+["elasticity","탄력성","The demand for salt has low price elasticity.","소금 수요는 가격 탄력성이 낮아요."],
+["marginal cost","한계비용","Marginal cost is the cost of producing one more unit.","한계비용은 한 단위를 더 생산하는 비용이에요."],
+["monopoly","독점","A monopoly can charge higher prices.","독점 기업은 더 높은 가격을 매길 수 있어요."],
+["inflation","물가상승, 인플레이션","Inflation reduces the value of money.","인플레이션은 돈의 가치를 떨어뜨려요."],
+["GDP","국내총생산","GDP grew by two percent last year.","작년 GDP는 2% 성장했어요."],
+["exchange rate","환율","The exchange rate affects exports.","환율은 수출에 영향을 줘요."],
+["recession","경기침체","Many companies cut jobs during the recession.","경기침체 동안 많은 기업이 일자리를 줄였어요."]]},
+/* ---------- 영문과 작품별 단어장 (group: work) ---------- */
+{id:"hamlet",track:"eng",group:"work",icon:"💀",ko:"햄릿",en:"Hamlet",info:"셰익스피어 · 1600년경 · 아버지의 복수를 망설이는 덴마크 왕자의 비극",w:[
+["soliloquy","독백","Hamlet reveals his true feelings in a soliloquy.","햄릿은 독백에서 진짜 감정을 드러내요."],
+["revenge","복수","The play is a story of revenge.","이 극은 복수 이야기예요."],
+["ghost","유령","The ghost of the king appears at night.","왕의 유령이 밤에 나타나요."],
+["madness","광기","Is Hamlet's madness real or an act?","햄릿의 광기는 진짜일까요, 연기일까요?"],
+["hesitation","망설임","His hesitation leads to more deaths.","그의 망설임은 더 많은 죽음을 불러요."],
+["usurp","(왕위를) 찬탈하다","Claudius usurped the throne.","클로디어스가 왕위를 찬탈했어요."],
+["tragic flaw","비극적 결함","Many critics say indecision is his tragic flaw.","많은 비평가는 우유부단함을 그의 비극적 결함으로 봐요."],
+["conscience","양심","The king's conscience troubles him.","왕은 양심의 가책을 느껴요."],
+["mortality","죽음을 피할 수 없음, 유한성","The graveyard scene makes us think about mortality.","묘지 장면은 인간의 유한성을 생각하게 해요."],
+["betrayal","배신","Hamlet feels deeply betrayed by his mother.","햄릿은 어머니에게 깊은 배신감을 느껴요."]]},
+{id:"macbeth",track:"eng",group:"work",icon:"🗡️",ko:"맥베스",en:"Macbeth",info:"셰익스피어 · 1606년경 · 예언과 야망에 이끌려 왕을 죽인 장군의 몰락",w:[
+["ambition","야망","Macbeth's ambition destroys him.","맥베스의 야망이 그를 파멸시켜요."],
+["prophecy","예언","The witches' prophecy changes everything.","마녀들의 예언이 모든 것을 바꿔요."],
+["witch","마녀","Three witches meet on a dark heath.","세 마녀가 어두운 황야에서 만나요."],
+["guilt","죄책감","Lady Macbeth cannot escape her guilt.","맥베스 부인은 죄책감에서 벗어나지 못해요."],
+["tyrant","폭군","Macbeth becomes a cruel tyrant.","맥베스는 잔인한 폭군이 돼요."],
+["hallucination","환각","He sees a dagger in a hallucination.","그는 환각 속에서 단검을 봐요."],
+["fate","운명","Is it fate or free will?","운명일까요, 자유의지일까요?"],
+["murder","살인","The murder of the king happens offstage.","왕의 살해는 무대 밖에서 일어나요."],
+["remorse","후회, 가책","Remorse comes too late for Macbeth.","맥베스에게 후회는 너무 늦게 와요."],
+["appearance versus reality","겉모습과 실체","Appearance versus reality is a key theme.","겉모습과 실체는 핵심 주제예요."]]},
+{id:"pride",track:"eng",group:"work",icon:"💌",ko:"오만과 편견",en:"Pride and Prejudice",info:"제인 오스틴 · 1813 · 첫인상의 오해를 넘어서는 엘리자베스와 다아시",w:[
+["pride","오만, 자존심","Darcy's pride makes a bad first impression.","다아시의 오만이 나쁜 첫인상을 줘요."],
+["prejudice","편견","Elizabeth learns that her prejudice was wrong.","엘리자베스는 자신의 편견이 틀렸음을 깨달아요."],
+["first impression","첫인상","The novel shows how first impressions can mislead us.","이 소설은 첫인상이 어떻게 우리를 오해하게 하는지 보여 줘요."],
+["estate","(시골의 큰) 사유지","Pemberley is Darcy's large estate.","펨벌리는 다아시의 넓은 사유지예요."],
+["inheritance","상속, 유산","The daughters cannot receive the inheritance.","딸들은 유산을 받을 수 없어요."],
+["suitor","구혼자","Mr. Collins is an awkward suitor.","콜린스 씨는 어색한 구혼자예요."],
+["courtship","구애, 연애 과정","The novel follows several courtships.","소설은 여러 구애 과정을 따라가요."],
+["propriety","예의범절","Propriety was very important in that society.","그 사회에서는 예의범절이 매우 중요했어요."],
+["social class","사회 계층","Social class affects every marriage in the story.","사회 계층은 이야기 속 모든 결혼에 영향을 줘요."],
+["wit","재치","Elizabeth is known for her wit.","엘리자베스는 재치로 유명해요."]]},
+{id:"frank",track:"eng",group:"work",icon:"⚡",ko:"프랑켄슈타인",en:"Frankenstein",info:"메리 셸리 · 1818 · 생명을 창조한 과학자와 버림받은 피조물의 비극",w:[
+["creature","피조물, 생명체","The creature wants love and friendship.","피조물은 사랑과 우정을 원해요."],
+["creation","창조, 창조물","Victor is horrified by his own creation.","빅터는 자신의 창조물에 경악해요."],
+["isolation","고립","Both Victor and the creature suffer from isolation.","빅터와 피조물 모두 고립으로 고통받아요."],
+["abandon","버리다","Victor abandons the creature right after it comes to life.","빅터는 피조물이 생명을 얻자마자 버려요."],
+["monstrous","괴물 같은, 끔찍한","Who is truly monstrous in the novel?","소설에서 진짜 괴물 같은 존재는 누구일까요?"],
+["forbidden knowledge","금지된 지식","The novel warns about forbidden knowledge.","소설은 금지된 지식에 대해 경고해요."],
+["the sublime","숭고","The Alps create a feeling of the sublime.","알프스는 숭고한 느낌을 자아내요."],
+["frame narrative","액자식 구성","The story uses a frame narrative with letters.","이 이야기는 편지로 된 액자식 구성을 써요."],
+["Gothic","고딕 (문학 양식)","Frankenstein is a classic Gothic novel.","프랑켄슈타인은 고전적인 고딕 소설이에요."],
+["responsibility","책임","The creator refuses to take responsibility.","창조자는 책임지기를 거부해요."]]},
+{id:"scarlet",track:"eng",group:"work",icon:"🅰️",ko:"주홍 글씨",en:"The Scarlet Letter",info:"너새니얼 호손 · 1850 · 청교도 사회에서 죄의 낙인을 안고 사는 헤스터",w:[
+["Puritan","청교도(의)","The story is set in a strict Puritan community.","이야기는 엄격한 청교도 공동체가 배경이에요."],
+["sin","죄","The novel explores sin and guilt.","소설은 죄와 죄책감을 탐구해요."],
+["adultery","간통","Hester is punished for adultery.","헤스터는 간통죄로 벌을 받아요."],
+["shame","수치심","The letter is meant to be a symbol of shame.","그 글자는 수치의 상징으로 의도됐어요."],
+["hypocrisy","위선","The minister's hypocrisy slowly destroys him.","목사의 위선이 그를 서서히 무너뜨려요."],
+["scaffold","처형대, 단","Hester stands on the scaffold in public.","헤스터는 사람들 앞에서 처형대 위에 서요."],
+["penance","속죄, 고행","He punishes himself as a form of penance.","그는 속죄의 방식으로 스스로를 벌해요."],
+["redemption","구원","Can Hester find redemption?","헤스터는 구원을 찾을 수 있을까요?"],
+["minister","목사","The young minister hides a secret.","젊은 목사는 비밀을 숨기고 있어요."],
+["allegory","우화, 알레고리","Some readers see the novel as an allegory.","어떤 독자는 이 소설을 알레고리로 봐요."]]},
+{id:"gatsby",track:"eng",group:"work",icon:"🥂",ko:"위대한 개츠비",en:"The Great Gatsby",info:"F. 스콧 피츠제럴드 · 1925 · 옛사랑을 좇는 개츠비와 아메리칸 드림의 허상",w:[
+["the American Dream","아메리칸 드림","The novel criticizes the American Dream.","이 소설은 아메리칸 드림을 비판해요."],
+["the Jazz Age","재즈 시대","The story takes place in the Jazz Age of the 1920s.","이야기는 1920년대 재즈 시대가 배경이에요."],
+["old money","대대로 부유한 집안","Tom and Daisy come from old money.","톰과 데이지는 대대로 부유한 집안 출신이에요."],
+["new money","신흥 부자","Gatsby represents new money.","개츠비는 신흥 부자를 대표해요."],
+["obsession","집착","Gatsby's obsession with Daisy never ends.","데이지를 향한 개츠비의 집착은 끝나지 않아요."],
+["illusion","환상","His dream is only an illusion.","그의 꿈은 환상일 뿐이에요."],
+["extravagant","사치스러운, 호화로운","Gatsby throws extravagant parties.","개츠비는 호화로운 파티를 열어요."],
+["disillusionment","환멸","Nick feels disillusionment at the end.","닉은 결국 환멸을 느껴요."],
+["unreliable narrator","신뢰할 수 없는 화자","Some critics call Nick an unreliable narrator.","몇몇 비평가는 닉을 신뢰할 수 없는 화자라고 해요."],
+["the green light","초록 불빛 (희망의 상징)","The green light stands for Gatsby's hope.","초록 불빛은 개츠비의 희망을 상징해요."]]},
+{id:"oldman",track:"eng",group:"work",icon:"🐟",ko:"노인과 바다",en:"The Old Man and the Sea",info:"어니스트 헤밍웨이 · 1952 · 거대한 청새치와 사투를 벌이는 늙은 어부",w:[
+["fisherman","어부","The old fisherman has not caught a fish for weeks.","늙은 어부는 몇 주째 고기를 못 잡았어요."],
+["marlin","청새치","He hooks a giant marlin.","그는 거대한 청새치를 낚아요."],
+["endurance","인내, 지구력","The story is about endurance.","이 이야기는 인내에 관한 거예요."],
+["dignity","존엄, 품위","He keeps his dignity even after losing the fish.","그는 물고기를 잃은 뒤에도 품위를 지켜요."],
+["struggle","사투, 투쟁","His struggle with the fish lasts three days.","물고기와의 사투는 사흘 동안 이어져요."],
+["solitude","고독","He talks to himself in his solitude.","그는 고독 속에서 혼잣말을 해요."],
+["perseverance","끈기","Perseverance is his greatest strength.","끈기는 그의 가장 큰 힘이에요."],
+["iceberg theory","빙산 이론 (생략의 문체)","Hemingway's iceberg theory leaves much unsaid.","헤밍웨이의 빙산 이론은 많은 것을 말하지 않고 남겨 둬요."],
+["simple style","간결한 문체","His simple style uses short sentences.","그의 간결한 문체는 짧은 문장을 써요."],
+["defeat","패배","Losing the fish is not the same as defeat.","물고기를 잃은 것이 곧 패배는 아니에요."]]},
+{id:"poetry",track:"eng",group:"work",icon:"🪶",ko:"영시 개관",en:"English Poetry",info:"워즈워스·키츠·디킨슨·프로스트 등 · 영시 수업 필수 용어",w:[
+["imagery","이미지, 심상","The poem is full of natural imagery.","그 시는 자연의 심상으로 가득해요."],
+["sonnet","소네트 (14행시)","A sonnet has fourteen lines.","소네트는 14행으로 되어 있어요."],
+["ode","송시, 찬가","Keats wrote several famous odes.","키츠는 유명한 송시를 여러 편 썼어요."],
+["iambic pentameter","약강 5보격","Shakespeare often wrote in iambic pentameter.","셰익스피어는 자주 약강 5보격으로 썼어요."],
+["rhyme scheme","각운 구조","The rhyme scheme is ABAB.","각운 구조는 ABAB예요."],
+["meter","운율, 율격","Can you find the meter of this line?","이 행의 율격을 찾을 수 있나요?"],
+["alliteration","두운","Alliteration repeats the first sound of words.","두운은 단어의 첫소리를 반복해요."],
+["personification","의인법","The wind whispers is an example of personification.","'바람이 속삭인다'는 의인법의 예예요."],
+["free verse","자유시","Free verse does not follow a fixed rhyme or meter.","자유시는 정해진 각운이나 율격을 따르지 않아요."],
+["Romanticism","낭만주의","Wordsworth is a key poet of Romanticism.","워즈워스는 낭만주의의 핵심 시인이에요."],
+["elegy","애가, 추도시","An elegy mourns the dead.","애가는 죽은 이를 애도해요."],
+["speaker","(시의) 화자","The speaker is not always the poet.","시의 화자가 항상 시인은 아니에요."]]},
+/* ---------- 나의 영어공부 (track: me) — 회계부서 실무 용어 ---------- */
+{id:"m_close",track:"me",group:"acct",icon:"📒",ko:"회계·결산",en:"Accounting & Closing",info:"월말·연말 결산과 재무제표 실무 용어",w:[
+["month-end close","월말 결산","We need to finish the month-end close by the fifth working day.","5영업일까지 월말 결산을 끝내야 합니다."],
+["accrual","발생액 계상 (미지급·미수)","Please book an accrual for the unbilled services.","청구 안 된 용역은 미지급비용으로 계상해 주세요."],
+["reconciliation","대사, 잔액 맞추기","The bank reconciliation still isn't done.","은행 잔액 대사가 아직 안 끝났어요."],
+["adjusting entry","수정 분개","We posted an adjusting entry for the FX difference.","환차이에 대해 수정 분개를 했습니다."],
+["write-off","대손 처리, 상각","Do we really need to write off this receivable?","이 채권을 꼭 대손 처리해야 하나요?"],
+["provision","충당금","We made a provision for the tax dispute.","세무 분쟁에 대해 충당금을 설정했습니다."],
+["deferred revenue","선수수익","The advance payment is recorded as deferred revenue.","미리 받은 대금은 선수수익으로 잡습니다."],
+["prepaid expense","선급비용","Insurance premiums are booked as prepaid expenses.","보험료는 선급비용으로 처리합니다."],
+["financial statements","재무제표","The audited financial statements will be ready in March.","감사받은 재무제표는 3월에 나옵니다."],
+["materiality","중요성 (기준)","It's below materiality, so let's not adjust it.","중요성 기준 미만이니 수정하지 맙시다."],
+["variance","차이, 편차","Can you explain the variance against last month?","전월 대비 차이를 설명해 줄래요?"],
+["going concern","계속기업","The auditors didn't raise any going concern issues.","감사인은 계속기업 관련 이슈를 제기하지 않았습니다."]]},
+{id:"m_treasury",track:"me",group:"acct",icon:"🏦",ko:"자금",en:"Treasury",info:"자금 운용·조달·외환 실무 용어",w:[
+["cash position","자금 현황","What's our cash position as of today?","오늘 기준 자금 현황이 어떻게 되나요?"],
+["cash forecast","자금 수지 전망","Please update the 13-week cash forecast.","13주 자금 수지 전망을 업데이트해 주세요."],
+["liquidity","유동성","Our liquidity is strong enough to cover the dividend.","배당을 감당할 만큼 유동성이 충분합니다."],
+["time deposit","정기예금","We placed fifty million dollars in time deposits.","5천만 달러를 정기예금에 넣었습니다."],
+["interest income","이자수익","Interest income came in higher than budget.","이자수익이 예산보다 높게 나왔습니다."],
+["FX exposure","환노출","We have FX exposure on rupiah payments.","루피아 지급분에 환노출이 있습니다."],
+["hedge","헤지하다","Should we hedge the rupiah exposure?","루피아 노출을 헤지해야 할까요?"],
+["loan facility","대출 약정, 여신 한도","The loan facility expires next year.","대출 약정이 내년에 만료됩니다."],
+["covenant","(대출) 약정 조건","We're in full compliance with all loan covenants.","모든 대출 약정 조건을 지키고 있습니다."],
+["repayment","상환","The next repayment is due in December.","다음 상환은 12월입니다."],
+["bank guarantee","은행 보증","The buyer asked for a bank guarantee.","구매자가 은행 보증을 요청했습니다."],
+["standby letter of credit","보증신용장 (SBLC)","We may need to draw on the standby letter of credit.","보증신용장을 인출해야 할 수도 있습니다."]]},
+{id:"m_budget",track:"me",group:"acct",icon:"🧮",ko:"예산",en:"Budget",info:"예산 편성·통제·전망 실무 용어",w:[
+["annual budget","연간 예산","The annual budget goes to the board in November.","연간 예산은 11월 이사회에 올라갑니다."],
+["OPEX","운영비","OPEX is running five percent below budget.","운영비가 예산보다 5% 적게 나가고 있습니다."],
+["CAPEX","투자비, 자본적 지출","The CAPEX plan needs board approval.","투자비 계획은 이사회 승인이 필요합니다."],
+["budget overrun","예산 초과","Who signed off on this budget overrun?","이 예산 초과는 누가 승인했나요?"],
+["reallocation","예산 전용","We can cover it with a budget reallocation.","예산 전용으로 충당할 수 있습니다."],
+["contingency","예비비","Let's keep a ten percent contingency.","예비비를 10% 남겨 둡시다."],
+["latest estimate","최신 전망치","Our latest estimate shows a small surplus.","최신 전망으로는 약간 남습니다."],
+["actual versus budget","예산 대비 실적","Show me actual versus budget by department.","부서별 예산 대비 실적을 보여 주세요."],
+["cost center","코스트센터","Charge it to the right cost center.","맞는 코스트센터로 비용 처리하세요."],
+["approval threshold","승인 한도","This is above my approval threshold.","이건 제 승인 한도를 넘습니다."]]},
+{id:"m_tax",track:"me",group:"acct",icon:"🧾",ko:"세무",en:"Tax",info:"법인세·부가세·세무조사 실무 용어",w:[
+["corporate income tax","법인세","Corporate income tax is paid in monthly installments here.","이곳은 법인세를 매월 분납합니다."],
+["VAT","부가가치세","We filed for a VAT refund last quarter.","지난 분기에 부가세 환급을 신청했습니다."],
+["withholding tax","원천징수세","Don't forget the withholding tax on service fees.","용역 수수료 원천징수 잊지 마세요."],
+["tax audit","세무조사","The tax audit covers fiscal year 2024.","세무조사 대상은 2024 회계연도입니다."],
+["tax assessment","과세 처분, 세액 결정","We got a tax assessment letter yesterday.","어제 과세 처분 통지서를 받았습니다."],
+["objection","이의신청","We have three months to file an objection.","이의신청 기한은 3개월입니다."],
+["appeal","심판 청구, 항소","If the objection fails, we'll go to appeal.","이의신청이 기각되면 심판 청구로 갑니다."],
+["tax invoice","세금계산서","The tax invoice has to match the contract amount.","세금계산서는 계약 금액과 맞아야 합니다."],
+["transfer pricing","이전가격","The transfer pricing documentation is due soon.","이전가격 문서 기한이 곧입니다."],
+["deferred tax","이연법인세","Deferred tax assets went up this year.","올해 이연법인세 자산이 늘었습니다."],
+["tax consultant","세무 자문사","Let's get an opinion from our tax consultant.","세무 자문사 의견을 받아 봅시다."],
+["penalty","가산세, 과태료","Late filing means a penalty.","늦게 신고하면 가산세가 붙습니다."]]},
+{id:"m_asset",track:"me",group:"acct",icon:"🏗️",ko:"자산관리",en:"Asset Management",info:"고정자산·감가상각·실사 실무 용어",w:[
+["fixed asset register","고정자산 대장","Please update the fixed asset register.","고정자산 대장을 업데이트해 주세요."],
+["useful life","내용연수","What's the useful life of this equipment?","이 설비 내용연수가 몇 년이죠?"],
+["depreciation","감가상각","Depreciation is our biggest non-cash expense.","감가상각이 가장 큰 비현금성 비용입니다."],
+["impairment","손상","Is there any sign of impairment?","손상 징후가 있나요?"],
+["physical count","실사","We'll do a physical count of spare parts in December.","12월에 예비품 실사를 합니다."],
+["disposal","처분, 폐기","Asset disposal needs committee approval.","자산 처분은 위원회 승인이 필요합니다."],
+["capitalize","자산화하다","Can we capitalize these costs?","이 비용을 자산화할 수 있나요?"],
+["spare parts","예비품","Our spare parts inventory is getting too high.","예비품 재고가 너무 많아지고 있어요."],
+["asset tagging","자산 번호 부착","Every new asset needs tagging.","신규 자산은 전부 번호를 붙여야 합니다."],
+["carrying amount","장부가액","The carrying amount is lower than the market value.","장부가액이 시가보다 낮습니다."]]},
+{id:"m_insurance",track:"me",group:"acct",icon:"🛡️",ko:"보험·리스크",en:"Insurance & Risk",info:"보험 갱신·재보험·사고 처리 실무 용어",w:[
+["premium","보험료","The premium went up by eight percent.","보험료가 8% 올랐습니다."],
+["deductible","자기부담금","A higher deductible could bring the premium down.","자기부담금을 높이면 보험료를 낮출 수 있어요."],
+["coverage","보장 범위","Does our coverage include business interruption?","보장 범위에 사업 중단 손실이 들어가나요?"],
+["policy renewal","보험 갱신","The policy renewal kicks in in January.","보험 갱신은 1월부터 적용됩니다."],
+["reinsurance","재보험","Most of the risk is placed in the reinsurance market.","위험 대부분을 재보험 시장에 넘깁니다."],
+["broker","보험 중개사","Let's ask the broker for more quotes.","중개사에게 견적을 더 받아 봅시다."],
+["underwriter","보험 인수사","The underwriters want a site visit.","인수사들이 현장 실사를 원합니다."],
+["claim","보험금 청구","We filed a claim for the pump damage.","펌프 손상 건으로 보험금을 청구했습니다."],
+["loss adjuster","손해사정인","The loss adjuster is coming next week.","손해사정인이 다음 주에 옵니다."],
+["natural catastrophe","자연재해 (Nat-Cat)","The natural catastrophe limit is the main issue.","자연재해 한도가 핵심 쟁점입니다."],
+["risk register","리스크 대장","Add this to the risk register.","이걸 리스크 대장에 올리세요."],
+["risk appetite","위험 감내 수준","That's beyond our risk appetite.","그건 우리 위험 감내 수준을 넘어요."]]},
+{id:"m_control",track:"me",group:"acct",icon:"🔍",ko:"내부통제·감사",en:"Internal Control & Audit",info:"내부통제·외부감사 대응 실무 용어",w:[
+["internal control","내부통제","We need tighter internal controls on payments.","지급 관련 내부통제를 강화해야 합니다."],
+["segregation of duties","직무 분리","There's no segregation of duties here.","여기는 직무 분리가 안 돼 있어요."],
+["audit finding","감사 지적사항","We closed all of last year's audit findings.","작년 감사 지적사항을 모두 해결했습니다."],
+["management letter","경영진 서한 (감사인 권고)","The auditors will issue a management letter.","감사인이 경영진 서한을 낼 예정입니다."],
+["external auditor","외부감사인","The external auditors arrive on Monday.","외부감사인이 월요일에 옵니다."],
+["sign-off","최종 승인, 서명","We're still waiting for the partner's sign-off.","파트너 최종 서명을 아직 기다리고 있어요."],
+["delegation of authority","위임전결 규정","Check the delegation of authority first.","먼저 위임전결 규정을 확인하세요."],
+["compliance","준수, 컴플라이언스","Compliance isn't optional.","규정 준수는 선택이 아닙니다."],
+["red flag","위험 신호","These duplicate invoices are a red flag.","이 중복 송장들은 위험 신호예요."],
+["root cause","근본 원인","Let's find the root cause, not just fix the symptom.","증상만 고치지 말고 근본 원인을 찾읍시다."]]}
+];
+
+/* ---------- 손서윤 요청: 2026-2 Vocabulary list (953단어, 9회 시험) ---------- */
+const SEOYUN_VOCAB = [{"n":1,"date":"2026-09-21","w":[["whimsical","엉뚱한, 변덕스러운"],
+["elicit","(반응·정보를) 이끌어 내다"],
+["leave (by your leave / take one's leave)","허가; 휴가"],
+["vicious","잔인한, 사나운; 악랄한"],
+["curb","억제하다, 제한하다"],
+["frippery","(문어) 값싼 장식, 겉치레"],
+["cavort","뛰놀다, 신나게 뛰어다니다"],
+["agreeable","기분 좋은; 선뜻 동의하는"],
+["abode","(문어) 거처, 주거"],
+["inoculate","예방 접종을 하다; (사상을) 주입하다"],
+["talk down (phr.)","깔보듯 말하다; 말로 압도하다"],
+["disgrace","망신시키다, 수치를 안기다"],
+["foothold","발판, 기반"],
+["innate","타고난, 선천적인"],
+["vivid","생생한, 선명한"],
+["wan","핏기 없는, 창백한; 힘없는"],
+["strain","긴장, 부담; 접질림; 혈통"],
+["imposing","당당한, 웅장한"],
+["folly","어리석음, 바보짓"],
+["deserts (pl.)","응분의 대가, 당연한 보상 또는 벌"],
+["precipice","절벽, 벼랑; (비유) 위기의 벼랑 끝"],
+["invidious","비위에 거슬리는, 부당한"],
+["growth","성장, 발육; 증가; (의학) 종양"],
+["piazza","(이탈리아의) 광장"],
+["pioneer","개척자, 선구자"],
+["abduct","납치하다, 유괴하다"],
+["confounded","(구식) 빌어먹을, 망할"],
+["pretentious","허세 부리는, 젠체하는"],
+["licence (license)","면허(증), 허가; 방종, 지나친 자유"],
+["ordain","서품하다; (문어) 정하다, 운명 지우다"],
+["offend","기분을 상하게 하다, 불쾌하게 하다; 위반하다"],
+["moral","교훈"],
+["rejoice","기뻐하다, 환호하다"],
+["woodcut","목판화"],
+["vessel","선박; 그릇; 혈관"],
+["reconnoiter (reconnoitre)","정찰하다, 사전 조사하다"],
+["lay","(명사) 지세, 놓인 형세"],
+["loathing","혐오, 넌더리"],
+["flush","(돈이) 넉넉한; 같은 높이의"],
+["overlook","간과하다, 못 보고 지나치다; (~을) 내려다보다"],
+["strife","(문어) 갈등, 불화, 투쟁"],
+["loftiness (lofty)","거만함; 숭고함"],
+["deftly","능숙하게, 솜씨 좋게"],
+["lore","(문어) 전승 지식, 구전 지식"],
+["indulge","(욕구를) 충족시키다, 마음껏 즐기다; 응석을 받아 주다"],
+["install","설치하다; 취임시키다"],
+["seer","예언자, 선견자"],
+["oblige","의무를 지우다; 호의를 베풀다"],
+["terms (pl.)","조건, 조항; 요금; 사이, 관계"],
+["lunacy","정신 이상, 광기; 어리석은 짓"],
+["ornery","(미국) 성질 고약한, 심술궂은"],
+["lodestar","(문어) 길잡이·지침이 되는 것; (고어) 북극성"],
+["prosecute","기소하다, 소추하다"],
+["aspiration","열망, 포부"],
+["stout","뚱뚱한, 통통한; 굳센"],
+["consolation","위안, 위로"],
+["fury","격노, 분노; 맹렬함"],
+["comprehensive","포괄적인, 종합적인"],
+["attenuated","희박해진, 약해진"],
+["eunuch","환관, 내시; 거세된 남자"],
+["defect","결함, 결점"],
+["button-hole","붙들고 이야기를 늘어놓다"],
+["nasty","고약한, 역겨운; 심술궂은"],
+["pillage","약탈"],
+["mystify","어리둥절하게 하다, 얼떨떨하게 만들다"],
+["grind","고된 반복 노동; 갈기"],
+["phantom","유령, 허깨비; 환영"],
+["portend","(주로 불길한 일의) 전조가 되다"],
+["tranquil","고요한, 평온한"],
+["distracted","주의가 산만한, 정신이 딴 데 팔린"],
+["decayed","썩은, 부패한; 쇠락한"],
+["scruple","양심의 가책, 망설임"],
+["wantonness","(문어) 방종, 음탕함; 까닭 없는 잔혹함"],
+["sovereign","주권을 가진, 자주적인; (명사) 군주"],
+["situation","상황, 형편"],
+["jig","(명사) 지그; (전문) 공작용 안내 틀; (동사) 들썩이며 움직이다"],
+["own","소유하다; 인정하다"],
+["complexion","안색, 피부색; (일의) 양상"],
+["mettle","기개, 근성, 용기"],
+["perpetuate","영속시키다, 후세에 남기다"],
+["exhorter","권면하는 사람; (감리교) 평신도 권면자"],
+["stray","(길을) 벗어나 헤매다; (주제에서) 빗나가다"],
+["mantel","벽난로 선반"],
+["browbeat","을러대다, 윽박질러 굴복시키다"],
+["adornment","장식, 치장; 장신구"],
+["belch","트림하다; (연기·불을) 내뿜다"],
+["bare","벌거벗은, 텅 빈; 겨우 ~뿐인"],
+["shift","교대 근무; 변화"],
+["vulgar","저속한, 상스러운, 천박한"],
+["intrigue","음모; 흥미진진함"],
+["paces (pl.) (go through one's paces)","걸음걸이; (관용) 솜씨를 선보이다"],
+["irreverence","불경, 경의 없음"],
+["insipid","밋밋한, 재미없는"],
+["bodkin","(전문) 돗바늘, 송곳; (고어) 단검"],
+["arduous","몹시 힘든, 고된"],
+["realm","영역, 분야; (문어) 왕국"],
+["dispense","나누어 주다; (약을) 조제해 주다; (with와 함께) ~없이 지내다"],
+["affectation","가식, 꾸민 티"],
+["meretricious","(문어) 겉만 번지르르한, 천박한"],
+["preach","설교하다; 훈계하다"],
+["couch","소파, 긴 의자"],
+["peerage","귀족의 지위; 귀족 계급"],
+["engraving","판화; 조각술"],
+["crook","사기꾼; 굽은 부분, 갈고리"],
+["compensation","보상, 배상"]]},
+{"n":2,"date":"2026-09-28","w":[["scrupulous","세심한, 꼼꼼한; 양심적인"],
+["sacrilegious","신성모독의, 불경한"],
+["plate","접시; 판"],
+["uproar","대소동, 아우성"],
+["projected","계획된, 예정된"],
+["verge","~에 가까워지다, 인접하다"],
+["ignoble","비열한, 떳떳하지 못한"],
+["stroke","뇌졸중; 타격; 붓질"],
+["porter","짐꾼, 운반인"],
+["outpost","전초 기지, 변방 거점"],
+["woe","(문어) 비애, 비통; (복수) 재난, 고난"],
+["intonation","억양, 어조"],
+["slumber","(문어) 잠자다, 잠들어 있다"],
+["delicate","섬세한, 연약한; 정교한"],
+["find one's account in (phr.)","(문어) ~에서 이득을 보다"],
+["compliance","(법·규정의) 준수; 순응"],
+["chamber","(특정 용도의) 실, 회의실; (총의) 약실"],
+["dainty","앙증맞은, 고운; 까다로운"],
+["vocation","천직, 직업; 소명"],
+["arms (pl.)","무기, 병기; (문장학) 문장(紋章)"],
+["venture","과감히 해 보다, 위험을 무릅쓰다"],
+["forestall","미리 막다, 선수를 치다"],
+["clue (clew)","단서, 실마리"],
+["equivocal","애매모호한; 미심쩍은"],
+["suspicion","의심, 혐의"],
+["aggravation","악화; 짜증나게 함"],
+["sallow","누르스름한, 혈색이 나쁜"],
+["impulse","충동; 자극"],
+["vale","(시어) 골짜기"],
+["footman","(고어) 하인, 종복"],
+["wander","헤매다, 배회하다; (생각·시선이) 딴 데로 흐르다"],
+["by dint of (phr.)","~의 힘으로"],
+["sluggish","굼뜬, 느릿한; 부진한"],
+["waistcoat","(영) 조끼"],
+["longing","갈망, 동경"],
+["illusion","착각, 환상; 착시"],
+["bawd","(고어) 포주, 뚜쟁이"],
+["grunt","꿀꿀거리다; 끙 앓는 소리를 내다"],
+["tune","(악기의) 음을 맞추다; (주파수를) 맞추다"],
+["installment (instalment)","할부금, 분할 납입"],
+["unsophisticated","세련되지 못한, 순진한"],
+["distemper","(전문) 개 홍역"],
+["execrable","형편없는, 지독한"],
+["trace","흔적, 자취; 극미량"],
+["element","요소, 성분; (화학) 원소; 자연의 힘, 비바람"],
+["ledger","원장, 회계 장부"],
+["sling","팔걸이 붕대; 멜빵; 투석기"],
+["aside","방백; 여담, 곁말"],
+["grief","비탄, 큰 슬픔"],
+["recollect","회상하다, 기억해 내다"],
+["limp","절뚝거리다"],
+["jocose","(문어) 익살스러운, 우스개의"],
+["slouchy","구부정한; 헐렁한"],
+["render","제공하다; 표현하다; 만들다"],
+["ejaculation","사정; (문어) 갑작스러운 외침"],
+["dingily","칙칙하게, 우중충하게"],
+["courser","(문어/시어) 준마"],
+["prized open (phr.)","비틀어 열다"],
+["outcast","버림받은 사람, 낙오자"],
+["tavern","선술집, 주점"],
+["insolence","무례, 오만불손"],
+["credentials (pl.)","자격 증명, 신임장"],
+["trusty","(고어/문어) 믿음직한, 오래 의지해 온"],
+["vain","헛된; 허영심 많은"],
+["falter","비틀거리다; 말을 더듬다; 주춤하다"],
+["oppressive","억압적인, 답답한"],
+["reverberate","울려 퍼지다, 반향하다"],
+["earnest","진지한, 성실한"],
+["erotic","성애의, 관능적인"],
+["flock","떼 지어 모여들다"],
+["devise","고안하다, 창안하다; (법) 유증하다"],
+["catastrophe","재앙, 대참사"],
+["innumerable","무수한, 셀 수 없이 많은"],
+["amiss","잘못되어, 탈이 나서"],
+["hoary","백발의, 희끗희끗한; 아주 오래된"],
+["bard","(문어) 시인, 음유시인"],
+["affliction","고통, 고뇌; 병고, 질환"],
+["commission","의뢰하다, 주문하다; 임관시키다"],
+["indifferent","무관심한, 아랑곳하지 않는; 그저 그런"],
+["flutter","펄럭이다, 파닥거리다; 두근거리다"],
+["chamberlain","(역사) 시종장, 궁내 대신; (영국) 자치체의 재무관"],
+["tint","엷은 색조, 색깔"],
+["append","덧붙이다, 첨부하다"],
+["brook","시내, 개울 (동음이의 동사 brook은 '참다')"],
+["greenback","(구어) 미국 달러 지폐"],
+["frankly","솔직히 말해서, 숨김없이"],
+["glance","흘긋 보다"],
+["lapse","실수, 착오; (기억의) 깜빡함; 소멸"],
+["dash","돌진하다, 서둘러 가다; 내동댕이치다"],
+["dejected (deject)","낙담한, 의기소침한"],
+["breeches (pl.)","(고어) 반바지, 승마용 바지"],
+["bud","싹, 봉오리"],
+["quail","메추라기"],
+["shuffle (shuffled off)","(카드를) 섞다; 발을 끌며 걷다; 뒤섞다"],
+["domestic","가사 도우미, 하인; 국내의"],
+["ay (aye)","(고어) 예, 그렇소"],
+["sitter","초상화의 모델; 아이 봐주는 사람"],
+["femininity","여성성, 여성다움"],
+["soothe","달래다, 진정시키다; (고통을) 누그러뜨리다"],
+["draughtsman","(영) 제도사; 소묘가"],
+["exhaust","다 써 버리다; 지치게 하다"],
+["pang","격통; (마음의) 괴로움, 가책"],
+["fan","부채질하다; (감정·불길을) 부추기다"],
+["conventional","관습적인, 틀에 박힌"],
+["gloom","우울, 침울; 어둠"],
+["freckle","주근깨"]]},
+{"n":3,"date":"2026-10-01","w":[["clothier","의류상, 양복점 주인"],
+["mare","암말"],
+["scrutinize (scrutinise)","면밀히 조사하다, 뜯어보다"],
+["respectability","체면, 사회적 품위"],
+["niggard","(고어) 인색한 사람; 인색한"],
+["perchance","(고어·문어) 어쩌면, 혹시"],
+["disposition","성향, 기질; 처분"],
+["carriage","마차; 운반"],
+["reformation","개혁, 개선; (대문자) 종교개혁"],
+["pastime","취미, 소일거리, 여가 활동"],
+["charity","자선; 자선 단체"],
+["histrionic","연극조의, 과장된"],
+["nod","고개를 끄덕이다; 꾸벅꾸벅 졸다"],
+["nudity","나체, 벌거벗음"],
+["rudimentary","기본적인; 미발달의"],
+["droll","우스꽝스러운, 익살맞은"],
+["amuse","즐겁게 하다, 재미있게 하다"],
+["impose","(on과 함께) 부과하다; 폐를 끼치다"],
+["skirmish","소규모 충돌, 실랑이"],
+["knickerbockers (pl.)","(네델란드식) 무릎바지"],
+["stand to reason (phr.)","당연하다, 이치에 닿다"],
+["undoing","파멸, 파멸의 원인"],
+["mimicry","흉내, 모방; (생물) 의태"],
+["obsess","사로잡다, 강박적으로 집착하게 하다"],
+["tribute","찬사, 헌사; (역사) 공물, 조공"],
+["intuition","직관, 직감"],
+["personality","성격, 개성; 유명 인사"],
+["tide","조수, 밀물과 썰물"],
+["palpable","명백한; 만져질 듯한"],
+["expiation","(문어/종교) 속죄, 보상"],
+["misgive","(문어) 불안한 예감이 들게 하다"],
+["quaint","예스럽고 정취 있는, 기이한"],
+["meagre (meager)","빈약한, 보잘것없는; 야윈"],
+["peculiar","이상한, 기묘한; (~에) 특유한"],
+["radiant","빛나는, 환한"],
+["blockade","봉쇄하다"],
+["sometime","언젠가, 조만간; (형용사) 이전의"],
+["hatch","(전문) 승강구, 해치; 부화"],
+["save","(문어) ~을 제외하고"],
+["revengeful","(문어) 복수심에 불타는"],
+["jangle","쨍그랑 시끄러운 소리를 내다; 신경을 거스르다"],
+["weary","지친, 피곤한; 지겨운"],
+["grimy","때에 전, 지저분한"],
+["simper","억지웃음, 간살웃음"],
+["inquire","문의하다, 조사하다"],
+["arrant","(문어) 순전한, 지독한"],
+["attitude","태도, 자세(마음가짐)"],
+["ironic (ironical)","반어적인, 아이러니한"],
+["courtier","조신, 궁정 신하; 권력자에게 아첨하는 사람"],
+["omnibus","합승 버스; 총괄판"],
+["solemn","엄숙한, 근엄한; 진지한"],
+["lamentable","개탄스러운, 한심한"],
+["relinquish","포기하다, 단념하다"],
+["celebrity","유명 인사; 명성"],
+["sustain","지속하다, 유지하다; 떠받치다; (피해를) 입다"],
+["maidenly","(고어/문어) 처녀다운, 얌전한"],
+["mayhap","(고어) 어쩌면, 아마도"],
+["tedious","지루한, 장황한"],
+["antechamber","대기실, 곁방"],
+["notorious","악명 높은, 나쁜 일로 유명한"],
+["masher","으깨는 기구"],
+["mould (mold)","곰팡이; 거푸집, 틀"],
+["foreshadow","예고하다, 전조를 보이다"],
+["heir","상속인, 후계자"],
+["tribe","부족, 종족; 무리"],
+["content","(동사) 만족시키다; (명사) 내용물; (형용사) 만족한"],
+["entreat","간청하다, 탄원하다"],
+["deride","조롱하다, 비웃다"],
+["consummation","완성, 성취; 혼인의 완성"],
+["slops (pl.)","구정물, 개숫물"],
+["resort","휴양지, 유원지; 수단"],
+["dispose","처분하다(of와 함께); ~할 마음이 들게 하다"],
+["fetid","악취가 나는"],
+["environs (pl.)","(도시의) 주변 지역, 근교"],
+["insatiable","만족을 모르는, 탐욕스러운"],
+["oppressor","압제자, 탄압자"],
+["wrapper","포장지, 겉싸개"],
+["exhilarate","들뜨게 하다, 신나게 하다"],
+["well-to-do","부유한, 유복한"],
+["sputter","침을 튀기며 말하다; 탁탁거리다"],
+["elbow","팔꿈치로 밀치다"],
+["knight","(중세의) 기사; (영국) 작위 기사"],
+["gob","덩어리, 뭉치"],
+["reserve","비축; 예비군; 조심성"],
+["elucidation","해명, 설명"],
+["stalk","몰래 따라다니다; 성큼성큼 걷다"],
+["woo","(고어) 구애하다; (지지·환심을) 얻으려 애쓰다"],
+["exalt","고양시키다, 찬양하다"],
+["baffled","어리둥절한, 당혹한"],
+["establishment","기관, 시설; 기득권층"],
+["musty","곰팡내 나는; 케케묵은"],
+["stays (pl.)","(고어) 코르셋"],
+["satchel","어깨끈 달린 학생 가방"],
+["species","(전문) 종(種), 생물 분류 단위"],
+["meet","(전문) 사냥·경기의 집합; 대회"],
+["commonplace","평범한, 진부한; 상투어"],
+["pot-boiler","돈벌이용 통속 작품"],
+["reminiscence","회상, 추억담"],
+["coxcomb","(고어) 잘난 체하는 멋쟁이, 얼간이"],
+["swagger","으스대다, 뽐내며 걷다"],
+["eventuate","결국 ~이 되다, 귀결되다"],
+["acquiesce","순순히 따르다, 묵인하다"],
+["pleasantry","가벼운 농담, 사교적 인사말"],
+["emolument","(문어) 보수, 봉급"],
+["finesse","능란한 솜씨, 기교"],
+["uncommon","흔치 않은, 드문"]]},
+{"n":4,"date":"2026-10-08","w":[["claret","(영) 보르도산 적포도주"],
+["dependence","의존, 의지; 중독"],
+["tract","넓은 지역; 관(管)"],
+["majesty","장엄, 위엄; (호칭) 폐하"],
+["wholesome","건전한, 유익한; 몸에 좋은"],
+["magnetism","자기; 사람을 끄는 매력"],
+["snare","덫, 올가미; 함정"],
+["trimmings (pl.)","(옷의) 장식; (요리의) 곁들이"],
+["fanciful","기발한, 공상적인"],
+["contemptible","경멸스러운, 하찮은"],
+["flop","털썩 주저앉다; 완전히 실패하다"],
+["properties (pl.)","재산, 부동산; 속성; (연극) 소품"],
+["monotonous","단조로운, 지루한"],
+["forth","(문어) 앞으로, 밖으로"],
+["exquisite","정교한, 절묘한; (감각이) 예민한"],
+["pierce","꿰뚫다, 관통하다"],
+["canvasser","호별 방문 판매원; 유세원, 여론 조사원"],
+["auspicious","상서로운, 앞날이 밝은"],
+["bustle","분주히 움직이다"],
+["toil","고된 노동, 노고"],
+["petticoat","(여성의) 속치마"],
+["stolid","무표정한, 둔감한"],
+["rarefied","희박한; 고상한, 난해한"],
+["beseech (besought, besought)","(문어) 간청하다, 애원하다"],
+["assumption","가정, 전제; (권력의) 장악"],
+["tacitly","암묵적으로, 말없이"],
+["thrill","전율, 짜릿함"],
+["gloss","광택, 윤기; 주석"],
+["expose","노출시키다; 폭로하다"],
+["solitude","고독, 혼자 있음"],
+["trying","견디기 힘든, 괴로운"],
+["cipher","암호로 쓰다; (고어) 셈하다"],
+["forecastle","(전문) (배의) 앞갑판, 선수루; 선원 거처"],
+["exuberance","넘치는 활기, 열정"],
+["conspicuous","눈에 띄는, 두드러진"],
+["livery","(하인·단체의) 제복"],
+["aloft","(문어) 높이, 공중에"],
+["prairie","대초원"],
+["wane","쇠퇴, (달이) 이지러짐"],
+["blare","요란한 소리, 굉음"],
+["province","주(州), 지방; (활동·지식의) 영역, 분야"],
+["behold (beheld, beheld)","(고어/문어) 바라보다, 목격하다"],
+["deterrent","억제책, 제지 요인"],
+["purse","지갑; (미국) 핸드백; 상금"],
+["thrift","절약, 검약"],
+["mercenary","돈만 밝히는; (명사) 용병"],
+["sensible","분별 있는, 현명한"],
+["perish","죽다, 소멸하다"],
+["intimation","암시, 낌새"],
+["grim","암울한, 냉혹한"],
+["fetch","가지러 가서 가져오다; (값에) 팔리다"],
+["silly","어리석은, 바보 같은"],
+["plod","터벅터벅 걷다; 묵묵히 해 나가다"],
+["clown","어릿광대, 곡예 광대; 우스꽝스러운 사람"],
+["closely","가까이, 밀접하게; 면밀히"],
+["aught","(고어) 무엇이든, 아무것"],
+["sickly","(형용사) 병약한, 창백한; 역겹게 달콤한"],
+["wretch","가엾은 사람; 비열한 인간"],
+["stern","엄격한, 근엄한; 가혹한"],
+["sepulchre (sepulcher)","(문어) 무덤, 묘소"],
+["overthrow (overthrew, overthrown)","전복시키다, 타도하다"],
+["bewilder","당황하게 하다, 어리둥절하게 하다"],
+["wax (waxed)","(고어·문어) ~해지다, 차오르다; (명사) 밀랍"],
+["brawny","우람한, 억센"],
+["paralysis","마비; 기능 정지"],
+["beck","(고어) 손짓, 분부"],
+["importunate","(문어) 끈질기게 조르는"],
+["relegate","좌천시키다, 밀어내다"],
+["lash","채찍질; 채찍 끈; 속눈썹"],
+["sympathetic","동정 어린, 공감하는"],
+["surrender","항복하다; 넘겨주다, 포기하다"],
+["spellbound","넋을 빼앗긴, 매혹된"],
+["embark","착수하다; 승선하다"],
+["pains (pl.)","수고, 노고, 공들임"],
+["rigour (rigor)","엄격함; 혹독함"],
+["naughtiness","짓궂음, 버릇없음; 야한 행실"],
+["depict","묘사하다, 그리다"],
+["maim","불구로 만들다, 심하게 다치게 하다"],
+["lurk","잠복하다, 도사리다"],
+["estimate","견적; 추산; 평가"],
+["strong suit (phr.)","장기, 가장 잘하는 것"],
+["parson","(구식) 목사, 교구 목사"],
+["resolve","해결하다; 결심하다; 결의하다"],
+["seal","봉인; 도장; 밀폐"],
+["meadow","초원, 목초지"],
+["rash","성급한, 무모한"],
+["costume","의상, 복장; 무대 의상"],
+["straddle","두 다리를 벌리고 걸터앉다; 양다리를 걸치다"],
+["truckle","(문어) 굽실거리다, 영합하다"],
+["handmaid","(고어) 시녀, 하녀; (비유) 보조 역할을 하는 것"],
+["transcendent","초월적인; 탁월한"],
+["merit","공로, 장점; 가치"],
+["summons","소환장, 출두 명령"],
+["desultory","산만한, 종잡을 수 없는"],
+["prevail","우세하다, 만연하다; 이기다; 설득하다(upon과 함께)"],
+["deface","(외관을) 훼손하다, 더럽히다"],
+["preponderant","우세한, 압도적인"],
+["diaphanous","(문어) 비쳐 보이는, 아주 얇은"],
+["vindication","정당성 입증, 명예 회복"],
+["direct","지시하다, 감독하다; ~로 향하게 하다"],
+["vagabond","방랑자, 부랑자"],
+["cant","(문어) 위선적 상투어, 입에 발린 말"],
+["connoisseur","감식가, 애호가"],
+["confer","수여하다; 협의하다"],
+["inarticulate","말주변이 없는; 표현되지 않은"],
+["decorous","예의 바른, 점잖은"]]},
+{"n":5,"date":"2026-10-15","w":[["alchemy","연금술; (비유) 신비한 변환의 힘"],
+["minister","장관; (개신교) 목사"],
+["aloof","쌀쌀맞은, 초연한; 거리를 두고"],
+["peril","(문어) 위험, 위기"],
+["fidget","꼼지락거리다, 안절부절못하다"],
+["flume","(물을 흘려보내는) 인공 수로"],
+["letters (pl.)","문학, 학문"],
+["reproach","비난, 나무람"],
+["distinguished","저명한; 기품 있는, 품위 있는"],
+["interminable","끝없이 길고 지루한"],
+["effete","활력을 잃은, 나약한"],
+["hitherto","(문어) 지금까지"],
+["means (pl.)","수단, 방법; 재력, 자산"],
+["withdraw (withdrew, withdrawn)","철수하다, 물러나다; 인출하다; 철회하다"],
+["soulful","감정이 풍부한, 애절한"],
+["unwonted","(문어) 이례적인, 평소와 다른"],
+["sophistication","세련됨, 교양; 정교함"],
+["scorn","경멸, 멸시"],
+["coquetry","교태, 아양"],
+["compass","둘러싸다; (문어) 이루다, 달성하다"],
+["allusion","(문학) 인유; 넌지시 하는 언급"],
+["draught","(영) 외풍, 통풍; 한 모금"],
+["adventuresome","모험을 무릅쓰는"],
+["resolution","결심, 결단; 해결; 결의안; (전문) 해상도"],
+["slipshod","엉성한, 대충 해치운"],
+["conduct","행동, 처신; (일을) 수행함, (악단의) 지휘"],
+["marvel","경이, 놀라운 것"],
+["dismal","음울한, 참담한"],
+["hive","벌통; 북적이는 곳"],
+["squeamish","비위가 약한; 결벽스러운"],
+["inscribe","새기다, 적어 넣다"],
+["stammer","말을 더듬다"],
+["quietus","(문어) 죽음, 종말; 끝장"],
+["penitent","참회자, 회개하는 사람"],
+["off-chance","만에 하나의 가능성"],
+["clod","흙덩이; (구어) 얼간이"],
+["impudence","뻔뻔함, 무례함"],
+["prove","증명하다; ~임이 드러나다"],
+["incandescent","백열의; 눈부신"],
+["avarice","탐욕, 물욕"],
+["fatuity","(문어) 어리석음, 얼빠짐"],
+["preside","주재하다, 사회를 보다; 관장하다"],
+["pretension","허세, 가식; 주장"],
+["stratagem","(문어) 책략, 계략"],
+["ante up (phr.)","(판돈을) 걸다, 돈을 내놓다"],
+["trinket","싸구려 장신구, 자질구레한 물건"],
+["sublime","숭고한, 장엄한; 숭고미"],
+["deliberate","고의적인; 신중한"],
+["divan","등받이 없는 긴 소파"],
+["vanity","허영심, 자만; 헛됨"],
+["ample","충분한, 넉넉한"],
+["prototype","원형, 시제품"],
+["rueful","후회스러운, 딱한"],
+["enlist","입대하다; (도움을) 얻어 내다"],
+["dreary","음울한, 따분한"],
+["prescribe","(약을) 처방하다; (규칙을) 규정하다"],
+["wearisome","진을 빼는, 넌더리 나는"],
+["stockyard (stock-yards)","(미국) 가축 수용장"],
+["noble","고귀한, 숭고한; 귀족의"],
+["cockney","런던 토박이; 런던 토박이 말씨"],
+["patron","후원자; 단골손님"],
+["drag","끌기; 장애, 걸림돌"],
+["swain","(고어/시어) 시골 젊은이, 목동; 구애하는 남자"],
+["frontage","(건물·토지의) 정면, 도로에 면한 쪽"],
+["detestation","(문어) 혐오, 질색"],
+["solitary","혼자의, 고독한; 외딴"],
+["lament","애도하다, 한탄하다"],
+["fraternize","친하게 어울리다"],
+["amble","느긋하게 거닐다, 어슬렁거리다"],
+["arrest","체포하다; 멈추다"],
+["yield (yielded, yielded)","산출하다; 굴복하다, 양보하다"],
+["appreciation","감상, 이해; 감사; 가치 상승"],
+["agony","극심한 고통, 고뇌"],
+["impart","(지식·정보를) 전하다; (성질을) 부여하다"],
+["drapery","휘장, 드리운 천; (미술) 옷 주름의 표현"],
+["overcast (overcast, overcast)","(주로 형용사) 잔뜩 흐린; (동사) 구름으로 뒤덮다"],
+["decorum","예의범절, 품위"],
+["prudish","내숭 떠는, 고상한 체하는"],
+["afflicted","병에 걸린, 시달리는"],
+["serenity","평온, 고요함"],
+["fable","우화; 지어낸 이야기"],
+["brood","(동사) 골똘히 곱씹다; (명사) (한배의) 새끼들; 무리"],
+["bandy","(말을) 주고받다"],
+["maze","미로, 미궁"],
+["tread (— trod, trodden)","밟다, 디디다; 걸어가다"],
+["quarry","채석장; (별개 낱말로) 사냥감, 추적 대상"],
+["rub","문지르기; 마사지; (문어) 난관"],
+["discourse","담론, 담화; 강연, 논설"],
+["outfit","옷 한 벌, 복장; 조직, 부대"],
+["prefigure","미리 짐작하다, 예시하다"],
+["cavil","(문어) 트집 잡다, 시비 걸다"],
+["oft","(문어/시어) 자주 (지금은 주로 합성어로 남음)"],
+["doze","졸다, 꾸벅꾸벅 자다"],
+["endeavor (endeavour)","노력, 시도"],
+["detain","붙잡아 두다; 구금하다"],
+["sidelong","곁눈질의, 비스듬한"],
+["cosmopolitan","국제적인; 각지의 문물에 밝은"],
+["scribble","갈겨쓰다, 휘갈겨 쓰다"],
+["promenade","산책; 산책길"],
+["camp-meeting","(미국) 야영 부흥 집회"],
+["servitude","예속, 노역"],
+["hollow","우묵한 곳, 구멍"],
+["pious","경건한, 신앙심 깊은; 경건한 체하는"],
+["manners (pl.)","예절, 예의범절; 풍습"],
+["novelty","참신함; 신기한 물건"],
+["modest","겸손한; (규모가) 그리 크지 않은"]]},
+{"n":6,"date":"2026-11-09","w":[["formulate","정식화하다, 명확히 표현하다"],
+["aesthetic","미적인, 심미적인"],
+["level","평평하게 하다; 허물다; 겨누다"],
+["bound","(형용사) (for와 함께) ~행의, ~로 향하는; (동사) (~의) 경계를 이루다; 한정하다"],
+["reign","통치하다, 군림하다; (풍조가) 널리 퍼지다"],
+["infamous","악명 높은"],
+["clime","(문어/시어) 지방, 풍토, 기후대"],
+["stoop","몸을 굽히다; (비굴하게) 자신을 낮추다"],
+["forlorn","쓸쓸한, 버림받은; 가망 없는"],
+["providence","신의 섭리, 하느님의 보살핌"],
+["wonted","(고어·문어) 여느 때의, 늘 하던"],
+["shudder","몸서리치다, 오싹 떨다"],
+["assent","동의, 찬성"],
+["grovel","굽실거리다, 비굴하게 굴다"],
+["antipathetic","반감을 일으키는, 거부감이 드는"],
+["invention","발명; 발명품; 꾸며낸 이야기"],
+["whirl","빙빙 돌다, 회전하다"],
+["lean","야윈; 기름기 없는; 빈약한"],
+["matting","돗자리, 거적"],
+["cunning","교활한, 약삭빠른"],
+["daring","대담성, 배짱"],
+["foreman","작업 반장, 십장; 배심장"],
+["peruse","(문어) 정독하다 (오늘날 흔히 '대충 훑어보다'로 잘못 쓰임)"],
+["hail","(고어/문어) 만세! 그대에게 인사를!"],
+["pledge","맹세하다, 서약하다"],
+["voluble","말이 술술 나오는, 달변의"],
+["actuate","작동시키다; (사람을) 움직이게 하다"],
+["meditate","명상하다; 숙고하다"],
+["despised","멸시받는, 천대받는"],
+["expanse","너른 공간, 광활한 면"],
+["earnestness","진지함, 진심"],
+["harlot","(고어) 창녀, 매춘부"],
+["canon","(전문) 참사회원; 정경(正經); 규범"],
+["annals (pl.)","(문어) 연대기, 역사 기록"],
+["discordantly","조화롭지 못하게, 어긋나게"],
+["particular","특정한; 까다로운"],
+["accomplishment","업적, 성취; 교양·재주"],
+["singular","유별난, 기이한"],
+["kilt","스코틀랜드 남자용 주름치마"],
+["convulse","경련을 일으키다, 발작하다"],
+["enterprising","진취적인, 수완 좋은"],
+["mischievous","장난기 있는, 짓궂은"],
+["exhibition","전시회, 전람회"],
+["stock","재고, 저장품; 주식; 육수"],
+["spur","박차를 가하다; 자극하다, 촉진하다"],
+["considerable","상당한, 꽤 많은"],
+["haply","(고어) 어쩌면, 혹시"],
+["melancholy","우울, 침울; 애수"],
+["lodgings (pl.)","셋방, 하숙, 숙소"],
+["evoke","불러일으키다, 환기하다"],
+["pall","관 덮개(관·영구차를 덮는 천); 어둡게 뒤덮는 기운"],
+["grip","꽉 쥐기; 장악력; 손잡이"],
+["awestruck","경외심에 사로잡힌"],
+["rapt","넋을 잃은, 몰입한"],
+["disconcert","당황하게 하다"],
+["let on (phr.)","내색하다, 티를 내다; ~인 척하다"],
+["countenance","(문어) 얼굴, 표정"],
+["calamity","재앙, 재난; 큰 불행"],
+["lure","유인하다, 꾀어내다"],
+["execution","처형; 실행"],
+["dread","두려움, 공포; (문어) 경외"],
+["swell","(구어, 다소 고어) 훌륭한, 근사한"],
+["lattice","격자, 격자 구조"],
+["offspring","자손, 자식"],
+["lightsome","(문어) 경쾌한, 가뿐한; 밝은"],
+["colossal","거대한, 엄청난"],
+["consumption","소비, 소모"],
+["suggestive","암시적인; 외설스러운"],
+["horrid","끔찍한, 지독한"],
+["patent leather","에나멜가죽"],
+["refined","세련된, 교양 있는; 정제된"],
+["fedora","중절모, 페도라"],
+["convention","관습, 인습; 대회"],
+["impropriety","부적절함, 무례함"],
+["incline","기울다; ~하는 경향이 있다"],
+["stir","(액체를) 젓다; (감정을) 자극하다"],
+["inform","알리다, 통지하다; 정보를 주다"],
+["intercourse","성교; (문어) 교제, 왕래"],
+["receipt","영수증; 수령; (복수) 수입금"],
+["trundle","덜커덕거리며 굴러가다"],
+["awry","(문어) 빗나가, 어긋나"],
+["slight","무시하다, 홀대하다"],
+["still-born","사산된; (계획 등이) 처음부터 실패한"],
+["profuse","아주 많은, 넘쳐나는; 아낌없는"],
+["in fine (phr.)","(문어) 요컨대, 결국"],
+["allure","매혹하다, 유혹하다"],
+["unkind","불친절한, 매정한"],
+["tackle","태클; 낚시 도구, 장비"],
+["pervert","왜곡하다; 타락시키다"],
+["self-righteousness","독선, 독선적 태도"],
+["faculty","능력; (대학) 교수진, 학부"],
+["list","(고어) 귀 기울이다"],
+["heft","(미국) 번쩍 들어 올리다; 무게를 어림하다"],
+["luncheon","(격식) 오찬, 점심 식사"],
+["fetich/fetish","맹목적 숭배물; (전문) 성적 집착 대상"],
+["ravening","(문어) 굶주려 사나운"],
+["grate","강판에 갈다; 거슬리는 소리를 내다; 신경을 거스르다"],
+["cast about (phr.)","이리저리 찾다, 궁리하다"],
+["affection","애정, 호의"],
+["errand","심부름, 볼일"],
+["unerring","틀림없는, 정확무비한"],
+["overawe","위압하다, 주눅 들게 하다"],
+["lay for (phr.)","숨어서 노리다, 기다렸다 덮치다"],
+["turbulent","격동하는, 소란한; (전문) 난류의"],
+["maid","하녀, 가정부; (고어) 처녀"],
+["metropolis","대도시, 중심 도시"]]},
+{"n":7,"date":"2026-11-16","w":[["acquaintance","아는 사람, 지인; 안면"],
+["fervor","열정, 열렬함"],
+["counsel","조언; 변호인"],
+["shrewd","영리한, 빈틈없는"],
+["visage","(문어) 얼굴, 용모; 겉모습"],
+["overreach (o'er-raught)","도를 넘다, 지나치게 욕심부려 그르치다"],
+["stump","그루터기; 잘리고 남은 부분"],
+["gentlefolk","(고어) 양갓집 사람들, 상류층 사람들"],
+["drift","떠돌다, 표류하다"],
+["divine","알아맞히다, 간파하다"],
+["ethereal","천상의, 영묘한, 더없이 섬세한"],
+["gulf","만(灣); 큰 격차"],
+["fidelity","충실, 신의; (재생의) 충실도"],
+["dilapidated","다 쓰러져 가는, 낡아빠진"],
+["alcove","벽감, 방 한쪽의 우묵한 공간"],
+["derisive","조롱하는, 비웃는"],
+["agate","마노(보석의 일종)"],
+["scent","냄새를 맡다; 낌새를 채다"],
+["limber","유연한, 나긋나긋한"],
+["cultivate","경작하다; 기르다, 함양하다"],
+["needs","(고어) 기어이, 꼭"],
+["confusion","혼란, 혼동; 당혹"],
+["candour (candor)","솔직함, 거리낌 없음"],
+["confidence","자신감; 신뢰; 비밀"],
+["breeder","사육자, 육종가; (전문) 증식로"],
+["garrulous","수다스러운, 장황한"],
+["unheeded","주목받지 못한, 무시된"],
+["array","다수의 나열, 집합; (컴퓨터) 배열"],
+["multitudinous","(문어) 무수히 많은"],
+["transgress","(문어) (법·도덕을) 어기다, 위반하다"],
+["dowry","지참금, 결혼 지참 재산"],
+["arson","(전문) 방화"],
+["stuff","물건, 것; 재료"],
+["multiplicity","다수, 다양성"],
+["censure","비난하다, 견책하다"],
+["erect","똑바로 선, 꼿꼿한"],
+["discreet","신중한, 조심스러운, 입이 무거운"],
+["chaste","순결한, 정숙한; (문체가) 간결한"],
+["refute","논박하다, 반박하다"],
+["rugged","울퉁불퉁한; 억센, 강인한"],
+["budge","꿈쩍하다 (주로 부정문)"],
+["mean","심술궂은, 못된; 인색한"],
+["knack","요령, 재주"],
+["obliterate","완전히 없애다, 지우다"],
+["homage","경의, 헌사"],
+["deed","행위, 행동; (전문) 날인 증서"],
+["abstain","삼가다, 자제하다; 기권하다"],
+["commencement","시작, 개시; (미국) 졸업식"],
+["shabby","초라한, 허름한; 치사한"],
+["gratify","만족시키다, 충족시키다"],
+["heed","(문어) 유의하다, 귀 기울이다"],
+["crude","조잡한, 투박한; 원유의"],
+["lull","소강 상태, 잠잠한 때"],
+["compendium","개요, 요약집"],
+["profess","공언하다, 표방하다"],
+["prudence","신중, 조심성"],
+["disclose","(동사) 밝히다, 공개하다 (명사 용법은 현대에 거의 없음)"],
+["shroud","수의; 덮어 가리는 것"],
+["calumny","(문어) 중상, 비방, 명예 훼손"],
+["alight","불타는; 환히 빛나는"],
+["circumlocution","완곡한 표현, 에두른 말투"],
+["mortal","죽을 운명의; 치명적인; 인간의"],
+["conception","개념; 구상; 임신"],
+["abash","무안하게 하다, 주눅 들게 하다"],
+["nape (nap)","목덜미"],
+["repine","(문어) 불평하다, 한탄하다"],
+["lot","많음; 제비뽑기; (미국) 부지, 필지"],
+["haberdasher","(영) 바느질 용품상; (미) 남성복 상인"],
+["contingent","~에 달려 있는; 우발적인"],
+["officiate","사회를 보다, 직무를 집행하다"],
+["bully","괴롭히다, 협박하다"],
+["abound","풍부하다, 많이 있다"],
+["verse","운문, 시; (성서의) 절"],
+["conviction","확신, 신념; 유죄 판결"],
+["drawback","단점, 결점"],
+["err","(문어) 잘못을 저지르다, 그르치다"],
+["grizzled","희끗희끗한, 반백의"],
+["insensible","(문어) 무감각한; 알아채지 못하는"],
+["pervade","널리 퍼지다, 스며들다"],
+["afford","~할 형편이 되다, 여유가 있다"],
+["wittingly","(문어) 알면서, 고의로"],
+["fardel","(고어) 무거운 짐, 봇짐"],
+["brisk","활기찬, 시원시원한"],
+["latent","잠재된, 숨어 있는"],
+["circumscribed","제한된, 좁게 한정된"],
+["stationery","문구류, 문방구"],
+["vex","짜증나게 하다; 골치 아프게 하다"],
+["bays (pl.)","월계수; (요리용) 월계수 잎"],
+["verity","(문어) 진실, 진리"],
+["relish","즐기다, 만끽하다; (명사) 다진 양념"],
+["keen","열망하는; 예리한"],
+["matron","(문어) 나이 든 기혼 여성; (병원·기숙사의) 수간호사, 사감"],
+["artful","교활한, 약삭빠른"],
+["disabuse","(문어) 오해를 풀어 주다"],
+["lounge","느긋하게 기대다, 빈둥거리다"],
+["patriarch","가장, 족장; (동방 교회의) 총대주교"],
+["pith","(식물의) 고갱이; 핵심, 요점"],
+["assay","(전문) (광석·금속의) 순도를 분석·시험하다"],
+["dungeon","지하 감옥, 토굴 감옥"],
+["bloom","꽃; 한창때; 화사한 윤기"],
+["flagging","판석 포장, 포석 바닥"],
+["plaintive","애처로운, 구슬픈"],
+["emigrant","(타국으로 떠나는) 이민자"],
+["mirth","(문어) 유쾌함, 흥겨움, 웃음"],
+["sympathy","동정, 연민; 공감"],
+["outrageous","터무니없는, 언어도단의; 충격적인"]]},
+{"n":8,"date":"2026-11-23","w":[["chink","쨍그랑 소리; 틈, 갈라진 금"],
+["tact","재치, 눈치, 요령"],
+["pomp","(의식의) 장엄함, 화려함"],
+["texture","감촉, 질감; 짜임새"],
+["insinuate","넌지시 비추다; 슬며시 끼어들다"],
+["sagacity","총명, 현명한 판단력"],
+["conjecture","추측, 억측"],
+["inexplicable","설명할 수 없는, 불가해한"],
+["supremacy","패권, 우위"],
+["lame","절뚝거리는; 설득력 없는"],
+["stature","키, 체격; 지위, 명성"],
+["unfaltering","확고한, 흔들림 없는"],
+["pathetic","한심한, 형편없는; 애처로운"],
+["maxim","격언, 금언; 처세훈"],
+["vigour (vigor)","활력, 정력, 힘"],
+["queer","기묘한; 이상한"],
+["wile","유혹의 술책, 농간"],
+["brilliancy","(문어) 광채, 눈부심, 화려함"],
+["fain","(고어) 기꺼이 ~하고 싶어 하는"],
+["continental","대륙의; (영국에서) 유럽 대륙의"],
+["rebuff","퇴짜, 냉대"],
+["avert","피하다, 막다; (눈을) 돌리다"],
+["beckon","손짓해 부르다"],
+["participle","(전문) 분사"],
+["nail","못을 박다; 붙잡다, 해내다"],
+["throw up the sponge (phr.)","항복하다, 포기하다"],
+["retort","쏘아붙이다, 말대꾸하다"],
+["mighty","강력한, 거대한"],
+["debauch","타락시키다, 유혹하다"],
+["flesh","살, 고기; 육체"],
+["provoke","화나게 하다, 도발하다; 유발하다"],
+["eloquence","웅변, 설득력 있는 표현"],
+["nag","늙고 볼품없는 말"],
+["magnet","자석; 사람을 끄는 것"],
+["destitute","극빈한, 궁핍한"],
+["hoist (hysted)","들어 올리다, 게양하다"],
+["affront","모욕하다, 무례를 범하다"],
+["wrought","(문어) 만들어진, 세공된"],
+["susceptible","영향받기 쉬운, 취약한"],
+["devoutly","경건하게; 진심으로, 간절히"],
+["lisp","혀 짧은 소리로 말하다"],
+["unanimity","만장일치"],
+["lay over (phr.)","(미국) 도중에 머물다; (구식) 능가하다"],
+["reel off","줄줄 읊다, 단숨에 늘어놓다"],
+["blight","마름병, 병충해; 파멸을 부르는 것, 황폐"],
+["populous","인구가 많은"],
+["hardened","굳어진; 무감각해진, 닳고 닳은"],
+["insurmountable","넘어설 수 없는, 극복 불가능한"],
+["scullery","(고옥의) 설거지방, 곁부엌"],
+["genially","상냥하게, 다정하게"],
+["plague","전염병, 역병; 골칫거리"],
+["pilgrimage","순례; 뜻깊은 여정"],
+["embolden","용기를 북돋우다"],
+["reparation","배상, 보상"],
+["reverend (=Rev.)","(성직자 이름 앞의 경칭) ~목사, ~신부"],
+["perfunctory","형식적인, 건성의"],
+["recruit","신입, 신병"],
+["vested interest (phr.)","기득권; 기득권 세력"],
+["whiskers (pl.)","구레나룻; (동물의) 수염"],
+["irreproachable","흠잡을 데 없는"],
+["fatal","치명적인, 죽음을 부르는"],
+["bestow","(문어) 수여하다, 부여하다"],
+["itinerant","떠돌이의, 순회하는"],
+["paean","(문어) 찬가; 찬양하는 글·작품"],
+["gospel (the Gospel)","복음; 절대적 진리"],
+["steed","(문어/시어) 준마, 군마"],
+["dismay","실망, 경악, 당혹"],
+["sensibility","감수성, 감성"],
+["conscience","양심, 도덕심"],
+["impassioned","열정적인, 격정적인"],
+["luminous","빛나는; 명료한"],
+["edge","가장자리; 날; 우위, 강점"],
+["prospect","전망, 가망, 예상; (복수) 장래성"],
+["pictorial","그림의, 회화적인; 화보의"],
+["bourn","(고어·시어) 경계, 한계; 목적지"],
+["slop","철벅거리다, 흘리다"],
+["irretrievably","돌이킬 수 없게"],
+["entrust","맡기다, 위임하다"],
+["insignia (pl.)","휘장, 배지, 계급장"],
+["mutilate","절단하다, 훼손하다"],
+["jargon","전문 용어; 알아듣기 힘든 말"],
+["devotion","헌신, 전념; 신앙심"],
+["plausible","그럴듯한, 있음 직한"],
+["coil","코일, 사린 것; 감다"],
+["methodize","(문어) 체계화하다, 조직적으로 정리하다"],
+["apothecary","(고어) 약제사, 약종상"],
+["perverse","비뚤어진, 심술궂은"],
+["blasted","폭파된; (구어) 빌어먹을"],
+["inappreciable","무시해도 좋을 만큼 미미한"],
+["subdued","차분한, 나직한; 억눌린"],
+["wont","(고어/문어) 늘 ~하곤 하는"],
+["spurn","(동사) 퇴짜 놓다, 일축하다"],
+["heave","(무거운 것을) 들어 올림; 치밀어 오름"],
+["confine","가두다, 감금하다; 국한하다"],
+["hindrance","방해, 장애"],
+["orison","(고어·문어) 기도"],
+["menial","(문어) 허드렛일꾼, 하인"],
+["stenographer","속기사"],
+["pensive","생각에 잠긴, 수심 어린"],
+["twaddle","허튼소리, 시시한 소리"],
+["somersault (summerset)","공중제비, 재주넘기"],
+["conservative","보수적인; 신중한"],
+["shanty","판잣집, 오두막"],
+["repose","(문어) 휴식, 평온"],
+["propriety","예의범절, 체면; 타당성"],
+["wistful","그리움에 찬, 아쉬운 듯한"]]},
+{"n":9,"date":"2026-11-30","w":[["stock in trade (phr.)","밑천; 늘 써먹는 수법"],
+["dub","~라는 별명을 붙이다; 더빙하다"],
+["decency","품위, 예절; 점잖음"],
+["repair","(문어) 가다, 발걸음을 옮기다"],
+["humility","겸손, 겸허"],
+["rouse","깨우다; (감정을) 불러일으키다"],
+["commend","칭찬하다; 추천하다"],
+["myth","신화; 근거 없는 통념"],
+["semblance","겉모습, 외관; 흉내"],
+["precept","교훈, 계율, 준칙"],
+["wince","움찔하다, 질색하다"],
+["commence","(문어) 시작하다"],
+["hither","(고어·문어) 이리로, 이쪽으로"],
+["mistress","(부정한 관계의) 정부(情婦); 여주인; (~에) 통달한 여성"],
+["stamp","우표; 도장; 각인"],
+["inclination","의향, 성향; 경사"],
+["fit","발작; 격발"],
+["incense","향, 향료; 향의 연기"],
+["resentment","분개, 원망"],
+["adversity","역경, 불운"],
+["Helice","(전문) 큰곰자리(Ursa Major)의 옛 그리스식 이름; 곰으로 변신한 님프 칼리스토"],
+["busted","부서진; 빈털터리가 된"],
+["communistic","공산주의의"],
+["racket","소음, 소란; 부정한 돈벌이"],
+["ere","(고어/시어) ~하기 전에"],
+["ostensibly","표면상으로는, 겉으로는"],
+["astray","길을 잃고; 그릇된 길로 빠져"],
+["outset","처음, 시초"],
+["fad","일시적 유행, 변덕"],
+["creed","신조, 신념"],
+["monstrous","괴물 같은, 끔찍한; 엄청난"],
+["revolt","반란을 일으키다; 역겹게 하다"],
+["knave","(고어) 악당, 무뢰한; (카드) 잭"],
+["shrubbery","관목 숲, 관목 정원"],
+["spite","악의, 앙심"],
+["cramp","속박하다, 제약하다; 경련이 나다"],
+["want","부족, 결핍"],
+["digest","소화하다; 되새기다"],
+["deferentially","공손하게, 정중하게"],
+["wretched","비참한, 불쌍한; 형편없는"],
+["admonish","훈계하다, 타이르다"],
+["obligation","의무, 책임"],
+["nunnery","(고어) 수녀원"],
+["appraise","평가하다, 감정하다"],
+["decry","공공연히 비난하다"],
+["decipher","해독하다, 판독하다"],
+["commerce","상업, 무역, 거래"],
+["hurl","세게 내던지다"],
+["wisp","가느다란 한 줄기; 하찮은 것"],
+["apprehension","우려, 불안; 체포"],
+["presumptuous","주제넘은, 뻔뻔한, 건방진"],
+["waif","집 없는 아이, 부랑아; 여위고 가냘픈 사람"],
+["piquancy","톡 쏘는 맛; 묘한 매력"],
+["vow","맹세, 서약 (혼인 서약 등)"],
+["scourge","(문어) 채찍질하다; 심하게 괴롭히다"],
+["contagious","전염성의; (감정이) 옮기 쉬운"],
+["barrack","병영, 막사"],
+["dodge","피하다, 잽싸게 비키다"],
+["curt","퉁명스러운, 무뚝뚝한"],
+["contumely","(문어·고어) 오만한 모욕, 무례"],
+["lime","(고어) 끈끈이로 잡다"],
+["apparel","(문어/상업) 의류, 복장"],
+["crafty","교활한, 약삭빠른"],
+["edifying","교화적인, 유익한"],
+["kin","친족, 일가"],
+["fag-end","마지막 남은 부분, 끄트머리"],
+["exasperate","몹시 짜증나게 하다"],
+["behoove (behove)","(문어) ~하는 것이 마땅하다"],
+["exorbitant","터무니없이 비싼, 과도한"],
+["harness","마구를 채우다; (자연력을) 이용하다"],
+["orthodox","정통의, 관례적인"],
+["vein","정맥; 광맥; (말·글의) 기조"],
+["refinement","세련, 정교함; 개선"],
+["ineffectual","무능한, 효과 없는"],
+["appurtenance","(문어) 부속물, 딸린 물건"],
+["exeunt","(전문) (희곡 지문) 두 사람 이상이 퇴장하다"],
+["throng","군중, 인파"],
+["sprightly","활기찬, 발랄한"],
+["receiver","수화기, 수신기; 수령인"],
+["caravan","대상(隊商) 행렬; (영국) 이동식 주택"],
+["regard","존중, 관심; 안부"],
+["wholesale","도매의; 대규모의"],
+["long","간절히 바라다, 갈망하다"],
+["journeyman","(전문) 숙련공, 직인"],
+["pasture","방목하다, 풀을 뜯기다"],
+["nourish","영양분을 주다, 기르다; (감정을) 키우다"],
+["dingy","칙칙한, 지저분한"],
+["lug","힘겹게 끌고 가다"],
+["virile","남성적인, 정력적인"],
+["nimble","민첩한, 재빠른"],
+["tease","놀리다, 괴롭히다"],
+["enthusiasm","열의, 열광"],
+["genteel","점잖은 체하는, 상류층 티를 내는"],
+["waver","흔들리다, 주저하다"],
+["personage","(문어) 명사(名士), 유력 인사"],
+["superstition","미신"],
+["familiarity","친숙함; 격의 없음"],
+["goodly","(고어/문어) 상당한; 훌륭한"],
+["cherished","소중한, 애지중지하는"],
+["high-strung","신경이 예민한, 긴장이 심한"],
+["portmanteau","대형 여행 가방"],
+["rusty","녹슨; 실력이 녹슨"],
+["venerable","존경할 만한, 유서 깊은"],
+["offense (offence)","위법 행위, 범죄; 모욕; (전문) 공격진"],
+["gross","역겨운; 총계의; 노골적인"],
+["inspire","영감을 주다, 고무하다"]]}];
+SEOYUN_VOCAB.forEach(s=>{
+  const md=parseInt(s.date.slice(5,7))+"/"+parseInt(s.date.slice(8,10));
+  CATS.push({id:"sy"+s.n,track:"sy",group:"seoyun",icon:"📝",ko:s.n+"차 단어 ("+md+" 시험)",en:"2026-2 Vocabulary · Test "+s.n,
+    exam:s.date,info:"손서윤 요청 · "+s.w.length+"단어 · "+md+" 시험",w:s.w.map(x=>[x[0],x[1],"",""])});
+});
+
+const SETS = [
+{id:"intro",track:"common",icon:"🙋",title:"자기소개",items:[
+["안녕하세요, 저는 경영학을 전공하는 2학년이에요.","Hi, I'm a sophomore majoring in business administration."],
+["최근에 군 복무를 마치고 복학했어요.","I recently finished my military service and came back to school."],
+["저는 영어영문학과 1학년이에요.","I'm a freshman in the English Language and Literature department."],
+["제 취미는 영화 보기와 운동이에요.","My hobbies are watching movies and working out."],
+["영어 실력을 늘리고 싶어서 매일 연습하고 있어요.","I practice every day because I want to improve my English."],
+["저희 가족은 부모님, 오빠, 그리고 저 이렇게 넷이에요.","There are four people in my family: my parents, my brother, and me."],
+["저희 부모님은 인도네시아 자카르타에 사세요.","My parents live in Jakarta, Indonesia."],
+["만나서 반가워요. 잘 부탁드려요.","Nice to meet you. I look forward to working with you."]]},
+{id:"prof",track:"common",icon:"👩‍🏫",title:"교수님께 질문·이메일",items:[
+["질문 하나 해도 될까요?","May I ask a question?"],
+["방금 말씀하신 부분을 다시 설명해 주실 수 있나요?","Could you explain that part again?"],
+["과제 마감일을 조금 연장해 주실 수 있을까요?","Would it be possible to extend the deadline a little?"],
+["면담 시간에 찾아뵈어도 될까요?","May I visit you during your office hours?"],
+["아파서 수업에 참석하지 못했습니다.","I couldn't attend class because I was sick."],
+["과제를 첨부 파일로 제출합니다.","I'm submitting my assignment as an attachment."],
+["답변 기다리겠습니다.","I look forward to hearing from you."],
+["시간 내 주셔서 감사합니다.","Thank you for your time."]]},
+{id:"friends",track:"common",icon:"☕",title:"원어민 친구와 대화",items:[
+["요즘 어떻게 지내?","How have you been lately?"],
+["이번 주말에 뭐 해?","What are you up to this weekend?"],
+["그거 정말 재밌겠다!","That sounds like a lot of fun!"],
+["미안, 오늘은 못 갈 것 같아.","Sorry, I don't think I can make it today."],
+["천천히 다시 말해 줄래?","Could you say that again more slowly?"],
+["그 단어가 무슨 뜻이야?","What does that word mean?"],
+["나도 그렇게 생각해.","I think so too."],
+["계속 연락하고 지내자!","Let's keep in touch!"]]},
+{id:"bizmeet",track:"biz",icon:"📈",title:"회의·발표",items:[
+["오늘 회의 안건부터 살펴보겠습니다.","Let's start with today's agenda."],
+["이 그래프를 봐 주세요.","Please take a look at this graph."],
+["매출이 작년 대비 15% 증가했습니다.","Sales increased by fifteen percent compared to last year."],
+["결론부터 말씀드리면, 비용을 줄여야 합니다.","The bottom line is that we need to cut costs."],
+["제가 제대로 이해했는지 확인하고 싶습니다.","I'd like to make sure I understand correctly."],
+["그 부분은 확인하고 다시 알려드리겠습니다.","I'll check on that and get back to you."],
+["다음 단계에 대해 이야기해 봅시다.","Let's talk about the next steps."],
+["질문 있으시면 편하게 해 주세요.","Please feel free to ask any questions."]]},
+{id:"interview",track:"biz",icon:"🤝",title:"면접 답변",items:[
+["저는 책임감이 강하고 팀워크를 중요하게 생각합니다.","I have a strong sense of responsibility, and I value teamwork."],
+["군 생활을 통해 리더십과 인내심을 배웠습니다.","I learned leadership and patience during my military service."],
+["제 약점은 가끔 세부 사항에 너무 신경 쓴다는 것입니다.","My weakness is that I sometimes focus too much on details."],
+["이 회사의 글로벌 비전에 매력을 느꼈습니다.","I was attracted to this company's global vision."],
+["5년 후에는 재무 전문가가 되고 싶습니다.","In five years, I want to become a finance professional."],
+["조별 과제에서 팀장을 맡아 성공적으로 마쳤습니다.","I led my team in a group project and completed it successfully."],
+["저는 새로운 것을 빨리 배우는 편입니다.","I'm a fast learner."],
+["기회를 주셔서 감사합니다.","Thank you for giving me this opportunity."]]},
+{id:"litdisc",track:"eng",icon:"🎭",title:"영문학 수업 토론",items:[
+["제 생각에 이 시의 주제는 선택과 후회예요.","In my opinion, the theme of this poem is choice and regret."],
+["작가는 자연을 인생의 은유로 사용하고 있어요.","The author uses nature as a metaphor for life."],
+["그 의견에 어느 정도는 동의해요.","I agree with that to some extent."],
+["다른 관점에서 보면, 주인공은 피해자일 수도 있어요.","From a different perspective, the protagonist could be a victim."],
+["본문에서 근거를 찾아볼게요.","Let me find some evidence in the text."],
+["좀 더 자세히 설명해 줄 수 있어요?","Could you elaborate on that?"],
+["이 장면은 비극적인 결말을 암시해요.","This scene foreshadows the tragic ending."],
+["결론적으로 이 소설은 사회를 비판하고 있어요.","In conclusion, this novel criticizes society."]]},
+{id:"casestudy",track:"biz",icon:"🧮",title:"전공 수업·케이스 발표",items:[
+["이번 사례의 핵심 문제는 현금흐름 부족입니다.","The key issue in this case is a lack of cash flow."],
+["NPV가 양수이므로 이 프로젝트를 채택해야 합니다.","Since the NPV is positive, we should accept this project."],
+["SWOT 분석부터 시작하겠습니다.","Let me start with a SWOT analysis."],
+["이 회사의 경쟁우위는 브랜드 파워입니다.","This company's competitive advantage is its brand power."],
+["재무제표를 보면 부채비율이 너무 높습니다.","Looking at the financial statements, the debt ratio is too high."],
+["저희 조는 두 가지 대안을 제시합니다.","Our group suggests two alternatives."],
+["이 가정이 바뀌면 결과도 달라집니다.","If this assumption changes, the result will also change."],
+["결론적으로 비용 절감보다 차별화가 더 효과적입니다.","In conclusion, differentiation is more effective than cost cutting."]]},
+{id:"litpresent",track:"eng",icon:"📚",title:"작품 감상 발표",items:[
+["오늘 제가 발표할 작품은 '오만과 편견'입니다.","Today I'm going to talk about Pride and Prejudice."],
+["이 소설은 1813년에 제인 오스틴이 썼습니다.","This novel was written by Jane Austen in 1813."],
+["주인공은 재치 있고 독립적인 여성입니다.","The protagonist is a witty and independent woman."],
+["이 작품의 주요 주제는 사랑과 사회 계층입니다.","The main themes of this work are love and social class."],
+["특히 이 장면이 인상 깊었습니다.","This scene was especially impressive to me."],
+["작가는 아이러니를 통해 사회를 비판합니다.","The author criticizes society through irony."],
+["저는 결말을 열린 결말로 해석했습니다.","I interpreted the ending as an open ending."],
+["들어 주셔서 감사합니다. 질문 있으신가요?","Thank you for listening. Do you have any questions?"]]},
+/* ---------- 나의 영어공부: 회사 내 회화 (구어체) ---------- */
+{id:"m_present",track:"me",icon:"📊",title:"이사회 발표 (발표자)",items:[
+["시작하겠습니다. 오늘은 3분기 재무 실적을 보고드리겠습니다.","Let's get started. Today I'll walk you through our Q3 numbers."],
+["결론부터 말씀드리면, 예산보다 실적이 좋습니다.","To cut to the chase, we're ahead of budget."],
+["다음 슬라이드를 보시면 매출 추이가 나와 있습니다.","If you look at the next slide, you'll see the revenue trend."],
+["주된 이유는 두 가지입니다.","There are two main reasons for that."],
+["이 부분은 조금 더 자세히 말씀드리겠습니다.","Let me go into a bit more detail here."],
+["오늘 승인을 요청드리는 건은 배당 지급입니다.","What we need from the board today is approval for the dividend."],
+["리스크는 있지만 충분히 관리 가능합니다.","There are some risks, but they're manageable."],
+["질문은 발표 끝나고 받겠습니다.","I'll take questions at the end, if that's okay."],
+["요약하면, 자금 사정은 탄탄하고 계획대로 가고 있습니다.","So, bottom line, our cash is solid and we're on track."],
+["감사합니다. 질문 있으시면 말씀해 주세요.","Thanks. Happy to take any questions."]]},
+{id:"m_qa",track:"me",icon:"🙋",title:"이사회 질의응답 (질문·답변)",items:[
+["좋은 질문입니다.","That's a fair question."],
+["질문을 제대로 이해했는지 확인하고 싶습니다.","Just to make sure I've got your question right..."],
+["그 숫자는 지금 없는데, 회의 끝나고 바로 드리겠습니다.","I don't have that number on me, but I'll get it to you right after the meeting."],
+["그건 영업본부장님이 더 잘 답하실 것 같습니다.","I think the Marketing Director can answer that better."],
+["숫자 하나만 확인할게요. 이게 연간 기준인가요?","Can I just check one number? Is this annual?"],
+["그 가정은 어디서 나온 건가요?","Where does that assumption come from?"],
+["최악의 경우엔 어떻게 되나요?","What happens in the worst case?"],
+["그 리스크에 대한 대비책은 있나요?","Do we have a plan B for that?"],
+["말씀하신 우려, 충분히 이해합니다.","I hear you. That's a valid concern."],
+["이 건은 다음 이사회 때 자료 보완해서 다시 보고드리겠습니다.","Let us come back to this at the next board meeting with more details."]]},
+{id:"m_up",track:"me",icon:"⬆️",title:"윗사람에게 보고·요청",items:[
+["잠깐 시간 괜찮으세요? 5분이면 됩니다.","Got a minute? It'll only take five."],
+["미리 말씀드릴 게 있습니다.","I wanted to give you a heads-up on something."],
+["좋은 소식과 나쁜 소식이 있습니다.","I've got good news and bad news."],
+["결정해 주셔야 할 게 하나 있습니다.","There's one thing I need your call on."],
+["제 생각엔 A안이 낫습니다.","My take is that option A makes more sense."],
+["승인해 주시면 바로 진행하겠습니다.","Once you give the green light, we'll get moving."],
+["마감을 일주일만 미뤄 주실 수 있을까요?","Any chance we could push the deadline back a week?"],
+["그건 제 실수였습니다. 바로 바로잡겠습니다.","That was my mistake. I'll fix it right away."],
+["진행 상황은 계속 알려 드리겠습니다.","I'll keep you posted."],
+["이 방향으로 가도 괜찮을까요?","Are you okay with us going this way?"]]},
+{id:"m_down",track:"me",icon:"⬇️",title:"팀원에게 지시·피드백",items:[
+["이거 금요일까지 해 줄 수 있어요?","Can you get this done by Friday?"],
+["이게 제일 급해요.","This one comes first."],
+["막히면 바로 말해 줘요.","Let me know right away if you get stuck."],
+["잘했어요. 정말 꼼꼼하네요.","Nice work. Really thorough."],
+["좋은데, 몇 군데만 고쳐 봅시다.","This is good, but let's tweak a few things."],
+["숫자가 안 맞아요. 다시 확인해 줄래요?","The numbers don't add up. Can you double-check?"],
+["다음엔 미리 좀 알려 줘요.","Next time, give me a heads-up earlier."],
+["왜 늦어졌는지 얘기 좀 해 볼까요?","Can we talk about what held this up?"],
+["어떻게 생각해요? 편하게 말해 봐요.","What do you think? Be honest."],
+["이건 당신 판단에 맡길게요.","I'll leave this one up to you."]]},
+{id:"m_conflict",track:"me",icon:"⚡",title:"이견·갈등 조율",items:[
+["무슨 말인지 알겠는데, 저는 좀 다르게 봐요.","I see where you're coming from, but I see it a bit differently."],
+["그 부분은 동의하기 어렵네요.","I'm not sure I can agree with that."],
+["같은 얘기를 하고 있는지부터 확인합시다.","Let's make sure we're talking about the same thing."],
+["감정 빼고 숫자로 얘기합시다.","Let's leave emotions out of it and look at the numbers."],
+["두 분 다 일리가 있네요.","You both have a point."],
+["중간 지점을 찾아봅시다.","Let's find some middle ground."],
+["이건 제 선에서 결정할 일이 아니라 위에 보고하겠습니다.","This is above my pay grade, so I'll escalate it."],
+["오해가 좀 있었던 것 같네요.","I think there's been a misunderstanding."],
+["이 얘기는 따로 하시죠.","Let's take this offline."],
+["일단 이렇게 가고, 나중에 다시 봅시다.","Let's go with this for now and revisit it later."]]},
+{id:"m_no",track:"me",icon:"🙏",title:"거절·사과·양해",items:[
+["미안하지만 이번 건은 승인하기 어렵겠어요.","Sorry, but I can't sign off on this one."],
+["지금 예산으로는 힘들 것 같아요.","I don't think the budget can stretch that far right now."],
+["취지는 좋은데 타이밍이 안 맞네요.","I like the idea, but the timing's off."],
+["답이 늦어서 죄송합니다.","Sorry for the late reply."],
+["번거롭게 해 드려서 죄송해요.","Sorry for the trouble."],
+["이번 한 번만 양해 부탁드립니다.","I'd really appreciate your understanding on this one."],
+["생각해 보고 다시 말씀드릴게요.","Let me think it over and get back to you."],
+["그건 제 책임입니다.","That's on me."]]},
+{id:"m_small",track:"me",icon:"☕",title:"스몰토크·회식",items:[
+["주말 잘 보내셨어요?","How was your weekend?"],
+["요즘 많이 바쁘시죠?","Keeping busy these days?"],
+["오늘 고생 많으셨어요.","Thanks for all your hard work today."],
+["다음에 골프 한번 치시죠.","Let's play a round of golf sometime."],
+["여기 음식 정말 맛있네요.","The food here is really good."],
+["건배! 올해도 잘해 봅시다.","Cheers! Here's to a great year."],
+["가족분들은 잘 지내시죠?","How's the family?"],
+["조심히 들어가세요.","Get home safe."]]},
+{id:"m_chair",track:"me",icon:"🪑",title:"회의 주재 (재무이사)",items:[
+["다 오셨으면 시작하죠.","Looks like everyone's here. Let's get started."],
+["오늘 안건은 세 가지예요.","We've got three things on the agenda today."],
+["시간이 없으니 핵심만 얘기합시다.","We're short on time, so let's stick to the key points."],
+["리니 씨가 먼저 업데이트해 줄래요?","Rini, why don't you kick us off with an update?"],
+["잠깐만요, 이 부분 좀 짚고 넘어갑시다.","Hold on, let's dig into this a bit."],
+["그건 따로 얘기합시다.","Let's park that and talk about it separately."],
+["다르게 보는 사람 있어요?","Does anyone see it differently?"],
+["아직 말 안 한 분들 의견도 듣고 싶어요.","I'd like to hear from those who haven't spoken yet."],
+["정리하면, 이렇게 하기로 한 겁니다.","So, just to recap, here's what we agreed."],
+["누가 언제까지 할지 정합시다.","Let's pin down who's doing what by when."],
+["다음 주 이 시간에 다시 체크합시다.","Let's check in again same time next week."],
+["다들 수고했어요. 오늘은 여기까지.","Thanks, everyone. That's it for today."]]}
+];
+
+const DIALOGS = [
+{id:"office",track:"common",icon:"🚪",title:"교수님 면담",desc:"기말 리포트 질문하기",roles:{A:"학생",B:"교수님"},lines:[
+["A","Hello, Professor Kim. Do you have a minute?","김 교수님, 안녕하세요. 잠시 시간 괜찮으세요?"],
+["B","Sure, come on in. What can I do for you?","그럼요, 들어와요. 무엇을 도와줄까요?"],
+["A","I have a question about the final report.","기말 리포트에 대해 질문이 있어요."],
+["B","Okay. What part is confusing?","좋아요. 어떤 부분이 헷갈리나요?"],
+["A","Can we use outside sources, or only the textbook?","외부 자료를 써도 되나요, 아니면 교과서만 써야 하나요?"],
+["B","You can use outside sources, but you need to cite them properly.","외부 자료도 괜찮지만 출처를 제대로 밝혀야 해요."],
+["A","Got it. How long should the report be?","알겠습니다. 분량은 어느 정도여야 하나요?"],
+["B","About five pages. Please submit it by December tenth.","5페이지 정도요. 12월 10일까지 제출하세요."],
+["A","Thank you so much for your help.","도와주셔서 정말 감사합니다."],
+["B","You're welcome. Good luck!","천만에요. 잘하길 바라요!"]]},
+{id:"team",track:"common",icon:"🧩",title:"조별 과제 역할 나누기",desc:"친구와 일 분담하기",roles:{A:"민지",B:"Alex"},lines:[
+["A","So, how should we divide the work for our project?","자, 프로젝트 일을 어떻게 나눌까?"],
+["B","I can do the research on our competitors.","난 경쟁사 조사를 할 수 있어."],
+["A","Great. Then I'll make the presentation slides.","좋아. 그럼 난 발표 슬라이드를 만들게."],
+["B","Who's going to present in class?","수업 때 발표는 누가 해?"],
+["A","How about we split it? You take the first half.","반씩 나누는 건 어때? 네가 앞부분 맡아."],
+["B","Sounds good. When should we meet again?","좋아. 언제 다시 만날까?"],
+["A","Let's meet on Thursday at three in the library.","목요일 3시에 도서관에서 만나자."],
+["B","Perfect. I'll send you my notes before then.","완벽해. 그 전에 내 자료 보내 줄게."]]},
+{id:"intern",track:"biz",icon:"💼",title:"인턴 면접",desc:"자기소개와 강점 말하기",roles:{A:"면접관",B:"지원자"},lines:[
+["A","Thank you for coming in today. Please introduce yourself.","오늘 와 주셔서 감사합니다. 자기소개 부탁드려요."],
+["B","Thank you for having me. I'm a business student at Pusan National University.","불러 주셔서 감사합니다. 저는 부산대학교 경영학과 학생입니다."],
+["A","Why are you interested in this internship?","이 인턴십에 왜 관심이 있나요?"],
+["B","I want to gain real experience in finance and learn from professionals.","재무 분야 실무 경험을 쌓고 전문가들에게 배우고 싶습니다."],
+["A","Can you tell me about a challenge you faced?","겪었던 어려움에 대해 말해 줄래요?"],
+["B","In the military, I had to lead a team under pressure. I learned to stay calm and communicate clearly.","군에서 압박 속에 팀을 이끌어야 했습니다. 침착하게 명확히 소통하는 법을 배웠습니다."],
+["A","That's impressive. What is your biggest strength?","인상적이네요. 가장 큰 강점은요?"],
+["B","I'm reliable, and I always meet deadlines.","저는 믿을 수 있고, 항상 마감을 지킵니다."],
+["A","Do you have any questions for us?","저희에게 질문 있나요?"],
+["B","Yes. What does a typical day look like for an intern here?","네. 이곳 인턴의 일반적인 하루는 어떤가요?"]]},
+{id:"sales",track:"biz",icon:"📊",title:"팀 회의: 매출 보고",desc:"숫자로 보고하고 제안하기",roles:{A:"팀장",B:"분석가"},lines:[
+["A","Let's get started. Can you give us an update on the sales numbers?","시작합시다. 매출 수치 업데이트해 줄래요?"],
+["B","Sure. Our revenue this quarter was five percent higher than our forecast.","네. 이번 분기 매출은 전망치보다 5% 높았습니다."],
+["A","That's good news. What was the main reason?","좋은 소식이네요. 주된 이유는요?"],
+["B","Our new online campaign brought in many young customers.","새 온라인 캠페인이 젊은 고객을 많이 끌어왔습니다."],
+["A","What about costs?","비용은요?"],
+["B","Marketing costs went over budget by about eight percent.","마케팅 비용이 예산을 약 8% 초과했습니다."],
+["A","We need to keep an eye on that. Any suggestions?","그건 주의해서 봐야겠네요. 제안 있나요?"],
+["B","We could focus on the channels with the best results.","성과가 가장 좋은 채널에 집중하면 됩니다."],
+["A","Good idea. Please prepare a detailed plan by Friday.","좋은 생각이에요. 금요일까지 상세 계획을 준비해 주세요."],
+["B","No problem. I'll send it to everyone.","문제없습니다. 모두에게 보내겠습니다."]]},
+{id:"poem",track:"eng",icon:"🌲",title:"영문학 수업 토론",desc:"시의 은유와 모호함 이야기하기",roles:{A:"교수님",B:"학생"},lines:[
+["A","What do you think this poem is really about?","이 시가 진짜로 말하는 게 뭐라고 생각해요?"],
+["B","On the surface, it's about walking in the woods.","표면적으로는 숲속을 걷는 이야기예요."],
+["A","And on a deeper level?","그럼 더 깊은 차원에서는요?"],
+["B","I think the two roads are a metaphor for the choices we make in life.","두 갈래 길은 우리가 인생에서 하는 선택의 은유 같아요."],
+["A","Interesting. Can you find evidence in the text?","흥미롭네요. 본문에서 근거를 찾을 수 있나요?"],
+["B","The speaker says he will tell this story in the future with a sigh.","화자가 나중에 한숨을 쉬며 이 이야기를 할 거라고 해요."],
+["A","So what does that sigh suggest?","그 한숨은 무엇을 암시하죠?"],
+["B","It could mean regret, or it could be ironic. It's a bit ambiguous.","후회일 수도, 반어일 수도 있어요. 조금 모호해요."],
+["A","Excellent point. That ambiguity is what makes the poem powerful.","훌륭한 지적이에요. 그 모호함이 이 시를 강렬하게 만들죠."]]},
+{id:"roommate",track:"eng",icon:"🛏",title:"교환학생 룸메이트 첫 만남",desc:"처음 만난 친구와 스몰토크",roles:{A:"Emma",B:"지우"},lines:[
+["A","Hi! You must be my new roommate. I'm Emma.","안녕! 네가 새 룸메이트구나. 난 엠마야."],
+["B","Hi, Emma. I'm Jiwoo. Nice to meet you!","안녕, 엠마. 난 지우야. 만나서 반가워!"],
+["A","Where are you from?","어디서 왔어?"],
+["B","I'm from Korea. I'm here as an exchange student.","한국에서 왔어. 교환학생이야."],
+["A","Cool! What are you studying?","멋지다! 뭐 공부해?"],
+["B","English literature. I love British novels.","영문학. 영국 소설을 좋아해."],
+["A","No way, me too! Have you read Pride and Prejudice?","말도 안 돼, 나도! '오만과 편견' 읽어 봤어?"],
+["B","Yes, it's one of my favorites. I've read it three times.","응, 제일 좋아하는 책 중 하나야. 세 번 읽었어."],
+["A","We're going to get along just fine. Do you want to grab dinner later?","우리 잘 지낼 것 같아. 이따 저녁 같이 먹을래?"],
+["B","I'd love to. I'm starving!","좋아. 배고파 죽겠어!"]]},
+/* ---------- 나의 영어공부: 역할극 ---------- */
+{id:"m_board",track:"me",icon:"🏛️",title:"이사회: 3분기 실적 보고",desc:"발표하고 커미셔너 질문에 답하기",roles:{A:"나 (FD)",B:"커미셔너"},lines:[
+["A","Good morning, everyone. I'll walk you through the Q3 results and our cash position.","안녕하십니까. 3분기 실적과 자금 현황을 보고드리겠습니다."],
+["B","Thanks. Before you start, are we still on track for the dividend?","감사합니다. 시작 전에, 배당은 계획대로 가능한가요?"],
+["A","Yes, we are. Net profit is above budget, and we have enough cash to pay it in December.","네, 가능합니다. 순이익이 예산을 넘었고, 12월 지급에 필요한 현금도 충분합니다."],
+["B","Good. But admin costs went up quite a bit. What happened there?","좋습니다. 그런데 관리비가 꽤 올랐네요. 무슨 일이죠?"],
+["A","Fair question. Most of it is one-off legal fees. We don't expect it to continue next year.","좋은 질문입니다. 대부분 일회성 법률 비용이라 내년에는 없을 것으로 봅니다."],
+["B","How confident are you about the fourth quarter?","4분기는 얼마나 자신 있나요?"],
+["A","Fairly confident. The main risk is the LNG price. If it drops further, our margin will shrink.","꽤 자신 있습니다. 주된 리스크는 LNG 가격인데, 더 떨어지면 마진이 줄어듭니다."],
+["B","Do you have numbers on that?","그에 대한 숫자가 있나요?"],
+["A","I don't have the exact sensitivity with me, but I'll send it right after the meeting.","정확한 민감도 분석은 지금 없는데, 회의 끝나고 바로 보내 드리겠습니다."],
+["B","That would be helpful. Thank you.","그러면 좋겠네요. 감사합니다."]]},
+{id:"m_pd",track:"me",icon:"🤝",title:"사장님과 예산 이견",desc:"윗사람과 의견이 다를 때 조율하기",roles:{A:"사장님",B:"나 (FD)"},lines:[
+["A","I think we should cut next year's OPEX by ten percent across the board.","내년 운영비를 일괄 10% 줄여야 할 것 같아요."],
+["B","I get the goal, but I'm worried a flat cut could hurt operations.","취지는 알겠는데, 일괄 삭감은 운영에 지장을 줄까 걱정됩니다."],
+["A","Everyone says that. We need to show the shareholders we're serious about costs.","다들 그렇게 말하죠. 주주들에게 비용 절감 의지를 보여 줘야 해요."],
+["B","Agreed. How about we go after the areas with the biggest variance instead?","동의합니다. 대신 차이가 가장 큰 부분을 집중적으로 줄이면 어떨까요?"],
+["A","Such as?","예를 들면?"],
+["B","Consulting and travel are well over budget. We can save more there with less pain.","컨설팅비와 출장비가 예산을 크게 넘었습니다. 거기서 부담 덜고 더 많이 아낄 수 있어요."],
+["A","Hmm, that makes sense. Can you put some numbers together?","음, 일리 있네요. 숫자를 좀 정리해 줄래요?"],
+["B","Sure. I'll have a proposal to you by Thursday.","물론입니다. 목요일까지 안을 올리겠습니다."],
+["A","Good. Let's go with that.","좋아요. 그렇게 갑시다."]]},
+{id:"m_feedback",track:"me",icon:"🗣️",title:"팀원 실수 피드백",desc:"부드럽지만 분명하게 지적하기",roles:{A:"나 (FD)",B:"팀원"},lines:[
+["A","Hey, got a minute? I want to talk about the cash report.","잠깐 시간 돼요? 자금 보고서 얘기 좀 하려고요."],
+["B","Sure. Is something wrong?","네. 뭐가 잘못됐나요?"],
+["A","A couple of numbers didn't match the bank statements, and it went to the President Director like that.","숫자 몇 개가 은행 잔고와 안 맞았는데, 그대로 사장님께 올라갔어요."],
+["B","Oh no. I'm really sorry. I was rushing to meet the deadline.","아이고, 정말 죄송합니다. 마감 맞추느라 서둘렀어요."],
+["A","I get it, but accuracy comes first. If you need more time, just tell me.","이해는 하는데, 정확성이 먼저예요. 시간이 더 필요하면 그냥 말해요."],
+["B","Understood. It won't happen again.","알겠습니다. 다시는 이런 일 없게 하겠습니다."],
+["A","Let's add a quick double-check before anything goes out. Can you set that up?","나가기 전에 한 번 더 확인하는 절차를 넣읍시다. 그거 만들어 줄래요?"],
+["B","Yes, I'll do it today.","네, 오늘 하겠습니다."],
+["A","Thanks. And don't be too hard on yourself. Everyone makes mistakes.","고마워요. 너무 자책하진 말아요. 누구나 실수해요."]]},
+{id:"m_ops",track:"me",icon:"🔧",title:"타 부서와 예산 갈등",desc:"거절하지 않고 해법 찾기",roles:{A:"운영 매니저",B:"나 (FD)"},lines:[
+["A","We need to buy these spare parts this month. It's urgent.","이번 달에 이 예비품을 꼭 사야 해요. 급합니다."],
+["B","I understand, but your department is already twelve percent over budget.","알겠는데, 그쪽 부서는 이미 예산을 12% 넘었어요."],
+["A","Plant safety comes first. We can't wait until next year.","공장 안전이 우선입니다. 내년까지 못 기다려요."],
+["B","I'm not saying no. I'm saying we need to find the money the right way.","안 된다는 게 아니에요. 돈을 제대로 마련하자는 거죠."],
+["A","So what do you suggest?","그럼 어떻게 하자는 건가요?"],
+["B","Let's see if we can move some budget from the projects that got delayed.","지연된 프로젝트 예산을 좀 옮길 수 있는지 봅시다."],
+["A","That could work. How long will it take?","그거 괜찮겠네요. 얼마나 걸려요?"],
+["B","If you send me the details today, I can approve it by Wednesday.","오늘 세부 내용 보내 주면 수요일까지 승인할 수 있어요."],
+["A","Great. Thanks for working with us on this.","좋습니다. 같이 방법 찾아 줘서 고마워요."],
+["B","No problem. Just loop me in earlier next time.","별말씀을요. 다음엔 좀 더 일찍 알려 줘요."]]},
+{id:"m_weekly",track:"me",icon:"📋",title:"재무본부 주간회의 주재",desc:"회의 열고, 업데이트 받고, 정리하기",roles:{A:"나 (FD)",B:"팀장들"},lines:[
+["A","Morning, everyone. Let's get started. We've got three items today.","좋은 아침입니다. 시작합시다. 오늘은 안건이 세 개예요."],
+["B","Morning. Should I start with the cash update?","안녕하세요. 자금 업데이트부터 할까요?"],
+["A","Yes, go ahead, Maria.","네, 마리아 씨 시작해요."],
+["B","Our cash balance is 320 million dollars. The next big outflow is the tax payment on the fifteenth.","현금 잔액은 3억 2천만 달러입니다. 다음 큰 지출은 15일 세금 납부입니다."],
+["A","Okay. Any risk on the PGN payment?","좋아요. PGN 입금 쪽 리스크는 있어요?"],
+["B","They're still holding back part of the invoice. We sent a reminder yesterday.","아직 송장 일부를 안 주고 있어요. 어제 독촉 메일을 보냈습니다."],
+["A","Keep pushing, and copy me on the next one. Ruli, anything on tax?","계속 밀어붙이고, 다음엔 저도 참조로 넣어요. 룰리 씨, 세무는요?"],
+["B","The audit team asked for more documents. We'll send them by Friday.","조사팀이 자료를 더 요청했어요. 금요일까지 보내겠습니다."],
+["A","Good. Make sure our consultant reviews them first.","좋아요. 자문사 검토부터 꼭 받아요."],
+["B","Will do.","그렇게 하겠습니다."],
+["A","Alright, to recap: Maria follows up on PGN, Ruli handles the audit documents. Let's check in next Monday. Thanks, everyone.","자, 정리하면 마리아 씨는 PGN 후속 조치, 룰리 씨는 조사 자료 담당. 다음 주 월요일에 다시 봅시다. 다들 수고했어요."]]}
+];
+
+const TRACKS = {
+  biz:{label:"💼 경영 트랙",desc:"경영학과 복학생용 · 회계원리·재무관리·전략·경제 원서 용어, 회의·면접"},
+  eng:{label:"📖 영문 트랙",desc:"영문과 1학년용 · 작품별 단어장(셰익스피어·오스틴·개츠비 등), 학술·토론 표현"},
+  sy:{label:"📝 손서윤 요청",desc:"2026-2 단어 시험 953단어 전용 · 회차별 카드·자동재생·실전·철자 쓰기"},
+  me:{label:"🧑‍💼 나의 영어공부",desc:"회계·자금·예산·세무·자산·보험 실무 용어, 이사회·직장 회화, 회의 주재 표현 (구어체)"},
+  all:{label:"🌏 전체",desc:"모든 트랙 함께 보기"}
+};
+
+/* =========================================================
+   STATE
+   ========================================================= */
+const KEY = "letstalk_english_v1";
+const APP_VERSION = "1.7.0";
+const $ = s => document.querySelector(s);
+const main = $("#main");
+function todayStr(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function def(){return {track:null,known:{},done:{},start:todayStr(),rate:0.9,voice:"",auto:true,front:"en",showKo:true,theme:"",ap:{rep:1,gap:1.5,ko:true,ex:true,loop:false}};}
+function load(){try{const v=JSON.parse(localStorage.getItem(KEY));if(v&&typeof v==="object"){const o=Object.assign(def(),v);o.ap=Object.assign(def().ap,v.ap||{});return o;}}catch(e){}return def();}
+let S = load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+let view = {name:"home"};
+
+/* 손서윤 요청(sy)·나의 영어공부(me)는 공통 콘텐츠 없이 자기 내용만 보여 주는 전용 트랙 */
+const SOLO_TRACKS=["sy","me"];
+const TAG_NAME={biz:"경영",eng:"영문",sy:"시험",me:"나의"};
+const inTrack = x => S.track==="all" || x.track===S.track || (x.track==="common" && !SOLO_TRACKS.includes(S.track));
+const fCats = () => CATS.filter(inTrack);
+const fSets = () => SETS.filter(inTrack);
+const fDlgs = () => DIALOGS.filter(inTrack);
+const cat = id => CATS.find(c=>c.id===id);
+const setOf = id => SETS.find(s=>s.id===id);
+const dlgOf = id => DIALOGS.find(d=>d.id===id);
+function sayOf(en){let t=en.replace(/\s*\([^)]*\)/g,"").trim();if(t.includes("/"))t=t.split("/").pop().trim();return t||en;}
+function koSpeak(ko){return ko.replace(/\([^)]*\)/g," ").replace(/\s*;\s*/g,", ").replace(/\s+/g," ").trim();}
+function wordsOf(c){return c.w.map((w,i)=>({id:c.id+":"+i,en:w[0],say:sayOf(w[0]),ko:w[1],ex:w[2]||"",exKo:w[3]||"",cat:c.id}));}
+function examDays(c){return dayDiff(todayStr(),c.exam);}
+function examTag(c){const n=examDays(c);return n<0?`<span class="tag" style="background:var(--line);color:var(--sub)">지난 시험</span>`:`<span class="tag" style="background:var(--mark);color:#16213a">${n===0?"D-DAY":"D-"+n}</span>`;}
+function nextExam(){return fCats().filter(c=>c.exam&&examDays(c)>=0).sort((a,b)=>examDays(a)-examDays(b))[0];}
+function allWords(){return fCats().flatMap(wordsOf);}
+function unknownWords(){return allWords().filter(w=>S.known[w.id]===0);}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),1600);}
+function applyTheme(){if(S.theme)document.documentElement.setAttribute("data-theme",S.theme);else document.documentElement.removeAttribute("data-theme");}
+
+/* =========================================================
+   SPEECH (TTS) — 첫 터치 전에는 소리 안 냄 / 안전 타이머 / 모바일 화면 꺼지면 정지
+   ========================================================= */
+let voices=[], koVoices=[], gesture=false, speakToken=0, playing=false;
+const isMobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+function voiceScore(v){
+  const n=v.name||"";let s=0;
+  if(/en[-_]US/i.test(v.lang))s+=2;
+  if(/natural|premium|enhanced|neural|online|향상|고품질/i.test(n))s+=6;
+  if(/Google US English|Samantha|Ava|Aria|Jenny|Zoe|Evan|Nathan|Allison|Susan|Tom/i.test(n))s+=3;
+  if(/compact|novelty|eloquence|bad news|bells|boing|bubbles|cellos|jester|organ|trinoids|whisper|zarvox|albert|fred|junior|ralph|kathy|superstar|wobble|grandma|grandpa|rocko|shelley|flo|reed|sandy|good news|hysterical|deranged/i.test(n))s-=8;
+  return s;
+}
+function loadVoices(){try{voices=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang)).sort((a,b)=>voiceScore(b)-voiceScore(a));}catch(e){voices=[];}}
+if("speechSynthesis" in window){loadVoices();loadKoVoices();speechSynthesis.onvoiceschanged=()=>{loadVoices();loadKoVoices();if(view.name==="settings")render();};}
+document.addEventListener("pointerdown",()=>{gesture=true;},{capture:true});
+document.addEventListener("keydown",()=>{gesture=true;},{capture:true});
+function loadKoVoices(){try{koVoices=speechSynthesis.getVoices().filter(v=>/^ko/i.test(v.lang)).sort((a,b)=>voiceScore(b)-voiceScore(a));}catch(e){koVoices=[];}}
+function speak(text,rate,lang){
+  return new Promise(res=>{
+    if(!("speechSynthesis" in window)||!gesture){res(true);return;}
+    const my=++speakToken;
+    try{speechSynthesis.cancel();}catch(e){}
+    const r=rate||(lang==="ko"?1:S.rate);
+    let fin=false;
+    const done=()=>{if(fin)return;fin=true;clearTimeout(t);res(my===speakToken);};
+    const t=setTimeout(done,1800+text.length*120/r);
+    setTimeout(()=>{
+      if(my!==speakToken){done();return;}
+      const u=new SpeechSynthesisUtterance(text);
+      const ko=lang==="ko";
+      u.lang=ko?"ko-KR":"en-US";u.rate=r;
+      if(ko&&!koVoices.length)loadKoVoices();
+      const v=ko?koVoices[0]:(voices.find(x=>x.name===S.voice)||voices[0]);
+      if(v)u.voice=v;
+      u.onend=done;u.onerror=done;
+      try{speechSynthesis.speak(u);}catch(e){done();}
+    },60);
+  });
+}
+let runId=0, wakeLock=null;
+async function keepAwake(on){
+  try{
+    if(on&&"wakeLock" in navigator&&!wakeLock&&!document.hidden){wakeLock=await navigator.wakeLock.request("screen");wakeLock.addEventListener("release",()=>{wakeLock=null;});}
+    else if(!on&&wakeLock){const w=wakeLock;wakeLock=null;await w.release();}
+  }catch(e){}
+}
+function stopAll(){speakToken++;runId++;playing=false;keepAwake(false);try{speechSynthesis.cancel();}catch(e){}}
+function beginRun(){stopAll();playing=true;keepAwake(true);return runId;}
+function gapMs(){return S.ap.gap*1000;}
+function apLabel(){return `영어 ${S.ap.rep}회 · 간격 ${S.ap.gap<=0.8?"짧게":S.ap.gap>=2.5?"길게":"보통"}${S.ap.ko?" · 한국어 뜻":""}${S.ap.loop?" · 무한 반복":""}`;}
+function autoBar(act,nextOff){
+  const nx=`<button class="btn pri" data-act="autoNext" ${nextOff?"disabled":""} aria-label="다음">다음 ›</button>`;
+  return playing
+  ?`<div class="autobar on"><button class="btn bad" data-act="autoStop">⏸ 정지</button><span class="st">🎧 자동재생 중<br>${apLabel()}</span>${nx}</div>`
+  :`<div class="autobar"><button class="btn play" data-act="${act}">▶ 자동재생</button><span class="st">${apLabel()}<br><a href="#" data-act="go" data-view="settings" style="color:var(--blue)">자동재생 설정 바꾸기</a></span>${nx}</div>`;}
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const UA=navigator.userAgent;
+const isIOS=/iPhone|iPad|iPod/i.test(UA)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const isAndroid=/Android/i.test(UA);
+const isKakao=/KAKAOTALK/i.test(UA);
+const isStandalone=()=>(!!window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
+let deferredPrompt=null;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;if(view.name==="home"||view.name==="settings")render();});
+window.addEventListener("appinstalled",()=>{deferredPrompt=null;toast("홈 화면에 설치했어요");if(view.name==="settings")render();});
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden&&isMobile){const was=playing;stopAll();if(was&&["dialog","card","set"].includes(view.name)){render();toast("화면이 꺼져서 자동재생을 멈췄어요");}}
+});
+
+/* =========================================================
+   21-DAY PLAN
+   ========================================================= */
+function dayDiff(a,b){const pa=a.split("-").map(Number),pb=b.split("-").map(Number);return Math.round((Date.UTC(pb[0],pb[1]-1,pb[2])-Date.UTC(pa[0],pa[1]-1,pa[2]))/864e5);}
+function today(){return Math.max(1,Math.min(21,dayDiff(S.start,todayStr())+1));}
+function plan(d){
+  const cs=fCats().filter(c=>c.group!=="seoyun"),ss=fSets(),ds=fDlgs();
+  if(d%7===0)return[{t:"review"},{t:"quiz",id:"all"},{t:"dialog",id:ds[(d/7-1)%ds.length].id}];
+  const k=d-1-Math.floor(d/7);
+  const tasks=[{t:"card",id:cs[k%cs.length].id}];
+  if(k%2===0)tasks.push({t:"set",id:ss[Math.floor(k/2)%ss.length].id});
+  else tasks.push({t:"dialog",id:ds[Math.floor(k/2)%ds.length].id});
+  return tasks;
+}
+function taskInfo(x){
+  if(x.t==="card"){const c=cat(x.id);return{ic:c.icon,ti:"단어 · "+c.ko,sub:c.w.length+"개 카드 넘기기",view:"card",id:x.id};}
+  if(x.t==="set"){const s=setOf(x.id);return{ic:s.icon,ti:"문장 · "+s.title,sub:s.items.length+"문장 영어로 말하기",view:"set",id:x.id};}
+  if(x.t==="dialog"){const g=dlgOf(x.id);return{ic:g.icon,ti:"대화 · "+g.title,sub:"한쪽 역할 숨기고 말하기",view:"dialog",id:x.id};}
+  if(x.t==="review")return{ic:"📌",ti:"모르는 단어 복습",sub:unknownWords().length+"개 남음",view:"card",id:"review"};
+  return{ic:"🏆",ti:"주간 퀴즈",sub:"이번 트랙 단어 10문제",view:"quiz",id:"all"};
+}
+function doneMap(){S.done[S.track]=S.done[S.track]||{};return S.done[S.track];}
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+const TAB_OF={home:"home",words:"words",card:"words",quiz:"words",spell:"words",sets:"sets",set:"sets",dialogs:"dialogs",dialog:"dialogs",settings:"settings",pick:"settings"};
+function go(name,params){stopAll();view=Object.assign({name},params||{});render();window.scrollTo(0,0);}
+document.getElementById("tabs").addEventListener("click",e=>{const b=e.target.closest("button[data-tab]");if(b&&S.track)go(b.dataset.tab);});
+$("#trackchip").addEventListener("click",()=>go("pick"));
+
+function render(){
+  applyTheme();
+  if(!S.track&&view.name!=="pick")view={name:"pick",first:true};
+  $("#trackchip").textContent=S.track?TRACKS[S.track].label:"트랙 선택";
+  document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===TAB_OF[view.name]));
+  const f={home:vHome,words:vWords,card:vCard,quiz:vQuiz,spell:vSpell,sets:vSets,set:vSet,dialogs:vDialogs,dialog:vDialog,settings:vSettings,pick:vPick}[view.name]||vHome;
+  main.innerHTML=f();
+  if(view.name==="spell"){const sp=$("#sp");if(sp&&!sp.disabled){try{sp.focus({preventScroll:true});const L=sp.value.length;sp.setSelectionRange(L,L);}catch(e){}}}
+  if(view.autostart){view.autostart=false;const fn={card:autoCards,set:autoSet,dialog:playDialog}[view.name];if(fn)setTimeout(fn,150);}
+  if(view.name==="dialog"){const c=main.querySelector(".bubble.cur");if(c)c.scrollIntoView({block:"center",behavior:"smooth"});}
+}
+function topbar(title,n,back){return `<div class="topbar"><button class="back" data-act="go" data-view="${back}" aria-label="뒤로">‹</button><div class="t">${esc(title)}</div><div class="n">${n||""}</div></div>`;}
+
+/* =========================================================
+   VIEWS
+   ========================================================= */
+function vPick(){
+  return `<h2>${view.first?"누가 공부하나요?":"트랙 바꾸기"}</h2>
+  <p class="muted">트랙에 맞는 단어·문장·대화가 나와요. 캠퍼스 생활, 일상 표현, 교수님 면담 같은 공통 내용은 모든 트랙에 들어 있어요. 진도는 이 기기에만 저장돼요.</p>
+  ${Object.entries(TRACKS).map(([k,t])=>`<button class="pick ${S.track===k?"on":""}" data-act="pickTrack" data-track="${k}"><b>${t.label}</b><span>${t.desc}</span></button>`).join("")}`;
+}
+
+function vHomeExam(){
+  const cs=fCats(), aw=allWords(), known=aw.filter(w=>S.known[w.id]===1).length, unk=unknownWords().length;
+  const up=cs.filter(c=>examDays(c)>=0), past=cs.filter(c=>examDays(c)<0);
+  return `${homeBanner()}${examCard()}
+  <h2>시험 일정</h2>
+  <div class="list">${up.map(catItem).join("")||`<div class="panel muted">남은 시험이 없어요. 수고했어요! 🎉</div>`}</div>
+  <div class="stat" style="margin-top:4px">
+    <div class="panel"><div class="muted">외운 단어</div><b>${known}</b><span class="muted"> / ${aw.length}</span><div class="bar"><i style="width:${aw.length?known/aw.length*100:0}%"></i></div></div>
+    <div class="panel"><div class="muted">복습할 단어</div><b>${unk}</b>${unk?`<div class="row wrap" style="margin-top:6px"><button class="btn sm pri" data-act="go" data-view="card" data-id="review">카드</button><button class="btn sm" data-act="go" data-view="spell" data-id="review" data-n="${unk}">✍️ 철자</button></div>`:""}</div>
+  </div>
+  ${past.length?`<h2>지난 시험 <span class="muted" style="font-weight:400;font-size:14px">· 누적 복습용</span></h2><div class="list">${past.map(catItem).join("")}</div>`:""}`;
+}
+function vHome(){
+  if(S.track==="sy")return vHomeExam();
+  const d=today(), dm=doneMap(), sel=view.sel||d, tasks=plan(sel);
+  const aw=allWords(), known=aw.filter(w=>S.known[w.id]===1).length, unk=unknownWords().length;
+  const doneCount=Object.keys(dm).length;
+  const pool=fSets().flatMap(s=>s.items), seed=dayDiff("2026-01-01",todayStr());
+  const qs=pool[((seed%pool.length)+pool.length)%pool.length];
+  let cells="";
+  for(let i=1;i<=21;i++)cells+=`<button class="${dm[i]?"done":""} ${i===d?"today":""} ${i===sel&&sel!==d?"sel":""}" data-act="selDay" data-d="${i}" aria-label="${i}일차">${dm[i]?"✓":i}</button>`;
+  return `${homeBanner()}${examCard()}
+  <section class="hero">
+    <div class="day">Day ${d}<span> / 21</span></div>
+    <p>21일 동안 <span class="hl">하루 15분</span>. 완료한 날은 노란 칸으로 표시돼요. (${doneCount}일 완료)</p>
+    <div class="grid21">${cells}</div>
+  </section>
+  <h2>${sel===d?"오늘의 학습":sel+"일차 학습"}</h2>
+  <div class="list">${tasks.map(x=>{const t=taskInfo(x);return `<button class="item" data-act="go" data-view="${t.view}" data-id="${t.id}"><span class="ic">${t.ic}</span><span class="tx">${esc(t.ti)}<small>${esc(t.sub)}</small></span><span class="go">›</span></button>`;}).join("")}</div>
+  <div class="row"><button class="btn play" data-act="go" data-view="card" data-id="${tasks.find(x=>x.t==="card")?tasks.find(x=>x.t==="card").id:"review"}" data-auto="1">🎧 ${sel===d?"오늘":sel+"일차"} 단어 자동재생</button></div>
+  <div class="row"><button class="btn ${dm[sel]?"":"pri"}" data-act="dayDone" data-d="${sel}">${dm[sel]?"✓ "+sel+"일차 완료됨 (취소하려면 탭)":sel+"일차 학습 완료 표시"}</button></div>
+  <h2>오늘의 한 문장</h2>
+  <div class="panel"><div class="en big">${esc(qs[1])}</div><div class="muted" style="margin-top:4px">${esc(qs[0])}</div>
+    <div class="row"><button class="btn sm" data-act="say" data-text="${esc(qs[1])}">🔊 듣기</button><button class="btn sm" data-act="say" data-text="${esc(qs[1])}" data-rate="0.65">🐢 천천히</button></div></div>
+  <h2>내 기록</h2>
+  <div class="stat">
+    <div class="panel"><div class="muted">외운 단어</div><b>${known}</b><span class="muted"> / ${aw.length}</span><div class="bar"><i style="width:${aw.length?known/aw.length*100:0}%"></i></div></div>
+    <div class="panel"><div class="muted">복습할 단어</div><b>${unk}</b>${unk?`<div class="row" style="margin-top:6px"><button class="btn sm pri" data-act="go" data-view="card" data-id="review">복습하기</button></div>`:""}</div>
+  </div>`;
+}
+
+function examCard(){
+  const c=nextExam(); if(!c)return "";
+  const n=examDays(c), ws=wordsOf(c), k=ws.filter(w=>S.known[w.id]===1).length, unk=ws.filter(w=>S.known[w.id]===0).length;
+  return `<div class="panel" style="border:2px solid var(--mark)">
+    <div class="muted">📝 손서윤 요청 · 다음 단어 시험</div>
+    <div class="big" style="margin-top:2px">${esc(c.ko)} <span class="tag" style="background:var(--mark);color:#16213a;font-size:14px">${n===0?"D-DAY":"D-"+n}</span></div>
+    <div class="muted">외운 단어 ${k} / ${ws.length}${unk?` · 복습 필요 ${unk}개`:""}</div>
+    <div class="bar"><i style="width:${k/ws.length*100}%"></i></div>
+    <div class="row wrap"><button class="btn sm pri" data-act="go" data-view="card" data-id="${c.id}">🃏 외우기</button><button class="btn sm" data-act="go" data-view="card" data-id="${c.id}" data-auto="1">🎧 자동</button><button class="btn sm" data-act="go" data-view="quiz" data-id="${c.id}" data-n="${ws.length}">📝 실전 ${ws.length}문제</button><button class="btn sm" data-act="go" data-view="spell" data-id="${c.id}" data-n="${ws.length}">✍️ 철자 쓰기</button></div>
+  </div>`;
+}
+function homeBanner(){
+  if(isKakao)return `<div class="banner"><span class="tx">카카오톡 안에서는 발음 듣기·설치가 잘 안 될 수 있어요. 기본 브라우저로 열어 주세요.</span><button class="btn sm pri" data-act="openExternal">브라우저로 열기</button></div>`;
+  if(isStandalone()||S.hideInstall)return "";
+  if(deferredPrompt)return `<div class="banner"><span class="tx">홈 화면에 설치하면 앱처럼 열리고, 인터넷이 없어도 공부할 수 있어요.</span><button class="btn sm pri" data-act="install">설치</button><button class="x" data-act="hideInstall" aria-label="닫기">×</button></div>`;
+  if(isIOS)return `<div class="banner"><span class="tx">Safari 아래쪽 공유 버튼 <b>⬆︎</b> → <b>홈 화면에 추가</b>를 누르면 앱처럼 쓸 수 있어요.</span><button class="x" data-act="hideInstall" aria-label="닫기">×</button></div>`;
+  return "";
+}
+
+function catItem(c){
+  const ws=wordsOf(c),k=ws.filter(w=>S.known[w.id]===1).length;
+  const tag=c.track==="common"?"":`<span class="tag">${TAG_NAME[c.track]||""}</span>`;
+  return `<div class="item" style="flex-wrap:wrap"><span class="ic">${c.icon}</span><span class="tx">${esc(c.ko)}${c.exam?examTag(c):tag}<small class="en">${esc(c.en)} · ${k}/${ws.length} 외움</small>${c.info?`<small>${esc(c.info)}</small>`:""}<div class="bar"><i style="width:${k/ws.length*100}%"></i></div></span>
+    <div class="row wrap" style="width:100%;margin-top:8px"><button class="btn sm" data-act="go" data-view="card" data-id="${c.id}">🃏 카드</button><button class="btn sm" data-act="go" data-view="card" data-id="${c.id}" data-auto="1">🎧 자동</button>${c.exam?`<button class="btn sm" data-act="go" data-view="quiz" data-id="${c.id}" data-n="${c.w.length}">📝 실전</button>`:""}<button class="btn sm" data-act="go" data-view="spell" data-id="${c.id}" ${c.exam?`data-n="${c.w.length}"`:""}>✍️ 철자</button><button class="btn sm" data-act="go" data-view="quiz" data-id="${c.id}">✅ 퀴즈</button></div></div>`;
+}
+function vWords(){
+  const unk=unknownWords().length, cs=fCats();
+  const groups=[
+    ["📝 손서윤 요청",cs.filter(c=>c.group==="seoyun")],
+    ["기본 주제",cs.filter(c=>!c.group)],
+    ["📘 전공 원서 용어",cs.filter(c=>c.group==="major")],
+    ["📚 작품별 단어장",cs.filter(c=>c.group==="work")],
+    ["📘 회계부서 실무 용어",cs.filter(c=>c.group==="acct")]
+  ].filter(g=>g[1].length);
+  return `<h2>단어 카드</h2>
+  <div class="list">
+    <button class="item" data-act="go" data-view="card" data-id="review"><span class="ic">📌</span><span class="tx">모르는 단어 복습<small>'몰라요'로 표시한 단어 ${unk}개</small></span><span class="go">›</span></button>
+    <button class="item" data-act="go" data-view="card" data-id="all" data-auto="1"><span class="ic">🎧</span><span class="tx">전체 단어 자동재생<small>손 안 대고 듣기 · 출퇴근·운동할 때</small></span><span class="go">›</span></button>
+    <button class="item" data-act="go" data-view="quiz" data-id="all"><span class="ic">🏆</span><span class="tx">전체 퀴즈<small>트랙 전체에서 10문제</small></span><span class="go">›</span></button>
+  </div>
+  ${groups.map(([t,list])=>`<div class="grp"><h2>${t}</h2><span class="muted">${list.length}개 주제</span></div><div class="list">${list.map(catItem).join("")}</div>`).join("")}`;
+}
+
+/* ---------- flashcard ---------- */
+function buildDeck(id){return id==="review"?shuffle(unknownWords()):id==="all"?allWords():wordsOf(cat(id));}
+function vCard(){
+  if(!view.deck){view.deck=buildDeck(view.id);view.i=0;view.rev=false;view.res={yes:0,no:0};}
+  const title=view.id==="review"?"모르는 단어 복습":view.id==="all"?"전체 단어 듣기":cat(view.id).ko, backTo=view.from||"words", deck=view.deck;
+  if(!deck.length)return topbar(title,"",backTo)+`<div class="panel center" style="margin-top:20px"><div class="big">복습할 단어가 없어요 👍</div><p class="muted">카드에서 '몰라요'를 누른 단어가 여기에 모여요.</p><button class="btn pri" data-act="go" data-view="words">단어 목록으로</button></div>`;
+  if(view.i>=deck.length){
+    const r=view.res;
+    return topbar(title,"",backTo)+`<div class="panel center" style="margin-top:20px"><div class="big">한 바퀴 끝! 🎉</div>
+      <p>😊 알아요 <b>${r.yes}</b> · 😅 몰라요 <b>${r.no}</b></p>
+      <div class="row wrap">${r.no?`<button class="btn pri" data-act="retryUnknown">모르는 것만 다시</button>`:""}<button class="btn" data-act="restartDeck">처음부터</button><button class="btn" data-act="go" data-view="words">목록</button></div></div>`;
+  }
+  const w=deck[view.i], enFirst=S.front==="en";
+  if(!view.rev&&enFirst&&S.auto&&!view.spoke){view.spoke=true;setTimeout(()=>speak(w.say),120);}
+  const front=enFirst?`<div class="word en">${esc(w.en)}</div>`:`<div class="ko" style="font-size:28px;margin:0">${esc(w.ko)}</div>`;
+  const back=view.rev?(enFirst?`<div class="ko">${esc(w.ko)}</div>`:`<div class="word en" style="margin-top:14px">${esc(w.en)}</div>`)+(w.ex?`<div class="ex en">${esc(w.ex)}</div><div class="exko">${esc(w.exKo)}</div>`:""):`<div class="hint">탭해서 ${enFirst?"뜻":"영어"} 보기</div>`;
+  const st=S.known[w.id]===1?"😊 외운 단어":S.known[w.id]===0?"😅 복습 중":"";
+  const c0=(view.id!=="review"&&view.id!=="all")?cat(view.id):null;
+  const infoLine=c0&&c0.info?`<p class="muted" style="margin:0 0 8px">${esc(c0.info)}</p>`:"";
+  return topbar(title,(view.i+1)+" / "+deck.length,backTo)+infoLine+`
+  <div class="prog"><i style="width:${view.i/deck.length*100}%"></i></div>
+  ${autoBar("autoCards")}
+  <div class="flash ${playing?"playing":""}" data-act="reveal" role="button" tabindex="0">${front}${back}${st?`<div class="hint">${st}</div>`:""}</div>
+  <div class="row"><button class="btn" data-act="say" data-text="${esc(w.say)}">🔊 단어</button>${w.ex?`<button class="btn" data-act="say" data-text="${esc(w.ex)}">🔊 예문</button><button class="btn" data-act="say" data-text="${esc(w.ex)}" data-rate="0.65">🐢 천천히</button>`:`<button class="btn" data-act="say" data-text="${esc(w.say)}" data-rate="0.6">🐢 천천히</button>`}</div>
+  <div class="row"><button class="btn bad" data-act="mark" data-v="0">😅 몰라요</button><button class="btn good" data-act="mark" data-v="1">😊 알아요</button></div>
+  <div class="row"><button class="btn sm" data-act="prevCard" ${view.i?"":"disabled"}>‹ 이전</button><button class="btn sm" data-act="shuffleDeck">🔀 섞기</button><button class="btn sm" data-act="flipFront">앞면: ${enFirst?"영어":"한국어"}</button></div>`;
+}
+
+/* ---------- spelling (뜻 → 영어 철자) ---------- */
+function normSp(t){return String(t).toLowerCase().replace(/[\u2018\u2019`]/g,"'").replace(/[\s\-]+/g,"").trim();}
+function lev(a,b){const m=a.length,n=b.length,d=[];for(let i=0;i<=m;i++){d[i]=[i];}for(let j=1;j<=n;j++)d[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n];}
+function spellAnswers(en){
+  const base=sayOf(en), set=new Set([base]);
+  en.replace(/\s*\([^)]*\)/g,"").split("/").forEach(p=>{p=p.trim();if(p)set.add(p);});
+  (en.match(/\(([^)]*)\)/g)||[]).forEach(m=>{const t=m.slice(1,-1).trim();
+    if(/^[A-Za-z'\-]+$/.test(t)&&lev(t.toLowerCase(),base.toLowerCase())<=2)set.add(t);});   /* 영·미 철자 변형 허용: candour/candor 등 */
+  return [...set];
+}
+function hintOf(ans,shown){
+  let k=0;
+  return ans.split("").map(ch=>{
+    if(/[A-Za-z]/.test(ch)){k++;return k<=shown?esc(ch):"_";}
+    if(ch===" ")return "&nbsp;&nbsp;";
+    return esc(ch);
+  }).join(" ");
+}
+function buildSpell(id,n){
+  const pool=id==="review"?unknownWords():id==="all"?allWords():wordsOf(cat(id));
+  return shuffle(pool).slice(0,n||10).map(w=>({w,ans:spellAnswers(w.en),input:"",res:null,shown:1}));
+}
+function vSpell(){
+  if(!view.sq){view.sq=buildSpell(view.id,view.n);view.i=0;view.score=0;view.end=false;}
+  const title=(view.id==="all"?"전체":view.id==="review"?"복습":cat(view.id).ko)+" · 철자";
+  const back=view.from||"words";
+  if(!view.sq.length)return topbar(title,"",back)+`<div class="panel center" style="margin-top:20px"><div class="big">문제로 낼 단어가 없어요</div></div>`;
+  if(view.end||view.i>=view.sq.length){
+    const answered=view.sq.filter(q=>q.res), wrong=answered.filter(q=>q.res!=="ok");
+    return topbar(title,"",back)+`<div class="panel center" style="margin-top:14px"><div class="big">${view.score} / ${answered.length}점</div>
+      <p class="muted">${answered.length&&!wrong.length?"철자까지 완벽해요! ✍️🏆":"틀린 단어는 '모르는 단어 복습'에도 들어갔어요."}</p>
+      ${wrong.length?`<div style="text-align:left;margin:10px 0">${wrong.map(q=>`<div style="padding:7px 0;border-top:1px solid var(--line)"><span class="en"><b>${esc(q.ans[0])}</b></span> — ${esc(q.w.ko)}<br><span class="muted">내 답: ${q.input?esc(q.input):"(모름)"}</span></div>`).join("")}</div>`:""}
+      <div class="row wrap">${wrong.length?`<button class="btn pri" data-act="spRetry">틀린 것만 다시 (${wrong.length})</button>`:""}<button class="btn" data-act="spRestart">새로 섞어서 다시</button><button class="btn" data-act="go" data-view="words">목록</button></div></div>`;
+  }
+  const q=view.sq[view.i], A=q.ans[0], letters=A.replace(/[^A-Za-z]/g,"").length;
+  const res=q.res?`<div class="res ${q.res}">${q.res==="ok"?`✅ 정답!${q.shown>1?` <span class="muted">(힌트 ${q.shown-1}개 사용)</span>`:""}<div class="ans">${esc(A)}</div>`:`❌ 정답<div class="ans">${esc(A)}</div><div class="muted">내 답: ${q.input?esc(q.input):"(모름)"}</div>`}
+      ${q.w.en!==A?`<div class="muted" style="margin-top:4px">표제어: ${esc(q.w.en)}</div>`:""}</div>`:"";
+  return topbar(title,(view.i+1)+" / "+view.sq.length,back)+`
+  <div class="prog"><i style="width:${view.i/view.sq.length*100}%"></i></div>
+  <div class="panel center" style="margin-top:14px">
+    <div class="muted">뜻을 보고 영어 철자를 쓰세요</div>
+    <div style="font-size:21px;font-weight:700;margin-top:6px;line-height:1.4">${esc(q.w.ko)}</div>
+    <div class="hintw">${hintOf(A,q.res?99:q.shown)}</div>
+    <div class="muted">${letters}글자${/\s/.test(A)?" · 여러 단어":""}</div>
+  </div>
+  <input id="sp" class="spin ${q.res||""}" type="text" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="${q.res?"next":"done"}" placeholder="영어로 입력" value="${esc(q.input)}" ${q.res?"disabled":""}>
+  ${res}
+  ${q.res
+    ?`<div class="row"><button class="btn" data-act="say" data-text="${esc(q.w.say)}">🔊 발음</button><button class="btn pri" data-act="spNext">${view.i===view.sq.length-1?"결과 보기":"다음 ›"}</button></div>`
+    :`<div class="row"><button class="btn" data-act="spHint" ${q.shown>=letters-1?"disabled":""}>💡 한 글자 더</button><button class="btn" data-act="say" data-text="${esc(q.w.say)}">🔊 발음 힌트</button><button class="btn pri" data-act="spCheck">확인</button></div>
+      <div class="row"><button class="btn sm" data-act="spGiveup">모르겠어요</button><button class="btn sm" data-act="spEnd">그만하고 결과 보기</button></div>`}
+  <p class="muted center" style="margin-top:12px">대소문자·띄어쓰기·하이픈은 구분하지 않고, 영국/미국식 철자(candour/candor 등)는 둘 다 정답이에요.</p>`;
+}
+function spCurrent(){const q=view.sq&&view.sq[view.i];const sp=$("#sp");if(q&&sp&&!q.res)q.input=sp.value;return q;}
+function spCheck(){
+  const q=spCurrent(); if(!q||q.res)return;
+  if(!q.input.trim()){toast("철자를 입력하세요");$("#sp")&&$("#sp").focus();return;}
+  const ok=q.ans.some(a=>normSp(a)===normSp(q.input));
+  q.res=ok?"ok":"ng";
+  if(ok)view.score++; else{S.known[q.w.id]=0;save();}
+  render(); speak(q.w.say);
+}
+
+/* ---------- quiz ---------- */
+/* 퀴즈 방향: en = 영어 보고 뜻 고르기 / ko = 뜻 보고 영어 고르기 */
+function buildQuiz(id,n,dir){
+  const pool=id==="all"?allWords():wordsOf(cat(id)), all=allWords(), key=dir==="ko"?"en":"ko";
+  return shuffle(pool).slice(0,n||10).map(w=>{
+    const src=pool.length>=4?pool:all;
+    const wrong=shuffle(src.filter(x=>x[key]!==w[key])).filter((x,i,arr)=>arr.findIndex(y=>y[key]===x[key])===i).slice(0,3).map(x=>x[key]);
+    return {w,ans:w[key],opts:shuffle([w[key],...wrong]),pick:null};
+  });
+}
+function quizDirSeg(){
+  const d=S.quizDir||"en";
+  return `<div class="seg" style="margin-top:10px">${[["en","영어 → 뜻 고르기"],["ko","뜻 → 영어 고르기"]].map(([k,l])=>`<button class="${d===k?"on":""}" data-act="quizDir" data-v="${k}">${l}</button>`).join("")}</div>`;
+}
+function vQuiz(){
+  const dir=S.quizDir||"en";
+  if(!view.qs){view.qs=buildQuiz(view.id,view.n,dir);view.i=0;view.score=0;}
+  const title=view.id==="all"?"전체 퀴즈":cat(view.id).ko+(view.n>10?" 실전 시험":" 퀴즈");
+  if(view.i>=view.qs.length){
+    const wrong=view.qs.filter(q=>q.pick!==q.ans);
+    return topbar(title,"","words")+quizDirSeg()+`<div class="panel center" style="margin-top:14px"><div class="big">${view.score} / ${view.qs.length}점</div>
+      <p class="muted">${view.score===view.qs.length?"완벽해요! 🏆":"틀린 단어는 '모르는 단어 복습'에 들어갔어요."}</p>
+      ${wrong.length?`<div style="text-align:left;margin:10px 0">${wrong.map(q=>`<div style="padding:6px 0;border-top:1px solid var(--line)"><span class="en"><b>${esc(q.w.en)}</b></span> — ${esc(q.w.ko)}</div>`).join("")}</div>`:""}
+      <div class="row"><button class="btn pri" data-act="restartQuiz">다시 풀기</button><button class="btn" data-act="go" data-view="words">목록</button></div></div>`;
+  }
+  const q=view.qs[view.i], answered=q.pick!==null;
+  const question=dir==="ko"
+    ?`<div class="muted">뜻에 맞는 영어 단어를 고르세요</div><div style="font-size:24px;font-weight:700;margin-top:6px;line-height:1.4">${esc(q.w.ko)}</div>
+      ${answered?`<button class="btn sm" style="margin-top:10px" data-act="say" data-text="${esc(q.w.say)}">🔊 듣기</button>`:""}`
+    :`<div class="word en" style="font-size:32px;font-weight:700">${esc(q.w.en)}</div>
+      <button class="btn sm" style="margin-top:10px" data-act="say" data-text="${esc(q.w.say)}">🔊 듣기</button>`;
+  return topbar(title,(view.i+1)+" / "+view.qs.length,"words")+`
+  <div class="prog"><i style="width:${view.i/view.qs.length*100}%"></i></div>
+  ${view.i===0&&!answered?quizDirSeg():""}
+  <div class="panel center" style="margin-top:14px">${question}</div>
+  ${q.opts.map((o,i)=>{let c="";if(answered){if(o===q.ans)c="ok";else if(o===q.pick)c="ng";}return `<button class="opt ${dir==="ko"?"en":""} ${c}" data-act="quizPick" data-i="${i}" ${answered?"disabled":""}>${esc(o)}</button>`;}).join("")}
+  ${answered?`${dir==="ko"?`<div class="panel" style="margin-top:12px"><span class="en"><b>${esc(q.w.en)}</b></span> — ${esc(q.w.ko)}</div>`:""}${q.w.ex?`<div class="panel" style="margin-top:12px"><div class="en">${esc(q.w.ex)}</div><div class="muted">${esc(q.w.exKo)}</div></div>`:""}<div class="row"><button class="btn pri" data-act="quizNext">다음 ›</button></div>`:""}`;
+}
+
+/* ---------- sentence sets ---------- */
+function noContent(what){return `<div class="panel center" style="margin-top:20px"><div class="big">📝 시험 단어 전용 트랙이에요</div><p class="muted">${what}은 다른 트랙에 있어요.</p><button class="btn pri" data-act="go" data-view="pick">트랙 바꾸기</button></div>`;}
+function vSets(){
+  if(!fSets().length)return `<h2>문장 말하기</h2>`+noContent("문장 연습");
+  return `<h2>문장 말하기</h2><p class="muted">한국어를 보고 먼저 소리 내어 영어로 말한 다음, 정답을 확인하세요.</p>
+  <div class="list">${fSets().map(s=>`<button class="item" data-act="go" data-view="set" data-id="${s.id}"><span class="ic">${s.icon}</span><span class="tx">${esc(s.title)}${s.track!=="common"?`<span class="tag">${TAG_NAME[s.track]||""}</span>`:""}<small>${s.items.length}문장</small></span><span class="go">›</span></button>`).join("")}</div>`;
+}
+function vSet(){
+  const s=setOf(view.id);
+  if(view.i==null){view.i=0;view.rev=false;}
+  const it=s.items[view.i], last=view.i===s.items.length-1;
+  return topbar(s.title,(view.i+1)+" / "+s.items.length,view.from||"sets")+`
+  <div class="prog"><i style="width:${(view.i+(view.rev?1:0))/s.items.length*100}%"></i></div>
+  ${autoBar("autoSet",view.i>=s.items.length-1)}
+  <div class="flash ${playing?"playing":""}" data-act="setReveal" role="button" tabindex="0">
+    <div class="big">${esc(it[0])}</div>
+    ${view.rev?`<div class="answer en">${esc(it[1])}</div>`:`<span class="speakhint">${playing?"🎤 지금 영어로 말해 보세요…":"🎤 영어로 먼저 말해 보고 탭하세요"}</span>`}
+  </div>
+  ${view.rev?`<div class="row"><button class="btn" data-act="say" data-text="${esc(it[1])}">🔊 다시 듣기</button><button class="btn" data-act="say" data-text="${esc(it[1])}" data-rate="0.65">🐢 천천히</button></div>`:""}
+  <div class="row"><button class="btn" data-act="setMove" data-d="-1" ${view.i?"":"disabled"}>‹ 이전</button>
+  ${view.rev?(last?`<button class="btn pri" data-act="go" data-view="${view.from||"sets"}">완료 ✓</button>`:`<button class="btn pri" data-act="setMove" data-d="1">다음 ›</button>`):`<button class="btn pri" data-act="setReveal">정답 보기</button>`}</div>`;
+}
+
+/* ---------- dialogs ---------- */
+function vDialogs(){
+  if(!fDlgs().length)return `<h2>역할극 대화</h2>`+noContent("역할극 대화");
+  return `<h2>역할극 대화</h2><p class="muted">한쪽 역할을 숨기고 '전체 재생'을 누르면, 내 차례에 한국어 힌트만 보여요. 그때 소리 내어 말하면 잠시 뒤 정답이 나와요.</p>
+  <div class="list">${fDlgs().map(g=>`<button class="item" data-act="go" data-view="dialog" data-id="${g.id}"><span class="ic">${g.icon}</span><span class="tx">${esc(g.title)}${g.track!=="common"?`<span class="tag">${TAG_NAME[g.track]||""}</span>`:""}<small>${esc(g.desc)} · ${g.lines.length}줄</small></span><span class="go">›</span></button>`).join("")}</div>`;
+}
+function vDialog(){
+  const g=dlgOf(view.id);
+  if(!view.hide){view.hide="none";view.revd=[];view.cur=-1;}
+  const seg=[["none","모두 보기"],["A",g.roles.A+" 숨기기"],["B",g.roles.B+" 숨기기"]];
+  return topbar(g.title,"",view.from||"dialogs")+`
+  <div class="ctrl">
+    <div class="seg">${seg.map(([k,l])=>`<button class="${view.hide===k?"on":""}" data-act="dlgHide" data-v="${k}">${esc(l)}</button>`).join("")}</div>
+    <div class="row" style="margin-top:8px">
+      ${playing?`<button class="btn bad" data-act="dlgStop">■ 정지</button>`:`<button class="btn pri" data-act="dlgPlay">▶ 전체 재생</button>`}
+      <button class="btn sm" data-act="dlgKo">해석 ${S.showKo?"숨기기":"보기"}</button>
+      <button class="btn sm" data-act="dlgReset">🔄 다시 가리기</button>
+    </div>
+  </div>
+  <div class="chat">${g.lines.map((L,i)=>{
+    const h=view.hide===L[0]&&!view.revd.includes(i);
+    const cur=i===view.cur?"cur":"";
+    return `<div class="line ${L[0]}"><div class="who">${esc(g.roles[L[0]])}</div>${h
+      ?`<button class="bubble hid ${cur}" data-act="dlgLine" data-i="${i}">🎤 내 차례 — 말해 보고 탭<b>${esc(L[2])}</b></button>`
+      :`<button class="bubble ${cur}" data-act="dlgLine" data-i="${i}"><span class="en">${esc(L[1])}</span>${S.showKo?`<span class="k">${esc(L[2])}</span>`:""}</button>`}</div>`;}).join("")}</div>
+  <p class="muted center" style="margin-top:16px">말풍선을 탭하면 한 줄씩 들을 수 있어요.</p>`;
+}
+async function playDialog(){
+  const g=dlgOf(view.id), my=beginRun(), alive=()=>playing&&runId===my&&view.name==="dialog";
+  do{
+    for(let i=0;i<g.lines.length;i++){
+      if(!alive())return;
+      const L=g.lines[i]; view.cur=i; render();
+      if(view.hide===L[0]&&!view.revd.includes(i)){
+        await wait(1500+L[1].length*75);
+        if(!alive())return;
+        view.revd.push(i); render();
+      }
+      for(let r=0;r<S.ap.rep;r++){await speak(L[1]);if(!alive())return;if(r<S.ap.rep-1)await wait(600);}
+      await wait(380);
+    }
+    if(S.ap.loop&&alive()){await wait(gapMs()*1.5);view.revd=[];view.cur=-1;}
+  }while(S.ap.loop&&alive());
+  if(runId===my){playing=false;keepAwake(false);view.cur=-1;render();}
+}
+
+/* ---------- auto play: cards & sentences ---------- */
+async function autoCards(){
+  const my=beginRun(), alive=()=>playing&&runId===my&&view.name==="card";
+  if(view.i>=view.deck.length){view.i=0;view.res={yes:0,no:0};}
+  while(alive()){
+    if(view.i>=view.deck.length){if(S.ap.loop){view.i=0;}else break;}
+    const w=view.deck[view.i], enFirst=S.front==="en";
+    view.rev=false;view.spoke=true;render();
+    if(enFirst){
+      for(let r=0;r<S.ap.rep;r++){await speak(w.say);if(!alive())return;await wait(r<S.ap.rep-1?600:gapMs());if(!alive())return;}
+      view.rev=true;render();
+      if(S.ap.ko){await speak(koSpeak(w.ko),1,"ko");if(!alive())return;await wait(gapMs()*0.6);if(!alive())return;}
+    }else{
+      if(S.ap.ko){await speak(koSpeak(w.ko),1,"ko");if(!alive())return;}
+      await wait(gapMs()*1.5);if(!alive())return;
+      view.rev=true;render();
+      for(let r=0;r<S.ap.rep;r++){await speak(w.say);if(!alive())return;await wait(600);if(!alive())return;}
+    }
+    if(S.ap.ex&&w.ex){await speak(w.ex);if(!alive())return;}
+    await wait(gapMs());if(!alive())return;
+    view.i++;
+  }
+  if(runId===my){playing=false;keepAwake(false);render();}
+}
+async function autoSet(){
+  const s=setOf(view.id), my=beginRun(), alive=()=>playing&&runId===my&&view.name==="set";
+  while(alive()){
+    if(view.i>=s.items.length){if(S.ap.loop){view.i=0;}else{view.i=s.items.length-1;view.rev=true;break;}}
+    const it=s.items[view.i];
+    view.rev=false;render();
+    if(S.ap.ko){await speak(it[0],1,"ko");if(!alive())return;}
+    await wait(gapMs()+it[1].length*60);if(!alive())return;   /* 내가 말해 볼 시간 */
+    view.rev=true;render();
+    for(let r=0;r<S.ap.rep;r++){await speak(it[1]);if(!alive())return;await wait(r<S.ap.rep-1?700:gapMs());if(!alive())return;}
+    view.i++;
+  }
+  if(runId===my){playing=false;keepAwake(false);render();}
+}
+
+/* ---------- settings ---------- */
+function installPanel(){
+  let body;
+  if(isStandalone())body=`<p class="muted">✅ 홈 화면 앱으로 실행 중이에요. 인터넷이 없어도 공부할 수 있어요.</p>`;
+  else if(isKakao)body=`<p class="muted">카카오톡 안에서는 설치할 수 없어요. 기본 브라우저(아이폰은 Safari, 안드로이드는 Chrome)로 연 다음 설치하세요.</p><div class="row"><button class="btn pri" data-act="openExternal">브라우저로 열기</button></div>`;
+  else if(deferredPrompt)body=`<p class="muted">버튼 한 번이면 홈 화면에 아이콘이 생겨요.</p><div class="row"><button class="btn pri" data-act="install">홈 화면에 설치</button></div>`;
+  else if(isIOS)body=`<details class="help" open><summary>아이폰 설치 방법</summary><ol><li>반드시 <b>Safari</b>로 여세요.</li><li>아래쪽 가운데 <b>공유 버튼 ⬆︎</b>을 누르세요.</li><li>목록을 올려 <code>홈 화면에 추가</code> → 오른쪽 위 <code>추가</code></li></ol></details>`;
+  else body=`<p class="muted">Chrome 메뉴(⋮)에서 <code>홈 화면에 추가</code> 또는 <code>앱 설치</code>를 누르세요. 컴퓨터에서는 주소창 오른쪽 설치 아이콘을 누르면 돼요.</p>`;
+  return `<div class="panel"><h3>📲 홈 화면에 설치</h3>${body}</div>`;
+}
+function vSettings(){
+  const vs=voices.length?voices.map(v=>`<option value="${esc(v.name)}" ${S.voice===v.name?"selected":""}>${voiceScore(v)>=6?"⭐ ":""}${esc(v.name)} (${esc(v.lang)})</option>`).join(""):"";
+  const best=voices[0];
+  return `<h2>설정</h2>
+  <div class="panel">
+    <label class="f">학습 트랙</label>
+    <button class="btn" style="width:100%;text-align:left" data-act="go" data-view="pick">${TRACKS[S.track].label} · 바꾸기</button>
+    <label class="f" for="rate">말하기 속도: <b id="ratev">${S.rate.toFixed(2)}x</b></label>
+    <input type="range" id="rate" min="0.6" max="1.2" step="0.05" value="${S.rate}">
+    <label class="f" for="voice">목소리</label>
+    <select id="voice"><option value="">자동: 가장 좋은 음성${best?" ("+esc(best.name)+")":""}</option>${vs}</select>
+    <p class="muted" style="margin:6px 0 0">⭐ 표시가 자연스러운 고품질 음성이에요. 없으면 아래 방법으로 받아 주세요.</p>
+    ${voices.length?"":`<p class="muted">이 기기에서 영어 음성을 아직 찾지 못했어요. 잠시 후 다시 열어 보세요.</p>`}
+    <div class="row"><button class="btn sm" data-act="say" data-text="Hi! Let's practice English together.">🔊 테스트</button></div>
+    <label class="f">카드 설정</label>
+    <div class="row"><button class="btn sm" data-act="autoToggle">카드 자동 발음: ${S.auto?"켜짐":"꺼짐"}</button><button class="btn sm" data-act="flipFront">카드 앞면: ${S.front==="en"?"영어":"한국어"}</button></div>
+    <label class="f">▶ 자동재생</label>
+    <div class="muted" style="margin-bottom:6px">영어 반복 횟수</div>
+    <div class="seg">${[1,2,3].map(n=>`<button class="${S.ap.rep===n?"on":""}" data-act="apSet" data-k="rep" data-v="${n}">${n}회</button>`).join("")}</div>
+    <div class="muted" style="margin:10px 0 6px">카드 사이 간격 (말해 볼 시간)</div>
+    <div class="seg">${[[0.8,"짧게"],[1.5,"보통"],[2.5,"길게"]].map(([n,l])=>`<button class="${S.ap.gap===n?"on":""}" data-act="apSet" data-k="gap" data-v="${n}">${l}</button>`).join("")}</div>
+    <div class="row wrap">
+      <button class="btn sm" data-act="apToggle" data-k="ko">한국어 뜻 읽기: ${S.ap.ko?"켜짐":"꺼짐"}</button>
+      <button class="btn sm" data-act="apToggle" data-k="ex">예문 읽기: ${S.ap.ex?"켜짐":"꺼짐"}</button>
+      <button class="btn sm" data-act="apToggle" data-k="loop">끝나면 처음부터: ${S.ap.loop?"켜짐":"꺼짐"}</button>
+    </div>
+    <p class="muted" style="margin:8px 0 0">자동재생 중에는 화면이 꺼지지 않게 유지해요. 폰 화면을 끄거나 다른 앱으로 가면 멈춰요.${koVoices.length?"":" 한국어 음성이 없으면 뜻 읽기가 어색할 수 있어요."}</p>
+    <div class="row"><button class="btn sm" data-act="say" data-text="안녕하세요, 한국어 뜻은 이렇게 읽어요." data-lang="ko">🔊 한국어 음성 테스트</button></div>
+    <label class="f">화면 테마</label>
+    <div class="seg">${[["","자동"],["light","밝게"],["dark","어둡게"]].map(([k,l])=>`<button class="${S.theme===k?"on":""}" data-act="theme" data-v="${k}">${l}</button>`).join("")}</div>
+  </div>
+  <div class="panel">
+    <h3>🔈 음성 품질 높이기</h3>
+    <p class="muted">발음이 기계처럼 들리면 기기에 고품질 영어 음성을 한 번만 받아 두세요. 받은 뒤 이 앱을 완전히 닫았다가 다시 열면 위 목록에 ⭐로 나타나요.</p>
+    <details class="help" ${isIOS?"open":""}><summary>아이폰·아이패드</summary><ol>
+      <li><code>설정</code> 앱을 열고 맨 위 검색창에 <code>음성</code>을 입력해도 바로 찾을 수 있어요.</li>
+      <li><code>손쉬운 사용</code> → <code>음성 콘텐츠</code> → <code>음성</code> (iOS 16 이하는 <code>읽기 및 말하기</code> → <code>음성</code>)</li>
+      <li><code>영어</code> → <code>영어(미국)</code> 선택</li>
+      <li><code>Ava (프리미엄)</code> 또는 <code>Samantha (향상됨)</code> 옆 다운로드 버튼(☁︎)을 눌러 받기 — 와이파이에서 받으세요.</li>
+      <li>Safari와 이 앱을 완전히 종료 후 다시 열고, 위 <b>목소리</b>에서 ⭐ 음성 선택</li>
+    </ol></details>
+    <details class="help" ${isAndroid?"open":""}><summary>갤럭시·안드로이드</summary><ol>
+      <li><code>설정</code> 앱 맨 위 🔍 검색에서 <code>텍스트 음성 변환</code> 또는 <code>TTS</code> 검색</li>
+      <li><code>기본 엔진</code>을 <code>Google 음성 인식 및 합성</code>으로 선택 (삼성 엔진보다 영어가 자연스러워요)</li>
+      <li>엔진 옆 ⚙️ → <code>음성 데이터 설치</code> → <code>English (United States)</code> 다운로드</li>
+      <li>같은 화면에서 목소리 종류를 골라 미리 들어볼 수 있어요.</li>
+      <li>Chrome과 이 앱을 다시 열고, 위 <b>목소리</b>에서 선택</li>
+    </ol></details>
+    <details class="help"><summary>컴퓨터 (윈도우·맥)</summary><ol>
+      <li>가장 쉬운 방법: <b>Microsoft Edge</b> 브라우저로 이 앱을 열면 <code>Aria / Jenny Online (Natural)</code> 같은 고품질 음성이 바로 나와요.</li>
+      <li>Chrome에서는 <code>Google US English</code>를 고르세요.</li>
+      <li>맥: <code>시스템 설정</code> → <code>손쉬운 사용</code> → <code>읽기 및 말하기</code> → <code>시스템 음성</code> → <code>음성 관리</code>에서 영어(미국) 프리미엄 음성 받기</li>
+    </ol></details>
+  </div>
+  ${installPanel()}
+  <div class="panel">
+    <h3>진도 백업·복원</h3>
+    <p class="muted">진도는 이 기기에만 저장돼요. 폰을 바꾸거나 브라우저 기록을 지우기 전에 백업 코드를 복사해 카톡 '나와의 채팅'에 보관하세요.</p>
+    <div class="row"><button class="btn" data-act="backupMake">백업 코드 만들기</button><button class="btn" data-act="backupCopy">복사</button></div>
+    <textarea id="bk" placeholder="백업 코드가 여기에 나와요. 복원할 때는 여기에 붙여넣으세요."></textarea>
+    <div class="row"><button class="btn pri" data-act="restore">붙여넣은 코드로 복원</button></div>
+  </div>
+  <div class="panel">
+    <h3>초기화</h3>
+    <div class="row"><button class="btn" data-act="restartPlan">21일 플랜 오늘부터 다시</button><button class="btn bad" data-act="reset">${view.resetArm?"한 번 더 누르면 전부 삭제":"모든 기록 삭제"}</button></div>
+  </div>
+  <p class="muted center">Let's Talk! 버전 ${APP_VERSION}</p>`;
+}
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+main.addEventListener("click",e=>{
+  const t=e.target.closest("[data-act]");
+  if(playing&&["card","set"].includes(view.name)&&(!t||!["autoStop","autoNext"].includes(t.dataset.act))){stopAll();render();if(!t||["reveal","setReveal"].includes(t.dataset.act)){toast("자동재생을 멈췄어요");return;}}
+  if(!t||t.disabled)return;
+  if(t.tagName==="A")e.preventDefault();
+  const a=t.dataset.act, d=t.dataset;
+  switch(a){
+    case "go": go(d.view,{id:d.id,n:d.n?parseInt(d.n):undefined,from:view.name==="home"?"home":undefined,autostart:d.auto==="1"}); break;
+    case "say": speak(d.text,d.rate?parseFloat(d.rate):undefined,d.lang); break;
+    case "autoCards": autoCards(); break;
+    case "autoSet": autoSet(); break;
+    case "autoStop": stopAll();render(); break;
+    case "autoNext": {   /* 다음 항목으로 — 자동재생 중이면 다음 항목부터 계속 재생 */
+      const was=playing; stopAll();
+      if(view.name==="card"){view.i=Math.min(view.i+1,view.deck.length);view.rev=false;view.spoke=!was?false:true;}
+      else if(view.name==="set"){const n=setOf(view.id).items.length;view.i=Math.min(view.i+1,n-1);view.rev=false;}
+      render();
+      if(was){if(view.name==="card"&&view.i<view.deck.length)autoCards();else if(view.name==="set")autoSet();}
+      break;}
+    case "apSet": S.ap[d.k]=parseFloat(d.v);save();render();break;
+    case "apToggle": S.ap[d.k]=!S.ap[d.k];save();render();break;
+    case "pickTrack": {const first=!S.track;S.track=d.track;save();go(first?"home":"settings");toast(TRACKS[d.track].label+" 선택");break;}
+    case "selDay": view.sel=parseInt(d.d);render(); break;
+    case "dayDone": {const dm=doneMap(),n=parseInt(d.d);if(dm[n])delete dm[n];else{dm[n]=true;toast(n+"일차 완료! 👏");}save();render();break;}
+    /* card */
+    case "reveal": if(!view.rev){view.rev=true;const w=view.deck[view.i];render();const tx=S.front==="ko"?w.say:w.ex;if(tx&&(S.front==="ko"||S.auto))speak(tx);} break;
+    case "mark": {const w=view.deck[view.i];S.known[w.id]=parseInt(d.v);save();view.res[d.v==="1"?"yes":"no"]++;view.i++;view.rev=false;view.spoke=false;stopAll();render();break;}
+    case "prevCard": view.i=Math.max(0,view.i-1);view.rev=false;view.spoke=false;render();break;
+    case "shuffleDeck": view.deck=shuffle(view.deck);view.i=0;view.rev=false;view.spoke=false;view.res={yes:0,no:0};render();toast("카드를 섞었어요");break;
+    case "flipFront": S.front=S.front==="en"?"ko":"en";save();if(view.name==="card"){view.rev=false;view.spoke=false;}render();break;
+    case "restartDeck": view.deck=buildDeck(view.id);view.i=0;view.rev=false;view.spoke=false;view.res={yes:0,no:0};render();break;
+    case "retryUnknown": view.deck=shuffle(view.deck.filter(w=>S.known[w.id]===0));view.i=0;view.rev=false;view.spoke=false;view.res={yes:0,no:0};render();break;
+    /* quiz */
+    case "quizPick": {const q=view.qs[view.i];q.pick=q.opts[parseInt(d.i)];if(q.pick===q.ans){view.score++;}else{S.known[q.w.id]=0;save();}render();speak(q.w.say);break;}
+    case "quizNext": view.i++;render();break;
+    case "restartQuiz": view.qs=null;render();break;
+    case "quizDir": if((S.quizDir||"en")!==d.v){S.quizDir=d.v;save();view.qs=null;render();toast(d.v==="ko"?"뜻 보고 영어 고르기":"영어 보고 뜻 고르기");} break;
+    /* spelling */
+    case "spCheck": spCheck(); break;
+    case "spHint": {const q=spCurrent();q.shown++;render();break;}
+    case "spGiveup": {const q=spCurrent();q.res="ng";S.known[q.w.id]=0;save();render();speak(q.w.say);break;}
+    case "spNext": view.i++;render();window.scrollTo(0,0);break;
+    case "spEnd": spCurrent();view.end=true;render();break;
+    case "spRetry": view.sq=view.sq.filter(q=>q.res&&q.res!=="ok").map(q=>({w:q.w,ans:q.ans,input:"",res:null,shown:1}));view.sq=shuffle(view.sq);view.i=0;view.score=0;view.end=false;render();break;
+    case "spRestart": view.sq=null;render();break;
+    /* sets */
+    case "setReveal": if(!view.rev){view.rev=true;render();speak(setOf(view.id).items[view.i][1]);} break;
+    case "setMove": stopAll();view.i+=parseInt(d.d);view.rev=false;render();break;
+    /* dialog */
+    case "dlgHide": stopAll();view.hide=d.v;view.revd=[];view.cur=-1;render();break;
+    case "dlgPlay": playDialog();break;
+    case "dlgStop": stopAll();view.cur=-1;render();break;
+    case "dlgKo": S.showKo=!S.showKo;save();render();break;
+    case "dlgReset": stopAll();view.revd=[];view.cur=-1;render();break;
+    case "dlgLine": {const i=parseInt(d.i),L=dlgOf(view.id).lines[i];if(playing)stopAll();if(!view.revd.includes(i))view.revd.push(i);view.cur=i;render();speak(L[1]).then(ok=>{if(ok&&view.name==="dialog"&&!playing){view.cur=-1;render();}});break;}
+    /* install */
+    case "install": if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.finally(()=>{deferredPrompt=null;render();});} break;
+    case "hideInstall": S.hideInstall=true;save();render();break;
+    case "openExternal": location.href="kakaotalk://web/openExternal?url="+encodeURIComponent(location.href);break;
+    /* settings */
+    case "autoToggle": S.auto=!S.auto;save();render();break;
+    case "theme": S.theme=d.v;save();render();break;
+    case "backupMake": {const code=btoa(unescape(encodeURIComponent(JSON.stringify(S))));$("#bk").value="LT1:"+code;toast("백업 코드를 만들었어요");break;}
+    case "backupCopy": {const ta=$("#bk");if(!ta.value){toast("먼저 백업 코드를 만드세요");break;}
+      const ok=()=>toast("복사했어요");
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(ta.value).then(ok,()=>{ta.select();try{document.execCommand("copy");ok();}catch(e){toast("길게 눌러 직접 복사하세요");}});
+      else{ta.select();try{document.execCommand("copy");ok();}catch(e){toast("길게 눌러 직접 복사하세요");}}
+      break;}
+    case "restore": {let v=$("#bk").value.trim();try{if(v.startsWith("LT1:"))v=v.slice(4);const obj=JSON.parse(decodeURIComponent(escape(atob(v))));if(!obj||typeof obj!=="object"||!("known" in obj))throw 0;S=Object.assign(def(),obj);save();toast("복원했어요");go("home");}catch(e){toast("코드가 올바르지 않아요. 전체를 붙여넣었는지 확인하세요");}break;}
+    case "restartPlan": S.start=todayStr();S.done[S.track]={};save();toast("오늘이 1일차예요");go("home");break;
+    case "reset": if(!view.resetArm){view.resetArm=true;render();setTimeout(()=>{if(view.name==="settings"&&view.resetArm){view.resetArm=false;render();}},4000);}else{const tr=S.track;S=def();S.track=tr;save();toast("기록을 모두 지웠어요");go("home");}break;
+  }
+});
+main.addEventListener("keydown",e=>{
+  if((e.key==="Enter"||e.key===" ")&&e.target.matches(".flash")){e.preventDefault();e.target.click();}
+  if(e.key==="Enter"&&e.target.id==="sp"){e.preventDefault();e.stopPropagation();spCheck();}
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&view.name==="spell"&&view.sq&&view.sq[view.i]&&view.sq[view.i].res&&!(e.target.matches&&e.target.matches("button"))){e.preventDefault();view.i++;render();}
+});
+main.addEventListener("input",e=>{if(e.target.id==="rate"){S.rate=parseFloat(e.target.value);$("#ratev").textContent=S.rate.toFixed(2)+"x";save();}});
+main.addEventListener("change",e=>{if(e.target.id==="voice"){S.voice=e.target.value;save();speak("This is my voice.");}});
+
+render();
+
+/* 오프라인·설치용 서비스워커 (Netlify 등 https 주소에서만 동작) */
+if("serviceWorker" in navigator&&location.protocol==="https:"&&!/claude\.ai|claudeusercontent/i.test(location.hostname)){
+  const hadController=!!navigator.serviceWorker.controller;
+  navigator.serviceWorker.register("sw.js").catch(()=>{});
+  let reloaded=false;
+  navigator.serviceWorker.addEventListener("controllerchange",()=>{
+    if(!hadController||reloaded)return; reloaded=true;
+    stopAll(); toast("새 버전으로 업데이트했어요"); setTimeout(()=>location.reload(),900);
+  });
+}
+</script>
+</body>
+</html>

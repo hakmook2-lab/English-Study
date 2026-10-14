@@ -1,0 +1,22 @@
+Let's Talk! 영어 공부 앱 - Netlify 배포 방법
+
+[처음 올릴 때 - 새 사이트 만들기]
+1. PC에서 이 폴더(또는 zip)를 준비
+2. app.netlify.com 로그인 → Sites → "Add new site" → "Deploy manually"
+3. 폴더(또는 zip)를 끌어다 놓기
+4. Site configuration → Change site name 에서 주소를 알기 쉽게 변경 (예: letstalk-english)
+   ※ 주소는 이후 바꾸지 마세요. 주소가 바뀌면 폰에 저장된 진도가 안 보입니다.
+5. Visitor access(방문자 접근)가 Private이면 Public으로 변경
+6. 주소를 카톡으로 아이들에게 전달
+
+[업데이트할 때 - 반드시 같은 사이트에]
+1. sw.js 맨 위 VERSION 숫자 올리기 (예: lt-1.2.0 → lt-1.2.1)
+   index.html의 APP_VERSION도 같이 올리면 설정 화면에서 확인 가능
+2. 기존 사이트 → Deploys 탭 → 아래쪽 드래그 영역에 폴더를 끌어다 놓기
+   ※ Netlify Drop 첫 화면에 올리면 새 사이트가 또 생기니 주의
+
+[아이들 폰에서]
+- 카톡 링크는 "브라우저로 열기" 후 설치
+- 아이폰: Safari 공유 버튼 → 홈 화면에 추가
+- 안드로이드: 앱 상단 배너의 "설치" 버튼
+- 발음 품질: 앱 설정 → "음성 품질 높이기" 안내대로 고품질 음성 1회 다운로드
