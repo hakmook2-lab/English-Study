@@ -2451,7 +2451,7 @@ main.addEventListener("change",e=>{if(e.target.id==="voice"){S.voice=e.target.va
 
 render();
 
-/* 오프라인·설치용 서비스워커 (Netlify 등 https 주소에서만 동작) */
+/* 오프라인·설치용 서비스워커 (GitHub Pages 등 https 주소에서만 동작) */
 if("serviceWorker" in navigator&&location.protocol==="https:"&&!/claude\.ai|claudeusercontent/i.test(location.hostname)){
   const hadController=!!navigator.serviceWorker.controller;
   navigator.serviceWorker.register("sw.js").catch(()=>{});
