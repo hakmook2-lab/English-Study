@@ -4,12 +4,12 @@
 
 ## 처음 올리기
 1. github.com → 오른쪽 위 **+** → **New repository**
-2. Repository name: `Lets-Talk` / **Public** 선택 / Create repository
+2. Repository name: `English-Study` / **Public** 선택 / Create repository
    - "Start free for 30 days"(Enterprise 체험)는 누르지 않기
 3. 저장소 화면 → **Add file → Upload files** → 파일 7개를 전부 선택해 끌어다 놓기 → **Commit changes**
    - 폴더 없이 파일만 올리면 됩니다 (하위 폴더 없음)
 4. **Settings → Pages** → Source: **Deploy from a branch** → Branch: **main / (root)** → **Save**
-5. 1~2분 뒤 주소: `https://hakmook2-lab.github.io/Lets-Talk/`
+5. 1~2분 뒤 주소: `https://hakmook2-lab.github.io/English-Study/`
    - 주소는 한 번 정한 뒤 바꾸지 않기 (주소가 바뀌면 폰에 저장된 진도가 안 보임)
 
 ## 업데이트할 때

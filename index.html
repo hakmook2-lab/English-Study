@@ -1806,7 +1806,7 @@ const TRACKS = {
    STATE
    ========================================================= */
 const KEY = "letstalk_english_v1";
-const APP_VERSION = "1.7.0";
+const APP_VERSION = "1.8.0";
 const $ = s => document.querySelector(s);
 const main = $("#main");
 function todayStr(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
@@ -1831,6 +1831,29 @@ function koSpeak(ko){return ko.replace(/\([^)]*\)/g," ").replace(/\s*;\s*/g,", "
 function wordsOf(c){return c.w.map((w,i)=>({id:c.id+":"+i,en:w[0],say:sayOf(w[0]),ko:w[1],ex:w[2]||"",exKo:w[3]||"",cat:c.id}));}
 function examDays(c){return dayDiff(todayStr(),c.exam);}
 function examTag(c){const n=examDays(c);return n<0?`<span class="tag" style="background:var(--line);color:var(--sub)">지난 시험</span>`:`<span class="tag" style="background:var(--mark);color:#16213a">${n===0?"D-DAY":"D-"+n}</span>`;}
+/* 여러 회차를 묶은 가상 단어장 (예: 중간고사 범위) — 진도는 원래 회차 단어 ID 그대로 공유 */
+const GROUPS={mid:{ko:"중간고사 범위 (1~5차)",icon:"📚",track:"sy",ids:["sy1","sy2","sy3","sy4","sy5"]}};
+function poolOf(id){
+  if(id==="review")return unknownWords();
+  if(id==="all")return allWords();
+  if(GROUPS[id])return GROUPS[id].ids.flatMap(x=>wordsOf(cat(x)));
+  return wordsOf(cat(id));
+}
+function titleOf(id){return id==="review"?"모르는 단어 복습":id==="all"?"전체 단어":GROUPS[id]?GROUPS[id].ko:cat(id).ko;}
+/* 문제 수: 직접 지정(view.n)이 없으면 설정값(S.quizN, 0=전체, 기본 30) */
+function effN(poolLen){if(view.n)return view.n;const n=S.quizN==null?30:S.quizN;return n===0?poolLen:Math.min(n,poolLen);}
+function groupPanel(gid){
+  const g=GROUPS[gid]; if(!g||!inTrack(g))return "";
+  const ws=poolOf(gid), k=ws.filter(w=>S.known[w.id]===1).length, unk=ws.filter(w=>S.known[w.id]===0).length;
+  return `<div class="panel" style="border:2px solid var(--blue)">
+    <div class="muted">${g.icon} 시험 범위 묶음</div>
+    <div class="big" style="margin-top:2px">${esc(g.ko)}</div>
+    <div class="muted">${ws.length}단어 · 외운 단어 ${k}${unk?` · 복습 필요 ${unk}개`:""}</div>
+    <div class="bar"><i style="width:${ws.length?k/ws.length*100:0}%"></i></div>
+    <div class="row wrap"><button class="btn sm pri" data-act="go" data-view="quiz" data-id="${gid}">✅ 퀴즈</button><button class="btn sm" data-act="go" data-view="spell" data-id="${gid}">✍️ 철자</button><button class="btn sm" data-act="go" data-view="card" data-id="${gid}">🃏 카드</button><button class="btn sm" data-act="go" data-view="card" data-id="${gid}" data-auto="1">🎧 자동</button></div>
+    <p class="muted" style="margin:8px 0 0">퀴즈 첫 화면에서 문제 수(10~전체)와 방향(영어→뜻 / 뜻→영어)을 고를 수 있어요.</p>
+  </div>`;
+}
 function nextExam(){return fCats().filter(c=>c.exam&&examDays(c)>=0).sort((a,b)=>examDays(a)-examDays(b))[0];}
 function allWords(){return fCats().flatMap(wordsOf);}
 function unknownWords(){return allWords().filter(w=>S.known[w.id]===0);}
@@ -1964,7 +1987,7 @@ function vPick(){
 function vHomeExam(){
   const cs=fCats(), aw=allWords(), known=aw.filter(w=>S.known[w.id]===1).length, unk=unknownWords().length;
   const up=cs.filter(c=>examDays(c)>=0), past=cs.filter(c=>examDays(c)<0);
-  return `${homeBanner()}${examCard()}
+  return `${homeBanner()}${groupPanel("mid")}${examCard()}
   <h2>시험 일정</h2>
   <div class="list">${up.map(catItem).join("")||`<div class="panel muted">남은 시험이 없어요. 수고했어요! 🎉</div>`}</div>
   <div class="stat" style="margin-top:4px">
@@ -2036,7 +2059,7 @@ function vWords(){
     ["📚 작품별 단어장",cs.filter(c=>c.group==="work")],
     ["📘 회계부서 실무 용어",cs.filter(c=>c.group==="acct")]
   ].filter(g=>g[1].length);
-  return `<h2>단어 카드</h2>
+  return `<h2>단어 카드</h2>${groupPanel("mid")}
   <div class="list">
     <button class="item" data-act="go" data-view="card" data-id="review"><span class="ic">📌</span><span class="tx">모르는 단어 복습<small>'몰라요'로 표시한 단어 ${unk}개</small></span><span class="go">›</span></button>
     <button class="item" data-act="go" data-view="card" data-id="all" data-auto="1"><span class="ic">🎧</span><span class="tx">전체 단어 자동재생<small>손 안 대고 듣기 · 출퇴근·운동할 때</small></span><span class="go">›</span></button>
@@ -2046,10 +2069,10 @@ function vWords(){
 }
 
 /* ---------- flashcard ---------- */
-function buildDeck(id){return id==="review"?shuffle(unknownWords()):id==="all"?allWords():wordsOf(cat(id));}
+function buildDeck(id){return id==="review"?shuffle(unknownWords()):poolOf(id);}
 function vCard(){
   if(!view.deck){view.deck=buildDeck(view.id);view.i=0;view.rev=false;view.res={yes:0,no:0};}
-  const title=view.id==="review"?"모르는 단어 복습":view.id==="all"?"전체 단어 듣기":cat(view.id).ko, backTo=view.from||"words", deck=view.deck;
+  const title=view.id==="all"?"전체 단어 듣기":titleOf(view.id), backTo=view.from||"words", deck=view.deck;
   if(!deck.length)return topbar(title,"",backTo)+`<div class="panel center" style="margin-top:20px"><div class="big">복습할 단어가 없어요 👍</div><p class="muted">카드에서 '몰라요'를 누른 단어가 여기에 모여요.</p><button class="btn pri" data-act="go" data-view="words">단어 목록으로</button></div>`;
   if(view.i>=deck.length){
     const r=view.res;
@@ -2062,7 +2085,7 @@ function vCard(){
   const front=enFirst?`<div class="word en">${esc(w.en)}</div>`:`<div class="ko" style="font-size:28px;margin:0">${esc(w.ko)}</div>`;
   const back=view.rev?(enFirst?`<div class="ko">${esc(w.ko)}</div>`:`<div class="word en" style="margin-top:14px">${esc(w.en)}</div>`)+(w.ex?`<div class="ex en">${esc(w.ex)}</div><div class="exko">${esc(w.exKo)}</div>`:""):`<div class="hint">탭해서 ${enFirst?"뜻":"영어"} 보기</div>`;
   const st=S.known[w.id]===1?"😊 외운 단어":S.known[w.id]===0?"😅 복습 중":"";
-  const c0=(view.id!=="review"&&view.id!=="all")?cat(view.id):null;
+  const c0=CATS.find(c=>c.id===view.id)||null;
   const infoLine=c0&&c0.info?`<p class="muted" style="margin:0 0 8px">${esc(c0.info)}</p>`:"";
   return topbar(title,(view.i+1)+" / "+deck.length,backTo)+infoLine+`
   <div class="prog"><i style="width:${view.i/deck.length*100}%"></i></div>
@@ -2093,12 +2116,12 @@ function hintOf(ans,shown){
   }).join(" ");
 }
 function buildSpell(id,n){
-  const pool=id==="review"?unknownWords():id==="all"?allWords():wordsOf(cat(id));
-  return shuffle(pool).slice(0,n||10).map(w=>({w,ans:spellAnswers(w.en),input:"",res:null,shown:1}));
+  const pool=poolOf(id);
+  return shuffle(pool).slice(0,n||effN(pool.length)).map(w=>({w,ans:spellAnswers(w.en),input:"",res:null,shown:1}));
 }
 function vSpell(){
   if(!view.sq){view.sq=buildSpell(view.id,view.n);view.i=0;view.score=0;view.end=false;}
-  const title=(view.id==="all"?"전체":view.id==="review"?"복습":cat(view.id).ko)+" · 철자";
+  const title=(view.id==="review"?"복습":titleOf(view.id))+" · 철자";
   const back=view.from||"words";
   if(!view.sq.length)return topbar(title,"",back)+`<div class="panel center" style="margin-top:20px"><div class="big">문제로 낼 단어가 없어요</div></div>`;
   if(view.end||view.i>=view.sq.length){
@@ -2140,21 +2163,23 @@ function spCheck(){
 /* ---------- quiz ---------- */
 /* 퀴즈 방향: en = 영어 보고 뜻 고르기 / ko = 뜻 보고 영어 고르기 */
 function buildQuiz(id,n,dir){
-  const pool=id==="all"?allWords():wordsOf(cat(id)), all=allWords(), key=dir==="ko"?"en":"ko";
-  return shuffle(pool).slice(0,n||10).map(w=>{
+  const pool=poolOf(id), all=allWords(), key=dir==="ko"?"en":"ko";
+  return shuffle(pool).slice(0,n||effN(pool.length)).map(w=>{
     const src=pool.length>=4?pool:all;
     const wrong=shuffle(src.filter(x=>x[key]!==w[key])).filter((x,i,arr)=>arr.findIndex(y=>y[key]===x[key])===i).slice(0,3).map(x=>x[key]);
     return {w,ans:w[key],opts:shuffle([w[key],...wrong]),pick:null};
   });
 }
 function quizDirSeg(){
-  const d=S.quizDir||"en";
-  return `<div class="seg" style="margin-top:10px">${[["en","영어 → 뜻 고르기"],["ko","뜻 → 영어 고르기"]].map(([k,l])=>`<button class="${d===k?"on":""}" data-act="quizDir" data-v="${k}">${l}</button>`).join("")}</div>`;
+  const d=S.quizDir||"en", total=poolOf(view.id).length, cur=view.qs?view.qs.length:0;
+  const counts=[10,30,50,100,0].filter(n=>n===0||n<total);
+  const cnt=`<div class="seg" style="margin-top:8px">${counts.map(n=>`<button class="${(n===0?total:n)===cur?"on":""}" data-act="quizCount" data-v="${n}">${n===0?"전체 "+total:n+"문제"}</button>`).join("")}</div>`;
+  return cnt+`<div class="seg" style="margin-top:10px">${[["en","영어 → 뜻 고르기"],["ko","뜻 → 영어 고르기"]].map(([k,l])=>`<button class="${d===k?"on":""}" data-act="quizDir" data-v="${k}">${l}</button>`).join("")}</div>`;
 }
 function vQuiz(){
   const dir=S.quizDir||"en";
   if(!view.qs){view.qs=buildQuiz(view.id,view.n,dir);view.i=0;view.score=0;}
-  const title=view.id==="all"?"전체 퀴즈":cat(view.id).ko+(view.n>10?" 실전 시험":" 퀴즈");
+  const title=titleOf(view.id)+" 퀴즈 · "+view.qs.length+"문제";
   if(view.i>=view.qs.length){
     const wrong=view.qs.filter(q=>q.pick!==q.ans);
     return topbar(title,"","words")+quizDirSeg()+`<div class="panel center" style="margin-top:14px"><div class="big">${view.score} / ${view.qs.length}점</div>
@@ -2402,6 +2427,7 @@ main.addEventListener("click",e=>{
     case "quizPick": {const q=view.qs[view.i];q.pick=q.opts[parseInt(d.i)];if(q.pick===q.ans){view.score++;}else{S.known[q.w.id]=0;save();}render();speak(q.w.say);break;}
     case "quizNext": view.i++;render();break;
     case "restartQuiz": view.qs=null;render();break;
+    case "quizCount": {const n=parseInt(d.v);S.quizN=n;save();view.n=undefined;view.qs=null;render();toast(n===0?"전체 문제":n+"문제");break;}
     case "quizDir": if((S.quizDir||"en")!==d.v){S.quizDir=d.v;save();view.qs=null;render();toast(d.v==="ko"?"뜻 보고 영어 고르기":"영어 보고 뜻 고르기");} break;
     /* spelling */
     case "spCheck": spCheck(); break;
