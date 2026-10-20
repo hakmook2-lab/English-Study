@@ -1,6 +1,6 @@
 /* Let's Talk! 서비스워커
    ★ 업데이트할 때마다 VERSION 숫자를 올려 주세요 (예: lt-1.2.0 → lt-1.2.1) */
-const VERSION = "lt-1.8.0";
+const VERSION = "lt-1.8.1";
 const FONT_CACHE = "lt-fonts";
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
 

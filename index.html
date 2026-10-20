@@ -1806,7 +1806,7 @@ const TRACKS = {
    STATE
    ========================================================= */
 const KEY = "letstalk_english_v1";
-const APP_VERSION = "1.8.0";
+const APP_VERSION = "1.8.1";
 const $ = s => document.querySelector(s);
 const main = $("#main");
 function todayStr(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
@@ -1841,7 +1841,7 @@ function poolOf(id){
 }
 function titleOf(id){return id==="review"?"모르는 단어 복습":id==="all"?"전체 단어":GROUPS[id]?GROUPS[id].ko:cat(id).ko;}
 /* 문제 수: 직접 지정(view.n)이 없으면 설정값(S.quizN, 0=전체, 기본 30) */
-function effN(poolLen){if(view.n)return view.n;const n=S.quizN==null?30:S.quizN;return n===0?poolLen:Math.min(n,poolLen);}
+function effN(poolLen){if(view.n)return view.n;const n=S.quizN==null?50:S.quizN;return n===0?poolLen:Math.min(n,poolLen);}
 function groupPanel(gid){
   const g=GROUPS[gid]; if(!g||!inTrack(g))return "";
   const ws=poolOf(gid), k=ws.filter(w=>S.known[w.id]===1).length, unk=ws.filter(w=>S.known[w.id]===0).length;
@@ -2059,11 +2059,16 @@ function vWords(){
     ["📚 작품별 단어장",cs.filter(c=>c.group==="work")],
     ["📘 회계부서 실무 용어",cs.filter(c=>c.group==="acct")]
   ].filter(g=>g[1].length);
-  return `<h2>단어 카드</h2>${groupPanel("mid")}
+  /* 손서윤 요청 트랙: '전체' 대신 중간고사 범위(1~5차)로 퀴즈·자동재생·철자 */
+  const scope=GROUPS.mid&&inTrack(GROUPS.mid)&&S.track==="sy"?"mid":"all";
+  const scopeName=scope==="mid"?"중간고사 범위":"전체";
+  const total=poolOf(scope).length, qn=(S.quizN==null?50:S.quizN)||total, qShow=Math.min(qn,total);
+  return `<h2>단어 카드</h2>
   <div class="list">
     <button class="item" data-act="go" data-view="card" data-id="review"><span class="ic">📌</span><span class="tx">모르는 단어 복습<small>'몰라요'로 표시한 단어 ${unk}개</small></span><span class="go">›</span></button>
-    <button class="item" data-act="go" data-view="card" data-id="all" data-auto="1"><span class="ic">🎧</span><span class="tx">전체 단어 자동재생<small>손 안 대고 듣기 · 출퇴근·운동할 때</small></span><span class="go">›</span></button>
-    <button class="item" data-act="go" data-view="quiz" data-id="all"><span class="ic">🏆</span><span class="tx">전체 퀴즈<small>트랙 전체에서 10문제</small></span><span class="go">›</span></button>
+    <button class="item" data-act="go" data-view="quiz" data-id="${scope}"><span class="ic">🏆</span><span class="tx">${scopeName} 퀴즈<small>${scope==="mid"?"1~5차 ":"트랙 전체 "}${total}단어에서 ${qShow}문제 · 첫 화면에서 문제 수 변경</small></span><span class="go">›</span></button>
+    <button class="item" data-act="go" data-view="spell" data-id="${scope}"><span class="ic">✍️</span><span class="tx">${scopeName} 철자 쓰기<small>${scope==="mid"?"1~5차 ":""}뜻 보고 영어 철자 쓰기 · ${qShow}문제</small></span><span class="go">›</span></button>
+    <button class="item" data-act="go" data-view="card" data-id="${scope}" data-auto="1"><span class="ic">🎧</span><span class="tx">${scopeName} 자동재생<small>손 안 대고 듣기 · ${total}단어</small></span><span class="go">›</span></button>
   </div>
   ${groups.map(([t,list])=>`<div class="grp"><h2>${t}</h2><span class="muted">${list.length}개 주제</span></div><div class="list">${list.map(catItem).join("")}</div>`).join("")}`;
 }
